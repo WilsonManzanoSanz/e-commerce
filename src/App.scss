@@ -1,0 +1,33 @@
+$break-tablet:768px;
+$break-tablet-xl:1024px;
+$break-desktop:1160px;
+$break-desktop-xl:1500px;
+
+$roboto-font: 'Roboto', Arial, Helvetica, sans-serif;
+$raleway-font: 'Raleway', Arial, Helvetica, sans-serif;
+
+body{
+  font-family: 'Open Sans Condensed', Arial, Helvetica, sans-serif;
+}
+
+.wrapper {
+  padding: 0px 30px;
+  @media screen and (min-width: $break-tablet) {
+      padding: 0px 60px;
+  }
+  @media screen and (min-width: $break-desktop) {
+     padding: 0px;
+  }
+}
+
+.container {
+  max-width: 750px;
+  margin: auto;
+  @media screen and (min-width: $break-desktop) {
+      max-width: 1160px;
+      padding: 0px;
+  }
+  @media screen and (min-width: $break-desktop-xl) {
+      max-width: 1400px;
+  }
+}
