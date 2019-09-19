@@ -10,6 +10,10 @@ body{
   font-family: 'Open Sans Condensed', Arial, Helvetica, sans-serif;
 }
 
+*{
+  box-sizing: border-box;
+}
+
 .wrapper {
   padding: 0px 30px;
   @media screen and (min-width: $break-tablet) {

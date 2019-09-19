@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { auth } from '../../firebase/firebase.utils';
 
 import { ReactComponent as Logo } from '../../assets/img/logo.svg';
 
 import './navbar.style.scss';
 
-const Navbar = () => (
+const Navbar = ({ currentUser }) => (
     <div className="header">
         <div className="wrapper container navbar">
             <Link className="logo-container" to="/">
@@ -18,6 +19,12 @@ const Navbar = () => (
                 <Link className="item" to="/contact">
                     CONTACT
                 </Link>
+                {
+                    currentUser ?
+                    <div className="item" onClick={() => auth.signOut()}>SIGN OUT</div>
+                    :
+                    <Link className="item" to="/login">SIGN IN</Link>
+                }
             </div>
         </div>
     </div>

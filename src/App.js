@@ -6,12 +6,37 @@ import LoginPage from './pages/login/login.component';
 import NotFound from './pages/notfound/notfound.component';
 import Navbar from './components/navbar/navbar.component.jsx';
 
+import { auth } from './firebase/firebase.utils';
+
 import './App.scss';
 
-function App() {
-  return (
-    <div>
-        <Navbar/>
+class App extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      currentUser: null
+    };
+
+    this.unSubscription = null;
+  }
+
+  componentDidMount(){
+    this.unSubscription = auth.onAuthStateChanged((user) => {
+      this.setState({ currentUser: user });
+      console.log(user);
+    });
+  }
+
+  componentWillUnmount(){
+    this.unSubscription();
+  }
+
+  render (){
+    console.log('was rendered');
+    return (
+      <div>
+        <Navbar currentUser={this.state.currentUser}/>
         <div className="container wrapper">
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
@@ -20,8 +45,9 @@ function App() {
             <Route component={NotFound}/>
           </Switch>
         </div>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 export default App;
