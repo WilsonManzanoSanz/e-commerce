@@ -28,7 +28,7 @@ class App extends React.Component {
         userRef.onSnapshot(snapshot => {
           this.setState({
             currentUser: snapshot.data()
-          })
+          });
         })
       } else {
         this.setState({
