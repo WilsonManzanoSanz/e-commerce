@@ -6,7 +6,7 @@ import LoginPage from './pages/login/login.component';
 import NotFound from './pages/notfound/notfound.component';
 import Navbar from './components/navbar/navbar.component.jsx';
 
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 import './App.scss';
 
@@ -22,9 +22,19 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    this.unSubscription = auth.onAuthStateChanged((user) => {
-      this.setState({ currentUser: user });
-      console.log(user);
+    this.unSubscription = auth.onAuthStateChanged(async (user) => {
+      if(user){
+        const userRef = await createUserProfileDocument(user);
+        userRef.onSnapshot(snapshot => {
+          this.setState({
+            currentUser: snapshot.data()
+          })
+        })
+      } else {
+        this.setState({
+          currentUser: user
+        });
+      }
     });
   }
 
@@ -33,7 +43,6 @@ class App extends React.Component {
   }
 
   render (){
-    console.log('was rendered');
     return (
       <div>
         <Navbar currentUser={this.state.currentUser}/>
