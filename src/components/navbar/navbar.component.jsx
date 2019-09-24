@@ -21,7 +21,7 @@ const Navbar = ({ currentUser }) => (
                 </Link>
                 {
                     currentUser ?
-                    <div className="item" onClick={() => auth.signOut()}>SIGN OUT</div>
+                    <div className="item pointer" onClick={() => auth.signOut()}>SIGN OUT</div>
                     :
                     <Link className="item" to="/login">SIGN IN</Link>
                 }
