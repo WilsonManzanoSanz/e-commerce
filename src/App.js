@@ -5,6 +5,8 @@ import ShopPage from './pages/shop/shop.component';
 import LoginPage from './pages/login/login.component';
 import NotFound from './pages/notfound/notfound.component';
 import Navbar from './components/navbar/navbar.component.jsx';
+import { connect } from 'react-redux';
+import { setCurrentUser } from './redux/actions/user.action';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
@@ -14,10 +16,6 @@ class App extends React.Component {
   constructor(props){
     super(props);
 
-    this.state = {
-      currentUser: null
-    };
-
     this.unSubscription = null;
   }
 
@@ -26,12 +24,12 @@ class App extends React.Component {
       if(user){
         const userRef = await createUserProfileDocument(user);
         userRef.onSnapshot(snapshot => {
-          this.setState({
+          this.props.setCurrentUser({
             currentUser: snapshot.data()
           });
         })
       } else {
-        this.setState({
+        this.props.setCurrentUser({
           currentUser: user
         });
       }
@@ -45,7 +43,7 @@ class App extends React.Component {
   render (){
     return (
       <div>
-        <Navbar currentUser={this.state.currentUser}/>
+        <Navbar />
         <div className="container wrapper">
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
@@ -59,4 +57,8 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+})
+
+export default connect(null, mapDispatchToProps)(App);
