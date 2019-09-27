@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { auth } from '../../firebase/firebase.utils';
 import { connect } from 'react-redux';
+import  CartIcon  from '../cart-icon/cart-icon.component';
 
 import { ReactComponent as Logo } from '../../assets/img/logo.svg';
 
@@ -26,6 +27,7 @@ const Navbar = ({ currentUser }) => (
                     :
                     <Link className="item" to="/login">SIGN IN</Link>
                 }
+                <CartIcon />
             </div>
         </div>
     </div>
