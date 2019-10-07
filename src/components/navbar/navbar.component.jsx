@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import { auth } from '../../firebase/firebase.utils';
 import { connect } from 'react-redux';
 import  CartIcon  from '../cart-icon/cart-icon.component';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
 import { ReactComponent as Logo } from '../../assets/img/logo.svg';
 
 import './navbar.style.scss';
 
-const Navbar = ({ currentUser }) => (
+const Navbar = ({ currentUser, hidden }) => (
     <div className="header">
         <div className="wrapper container navbar">
             <Link className="logo-container" to="/">
@@ -30,11 +31,15 @@ const Navbar = ({ currentUser }) => (
                 <CartIcon />
             </div>
         </div>
+        {
+            hidden ? null : <CartDropdown />
+        }
     </div>
 );
 
-const mapStateToProps = state => ({
-    currentUser: state.user.currentUser
+const mapStateToProps = ({user: {currentUser}, cart: {hidden}}) => ({
+    currentUser,
+    hidden
 });
 
 export default connect(mapStateToProps)(Navbar);
