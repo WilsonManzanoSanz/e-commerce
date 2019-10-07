@@ -6,7 +6,7 @@ import LoginPage from './pages/login/login.component';
 import NotFound from './pages/notfound/notfound.component';
 import Navbar from './components/navbar/navbar.component.jsx';
 import { connect } from 'react-redux';
-import { setCurrentUser } from './redux/actions/user.action';
+import { setCurrentUser } from './redux/user/user.action';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
