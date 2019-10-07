@@ -1,14 +1,16 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import HomePage from './pages/homepage/homepage.component';
-import ShopPage from './pages/shop/shop.component';
-import LoginPage from './pages/login/login.component';
-import NotFound from './pages/notfound/notfound.component';
 import Navbar from './components/navbar/navbar.component.jsx';
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.action';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser} from './redux/user/user.selector';
+
+import HomePage from './pages/homepage/homepage.component';
+import ShopPage from './pages/shop/shop.component';
+import LoginPage from './pages/login/login.component';
+import NotFound from './pages/notfound/notfound.component';
+import CheckoutPage from './pages/checkout/checkout.component';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
@@ -46,6 +48,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
             <Route exact path="/shop" component={ShopPage}></Route>
+            <Route exact path="/checkout" component={CheckoutPage}></Route>
             <Route exact path="/login" render={() => this.props.currentUser ? (<Redirect  to="/"/>) : (<LoginPage />)}></Route>
             <Route component={NotFound}/>
           </Switch>
