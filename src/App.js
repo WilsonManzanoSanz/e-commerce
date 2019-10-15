@@ -47,7 +47,7 @@ class App extends React.Component {
         <div className="container wrapper">
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
-            <Route exact path="/shop" component={ShopPage}></Route>
+            <Route path="/shop" component={ShopPage}></Route>
             <Route exact path="/checkout" component={CheckoutPage}></Route>
             <Route exact path="/login" render={() => this.props.currentUser ? (<Redirect  to="/"/>) : (<LoginPage />)}></Route>
             <Route component={NotFound}/>

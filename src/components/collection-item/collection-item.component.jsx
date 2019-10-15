@@ -1,9 +1,9 @@
 import React from 'react';
 import ShopCard from '../shop-card/shop-card.component';
 
-import './shop-collections.style.scss';
+import './collection-item.style.scss';
 
-const ShopCollections = ({title, items}) => (
+const CollectionItem = ({title, items}) => (
     <div className="shop-collections">
         <h1 className="title">{title.toUpperCase()}</h1>
         <div className="preview">
@@ -17,4 +17,4 @@ const ShopCollections = ({title, items}) => (
     </div>
 );
 
-export default ShopCollections;
+export default CollectionItem;
