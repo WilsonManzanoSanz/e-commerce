@@ -8,7 +8,15 @@
     .logo-container {
       height: 100%;
       width: 70px;
-      padding: 25px 25px 0 0;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      svg{
+        width: 40px;
+        @media screen and (min-width: 768px){
+          width: 50px;
+        }
+      }
     }
 
     a{
@@ -25,6 +33,47 @@
   
       .item {
         padding: 10px 15px;
+        margin-top: auto;
+      }
+      .cart-icon{
+        margin-top: auto;
+      }
+    }
+
+    .hambuguer-menu{
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      margin-top: 15px;
+    }
+    
+    .dropdown-navbar{
+      position: fixed;
+      width: 100%;
+      top: 70px;
+      height: auto;
+      background: white;
+      left: 0;
+      box-shadow: 0 4px 8px rgba(0,0,0,.1);
+      z-index: 30;
+      overflow-y: hidden;
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: .4s;
+      .item{
+        padding: 10px 0;
+        display: block;
+      }
+    }
+
+    .right-items-mobile{
+      display: flex;
+      margin-top: 15px;
+      .hambuguer-menu{
+        margin-left: 20px;
+      }
+      .cart-icon{
+        margin-top: 2px;
       }
     }
   }
