@@ -1,10 +1,4 @@
-$break-tablet:768px;
-$break-tablet-xl:1024px;
-$break-desktop:1160px;
-$break-desktop-xl:1500px;
-
-$roboto-font: 'Roboto', Arial, Helvetica, sans-serif;
-$raleway-font: 'Raleway', Arial, Helvetica, sans-serif;
+@import './variable.scss';
 
 body{
   font-family: 'Open Sans Condensed', Arial, Helvetica, sans-serif;
