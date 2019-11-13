@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { auth } from '../../firebase/firebase.utils';
+// import { auth } from '../../firebase/firebase.utils';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import  CartIcon  from '../cart-icon/cart-icon.component';
@@ -8,6 +8,7 @@ import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
 import { selectCartHidden } from '../../redux/cart/cart.selector';
 import { selectCurrentUser} from '../../redux/user/user.selector';
+import { setCurrentUser } from '../../redux/user/user.action';
 import { selectIsMobile } from '../../redux/ui/ui.selector';
 
 import { ReactComponent as Logo } from '../../assets/img/logo.svg';
@@ -15,7 +16,7 @@ import { ReactComponent as HamburguerMenu } from '../../assets/img/hamburguer.sv
 
 import './navbar.style.scss';
 
-const Navbar = ({ currentUser, hidden, isMobile }) => {
+const Navbar = ({ currentUser, hidden, isMobile, setCurrentUser}) => {
     const [isOpen, setOpenStatus] = useState(false);
     return (
         <div className="header">
@@ -34,7 +35,7 @@ const Navbar = ({ currentUser, hidden, isMobile }) => {
                             </Link>
                             {
                                 currentUser ?
-                                <div className="item pointer" onClick={() => auth.signOut()}>SIGN OUT</div>
+                                <div className="item pointer" onClick={() => setCurrentUser(null)}>SIGN OUT</div>
                                 :
                                 <Link className="item" to="/login">SIGN IN</Link>
                             }
@@ -59,7 +60,7 @@ const Navbar = ({ currentUser, hidden, isMobile }) => {
                                     </Link>
                                     {
                                         currentUser ?
-                                        <div className="item pointer" onClick={() => auth.signOut()}>SIGN OUT</div>
+                                        <div className="item pointer" onClick={() => setCurrentUser(null)}>SIGN OUT</div>
                                         :
                                         <Link className="item" to="/login">SIGN IN</Link>
                                     }
@@ -81,4 +82,8 @@ const mapStateToProps = createStructuredSelector({
     isMobile: selectIsMobile
 })
 
-export default connect(mapStateToProps)(Navbar);
+const mapDispatchToProps = dispatch => ({
+    setCurrentUser: (user) => dispatch(setCurrentUser(user))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

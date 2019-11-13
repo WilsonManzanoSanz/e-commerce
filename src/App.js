@@ -12,7 +12,7 @@ import LoginPage from './pages/login/login.component';
 import NotFound from './pages/notfound/notfound.component';
 import CheckoutPage from './pages/checkout/checkout.component';
 
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+// import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 import './App.scss';
 
@@ -24,7 +24,7 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    this.unSubscription = auth.onAuthStateChanged(async (user) => {
+    /* this.unSubscription = auth.onAuthStateChanged(async (user) => {
       if(user){
         const userRef = await createUserProfileDocument(user);
         userRef.onSnapshot(snapshot => {
@@ -34,10 +34,11 @@ class App extends React.Component {
         this.props.setCurrentUser(user);
       }
     });
+    */
   }
 
   componentWillUnmount(){
-    this.unSubscription();
+    // this.unSubscription();
   }
 
   render (){
