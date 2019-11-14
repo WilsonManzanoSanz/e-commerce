@@ -3,7 +3,8 @@ import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 import { connect } from 'react-redux';
 import { signInWithPassword } from '../../redux/user/user.action';
-import { signInWithGoogle } from '../../firebase/firebase.utils';
+import { setCurrentUser } from '../../redux/user/user.action';
+// import { signInWithGoogle } from '../../firebase/firebase.utils';
 
 import './sign-in.style.scss';
 
@@ -16,6 +17,7 @@ class SignIn extends React.Component {
             password: '',
             errorMessage:''
         };
+
     }
 
     handleChange = (e) => {
@@ -53,7 +55,7 @@ class SignIn extends React.Component {
                     <p className="error-message">{errorMessage}</p>
                     <div className="buttons">
                         <Button type="submit">SIGN IN</Button>
-                        <Button type="button" classType="secondary-button" onClick={signInWithGoogle}>
+                        <Button type="button" classType="secondary-button" onClick={() => window.location.href = 'http://localhost:3001/api/v1/auth/google'}>
                             {''}
                             Sign in with Google {''}
                         </Button>
@@ -66,7 +68,8 @@ class SignIn extends React.Component {
 
 
 const mapDispatchToProps = dispatch => ({
-    signInWithPassword: (email, password) => dispatch(signInWithPassword(email, password))
+    signInWithPassword: (email, password) => dispatch(signInWithPassword(email, password)),
+    setCurrentUser: (user) => dispatch(setCurrentUser(user))
 })
 
 export default connect(null, mapDispatchToProps)(SignIn);

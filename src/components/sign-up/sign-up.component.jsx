@@ -1,9 +1,9 @@
 import React from 'react';
-
+import {connect} from 'react-redux';
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
-
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+// import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import { signUpWithPassword } from '../../redux/user/user.action';
 
 import './sign-up.style.scss';
 
@@ -15,29 +15,31 @@ class SignUp extends React.Component {
             email: '',
             password: '',
             displayName: '',
-            confirmPassword: ''
+            confirmPassword: '',
+            errorMessage: ''
         };
     }
 
     handleSubmit = async event => {
         event.preventDefault();
-        const { displayName, email, password, confirmPassword } = this.state;
+        const { password, confirmPassword } = this.state;
+        const { signUpWithPassword } = this.props;
         if( password !== confirmPassword){
-            alert("passwords don't match");
+            this.setState({errorMessage: 'Password does not match'});
             return;
+        } else {
+            this.setState({errorMessage: ''});
         }
         try {
-            const { user } = await auth.createUserWithEmailAndPassword(email, password);
-            await createUserProfileDocument( user, {displayName} );
-            this.setState(
-                {email: '',
-                password: '',
-                displayName: '',
-                confirmPassword: ''
-                }
-            );
+            const res = await signUpWithPassword(this.state);
+            if(!res.success){
+                console.log('triggered', res);
+                throw(res.message);
+            }
+            // this.setState({ email: '', password: '' });
         } catch (error) {
-            console.error(error);
+            console.log('triggered', error);
+            this.setState({errorMessage:error});
         }
     }
 
@@ -47,8 +49,7 @@ class SignUp extends React.Component {
     };
 
     render(){
-        const { displayName, email, password, confirmPassword } = this.state;
-
+        const { displayName, email, password, confirmPassword, errorMessage } = this.state;
         return (
         <div className="sign-up">
             <h2 className="title">I do not have an account</h2>
@@ -86,6 +87,7 @@ class SignUp extends React.Component {
                     label="Confirm password"
                     required>
                 </FormInput>
+                <p className="error-message">{errorMessage}</p>
                 <Button type="submit">SIGN UP</Button>
             </form>
         </div>)
@@ -93,4 +95,8 @@ class SignUp extends React.Component {
 
 }
 
-export default SignUp;
+const mapDispatchToProps = dispatch => ({
+    signUpWithPassword: (email, password) => dispatch(signUpWithPassword(email, password))
+})
+
+export default connect(null, mapDispatchToProps)(SignUp);

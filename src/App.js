@@ -11,6 +11,7 @@ import ShopPage from './pages/shop/shop.component';
 import LoginPage from './pages/login/login.component';
 import NotFound from './pages/notfound/notfound.component';
 import CheckoutPage from './pages/checkout/checkout.component';
+import GoogleLoginPage from './pages/google/google.component';
 
 // import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
@@ -49,6 +50,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
             <Route path="/shop" component={ShopPage}></Route>
+            <Route path="/google/:token" component={GoogleLoginPage}></Route>
             <Route exact path="/checkout" component={CheckoutPage}></Route>
             <Route exact path="/login" render={() => this.props.currentUser ? (<Redirect  to="/"/>) : (<LoginPage />)}></Route>
             <Route component={NotFound}/>

@@ -19,6 +19,32 @@ export const signInWithPassword = (email, password) => {
             });
             const json = await response.json();
             if(json.success){
+                dispatch(setCurrentUser(json.data.user));
+                return json;
+            } else {
+                throw(json.message);
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            return error;
+        }
+    }; 
+}
+
+
+export const signUpWithPassword = (user) => {
+    return async dispatch => {
+        try {
+              const response = await fetch(`${BASE_URL}/register`, {
+              method: 'POST', 
+              body: JSON.stringify(user), // data can be `string` or {object}!
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+            const json = await response.json();
+            console.log(json);
+            if(json.success){
                 dispatch(setCurrentUser(json.data));
                 return json;
             } else {
