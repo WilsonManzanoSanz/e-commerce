@@ -1,3 +1,4 @@
+@import '../../variable.scss';
 .navbar {
     height: 70px;
     width: 100%;
@@ -13,7 +14,7 @@
       flex-direction: column;
       svg{
         width: 40px;
-        @media screen and (min-width: 768px){
+        @media screen and (min-width: $break-tablet){
           width: 50px;
         }
       }
