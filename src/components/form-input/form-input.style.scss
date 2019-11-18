@@ -1,5 +1,6 @@
 $sub-color: grey;
 $main-color: black;
+@import '../../variable.scss';
 
 @mixin shrinkLabel {
   top: -14px;
@@ -9,7 +10,10 @@ $main-color: black;
 
 .form-group {
   position: relative;
-  margin: 45px 0;
+  margin: 25px 0;
+  @media screen and (min-width: $break-tablet) {
+    margin: 45px 0;
+  }
 
   .input {
     background: none;

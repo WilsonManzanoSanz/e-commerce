@@ -16,7 +16,6 @@ class GoogleLoginPage extends React.Component {
             }
           });
           const json = await response.json();
-          console.log(json);
           if(json.success){
             setCurrentUser(json.data)
             this.props.history.push('/');

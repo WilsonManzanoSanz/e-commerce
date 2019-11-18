@@ -46,8 +46,8 @@ class SignIn extends React.Component {
         const {errorMessage} = this.state;
         return (
             <div className="sign-in">
-                <h2>I already have an account</h2>
-                <span>Sign in with your email and password</span>
+                <h2 className="title">I already have an account</h2>
+                <span class="description">Sign in with your email and password</span>
 
                 <form onSubmit={this.handleSubmit}>
                     <FormInput name="email" type="email" label="email" value={this.state.email} handleChange={this.handleChange} required/>

@@ -1,6 +1,8 @@
+@import '../../variable.scss';
 .login-page{
-    width: 850px;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin: 30px auto 30px;
+    flex-wrap: wrap;
 }

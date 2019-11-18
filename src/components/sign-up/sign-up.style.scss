@@ -1,3 +1,4 @@
+@import '../../variable.scss';
 .sign-up{
     display: flex;
     flex-direction: column;
@@ -5,5 +6,25 @@
 
     .title{
         margin: 10px 0;
+        text-align: center;
+        padding-top: 20px;
+        @media screen and (min-width:$break-desktop) {
+            text-align: start;
+            padding-top: 0px;
+        }
+    }
+
+    .description{
+        text-align: center;
+        @media screen and (min-width:$break-desktop) {
+            text-align: start;
+        }
+    }
+
+    .primary-button{
+        margin: auto;
+        @media screen and (min-width:$break-desktop) {
+            margin-left: 0;
+        }
     }
 }

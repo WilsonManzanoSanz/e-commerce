@@ -1,15 +1,37 @@
+@import '../../variable.scss';
 .sign-in{
-    width: 30vw;
     display: flex;
     flex-direction: column;
-
+    width: 100%;
+    @media screen and (min-width:$break-desktop) {
+        width: 30vw;
+    }
     .title{
         margin: 10px 0;
+        text-align: center;
+        @media screen and (min-width:$break-desktop) {
+            text-align: start;
+        }
+    }
+
+    .description{
+        text-align: center;
+        @media screen and (min-width:$break-desktop) {
+            text-align: start;
+        }
     }
     
     .buttons{
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
+        .primary-button{
+            margin: 0 auto 20px;
+            text-align: center;
+            @media screen and (min-width:$break-desktop) {
+                margin-left: 0;
+            }
+        }
     }
 
     .error-message{

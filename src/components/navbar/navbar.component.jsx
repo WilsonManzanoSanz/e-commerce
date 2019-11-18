@@ -52,17 +52,17 @@ const Navbar = ({ currentUser, hidden, isMobile, setCurrentUser}) => {
                     isMobile ? (
                         <div className="dropdown-navbar wrapper" style={isOpen ? {transform: 'scaleY(1)'} : {transform: 'scaleY(0)'}}>
                             <div className="dropdown-navbar-list">
-                                    <Link className="item" to="/shop">
+                                    <Link className="item" onClick={() => setOpenStatus(!isOpen)} to="/shop">
                                         SHOP
                                     </Link>
-                                    <Link className="item" to="/contact">
+                                    <Link className="item" onClick={() => setOpenStatus(!isOpen)} to="/contact">
                                         CONTACT
                                     </Link>
                                     {
                                         currentUser ?
-                                        <div className="item pointer" onClick={() => setCurrentUser(null)}>SIGN OUT</div>
+                                        <div className="item pointer" onClick={() => { setCurrentUser(null); setOpenStatus(!isOpen) }}>SIGN OUT</div>
                                         :
-                                        <Link className="item" to="/login">SIGN IN</Link>
+                                        <Link className="item" to="/login" onClick={() => setOpenStatus(!isOpen)}>SIGN IN</Link>
                                     }
                             </div>
                         </div>
