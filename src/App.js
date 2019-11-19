@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Navbar from './components/navbar/navbar.component.jsx';
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.action';
+import { getUser } from './redux/user/user.action';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser} from './redux/user/user.selector';
 
@@ -19,28 +20,15 @@ import AdminPage from './pages/admin/admin.component';
 import './App.scss';
 
 class App extends React.Component {
-  constructor(props){
-    super(props);
-
-    this.unSubscription = null;
-  }
 
   componentDidMount(){
-    /* this.unSubscription = auth.onAuthStateChanged(async (user) => {
-      if(user){
-        const userRef = await createUserProfileDocument(user);
-        userRef.onSnapshot(snapshot => {
-          this.props.setCurrentUser(snapshot.data());
-        })
-      } else {
-        this.props.setCurrentUser(user);
-      }
-    });
-    */
+    const { getUser, currentUser } = this.props;
+    if(currentUser && currentUser.id){
+      getUser(currentUser.id);
+    } 
   }
 
   componentWillUnmount(){
-    // this.unSubscription();
   }
 
   render (){
@@ -68,7 +56,8 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
+  setCurrentUser: user => dispatch(setCurrentUser(user)),
+  getUser: id => dispatch(getUser(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

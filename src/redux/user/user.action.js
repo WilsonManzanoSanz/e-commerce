@@ -56,3 +56,26 @@ export const signUpWithPassword = (user) => {
         }
     }; 
 }
+
+export const getUser = (id) => {
+    return async dispatch => {
+        try {
+              const response = await fetch(`${BASE_URL}/users/${id}`, {
+              method: 'GET', 
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+            const json = await response.json();
+            if(json.success){
+                dispatch(setCurrentUser(json.data));
+                return json;
+            } else {
+                throw(json.message);
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            return error;
+        }
+    }; 
+}
