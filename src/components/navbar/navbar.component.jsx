@@ -33,6 +33,11 @@ const Navbar = ({ currentUser, hidden, isMobile, setCurrentUser}) => {
                             <Link className="item" to="/contact">
                                 CONTACT
                             </Link>
+                            {   currentUser && currentUser.role && currentUser.role.type === 'admin' &&
+                                <Link className="item" onClick={() => setOpenStatus(!isOpen)} to="/admin">
+                                    ADMIN
+                                </Link>
+                            } 
                             {
                                 currentUser ?
                                 <div className="item pointer" onClick={() => setCurrentUser(null)}>SIGN OUT</div>
@@ -57,6 +62,9 @@ const Navbar = ({ currentUser, hidden, isMobile, setCurrentUser}) => {
                                     </Link>
                                     <Link className="item" onClick={() => setOpenStatus(!isOpen)} to="/contact">
                                         CONTACT
+                                    </Link>
+                                    <Link className="item" onClick={() => setOpenStatus(!isOpen)} to="/admin">
+                                        ADMIN
                                     </Link>
                                     {
                                         currentUser ?

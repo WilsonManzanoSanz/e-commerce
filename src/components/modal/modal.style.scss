@@ -1,0 +1,56 @@
+.modal { 
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: #00000024;
+    visibility: hidden;
+    cursor: pointer;
+    opacity: 0.2;
+    transition: all 0.35s ease-in;
+    .modal-dialog {
+        position: relative;
+        max-width: 800px;
+        max-height: 80vh;
+        border-radius: 5px;
+        background: white;
+        overflow: auto;
+        cursor: default;
+    }
+    .modal-header{
+        padding: 5px 0; 
+        .close{
+            padding: 0 10px;
+            cursor: pointer;
+        }
+    }
+    .modal-body{
+        padding: 20px; 
+    }
+}
+.modal.is-visible {
+    visibility: visible;
+    opacity: 1;
+    .modal-dialog{
+        -webkit-animation-name: slideIn;
+        -webkit-animation-duration: 0.5s;
+        animation-name: slideIn;
+        animation-duration: 0.5s;
+    }
+}
+
+@-webkit-keyframes slideIn {
+    from {margin-top:-100px; opacity: 0} 
+    to {margin-top: 0px; opacity: 1}
+  }
+  
+@keyframes slideIn {
+    from {margin-top: -100px; opacity: 0} 
+    to {margin-top: 0px; opacity: 1}
+}
+
