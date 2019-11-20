@@ -1,4 +1,4 @@
-.modal { 
+.custom-modal { 
     position: fixed;
     top: 0;
     left: 0;
@@ -13,7 +13,7 @@
     cursor: pointer;
     opacity: 0.2;
     transition: all 0.35s ease-in;
-    .modal-dialog {
+    .custom-modal-dialog {
         position: absolute;
         max-width: 800px;
         max-height: 80vh;
@@ -23,7 +23,7 @@
         cursor: default;
         z-index: 10;
     }
-    .modal-header{
+    .custom-modal-header{
         padding: 5px 0; 
         .close{
             padding: 0 10px;
@@ -34,10 +34,10 @@
         padding: 0 20px 20px; 
     }
 }
-.modal.is-visible {
+.custom-modal.is-visible {
     visibility: visible;
     opacity: 1;
-    .modal-dialog{
+    .custom-modal-dialog{
         -webkit-animation-name: slideIn;
         -webkit-animation-duration: 0.5s;
         animation-name: slideIn;
