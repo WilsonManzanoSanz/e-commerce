@@ -3,23 +3,22 @@ import './modal.style.scss';
 import PropTypes from "prop-types";
 
 class Modal extends React.Component {
-    constructor(props){
-        super(props);
-    }
     
     onClose = e => {
-        console.log(this.props.onClose);
-        this.props.onClose && this.props.onClose(e);
+        if((e.target === document.querySelector(".modal.is-visible")) || ((e.target.id === "close-modal-button") && this.props.show )){
+            e.stopPropagation();
+            this.props.onClose && this.props.onClose(e);
+        }
     };
 
     render() {
-        return <div  className={this.props.show  ? 'modal is-visible': 'modal'}>
+        return <div  className={this.props.show  ? 'modal is-visible': 'modal'} onClick={ e => this.onClose(e) }>
                 <div className="modal-dialog">
                     <div className="flex modal-header">
                         <span className="spacer"></span>
-                        <span className="close" onClick={ e => this.onClose(e) }>&#10005;</span>
+                        <span className="close" id="close-modal-button" onClick={ e => this.onClose(e) }>&#10005;</span>
                     </div>
-                    <div class="modal-body">
+                    <div className="modal-body">
                         {this.props.children}
                     </div>
                 </div>

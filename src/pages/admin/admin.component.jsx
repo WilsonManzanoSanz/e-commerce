@@ -33,7 +33,7 @@ export class AdminPage extends React.Component{
                 </div>
                 <div>
                     <Modal onClose={this.showModal} show={this.state.show}>
-                        <h1>Message in Modal</h1>
+                        <CategoryCreate></CategoryCreate>
                     </Modal>
                 </div>
             </div>

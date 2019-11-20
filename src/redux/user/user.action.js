@@ -18,8 +18,9 @@ export const signInWithPassword = (email, password) => {
               }
             });
             const json = await response.json();
+            console.log(json);
             if(json.success){
-                dispatch(setCurrentUser(json.data.user));
+                dispatch(setCurrentUser(json.data));
                 return json;
             } else {
                 throw(json.message);
