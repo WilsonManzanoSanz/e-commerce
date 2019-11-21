@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../../components/button/button.component';
 import Modal from '../../components/modal/modal.component';
 import CategoryCreate from '../../components/category-create/category-create.component';
+import ProductCreate from '../../components/product-create/product-create.component';
 import CategoryList from '../../components/category-list/category-list.component';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -14,13 +15,21 @@ export class AdminPage extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            show: false,
+            categoryModal: false,
+            productModal: false,
             categoryDropdown: false
         };
     }
-    showModal = e => {
+
+    showCategory = e => {
         this.setState(prevstate => ({
-          show: !prevstate.show
+            categoryModal: !prevstate.categoryModal
+        }));
+    };
+
+    showProduct = e => {
+        this.setState(prevstate => ({
+            productModal: !prevstate.productModal
         }));
     };
 
@@ -51,12 +60,15 @@ export class AdminPage extends React.Component{
                         </DropdownMenu>  
                     </Dropdown>
                     <span className="spacer"></span>
-                    <Button className="primary-button admin-button" onClick={() => this.showModal()}>Create a Category</Button>
-                    <Button className="primary-button admin-button">Create a Product</Button>
+                    <Button className="primary-button admin-button" onClick={() => this.showCategory()}>Create a Category</Button>
+                    <Button className="primary-button admin-button" onClick={() => this.showProduct()}>Create a Product</Button>
                 </div>
                 <div>
-                    <Modal onClose={this.showModal} show={this.state.show}>
-                        <CategoryCreate onClose={this.showModal}></CategoryCreate>
+                    <Modal onClose={this.showCategory} show={this.state.categoryModal}>
+                        <CategoryCreate onClose={this.showCategory}></CategoryCreate>
+                    </Modal>
+                    <Modal onClose={this.showProduct} show={this.state.productModal}>
+                        <ProductCreate onClose={this.showProduct}></ProductCreate>
                     </Modal>
                 </div>
                 <div>

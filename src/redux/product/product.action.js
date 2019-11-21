@@ -13,25 +13,50 @@ export const addCategory = category => ({
 export const fetchNewCategory = (category) => {
     return async dispatch => {
         try {
-              const response = await fetch(`${BASE_URL}/categories`, {
-              method: 'POST', 
-              body: JSON.stringify(category), // data can be `string` or {object}!
-              headers: {
-                'Content-Type': 'application/json'
-              }
+            const response = await fetch(`${BASE_URL}/categories`, {
+                method: 'POST',
+                body: JSON.stringify(category), // data can be `string` or {object}!
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
             const json = await response.json();
-            if(json.success){
+            if (json.success) {
                 dispatch(addCategory(json.data));
                 return json;
             } else {
-                throw(json.message);
+                throw (json.message);
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Error:', error);
             return error;
         }
-    }; 
+    };
+};
+
+
+export const fetchNewProduct = (product) => {
+    return async dispatch => {
+        try {
+            const response = await fetch(`${BASE_URL}/products`, {
+                method: 'POST',
+                body: JSON.stringify(product), // data can be `string` or {object}!
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const json = await response.json();
+            if (json.success) {
+                dispatch(addCategory(json.data));
+                return json;
+            } else {
+                throw (json.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            return error;
+        }
+    };
 }
 
 export const fetchCategorysStart = () => ({
@@ -51,22 +76,22 @@ export const fetchCategorysFailure = (errorMessage) => ({
 export const fetchCategories = () => {
     return async dispatch => {
         try {
-              const response = await fetch(`${BASE_URL}/categories`, {
-              method: 'GET', 
-              headers: {
-                'Content-Type': 'application/json'
-              }
+            const response = await fetch(`${BASE_URL}/categories`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
             const json = await response.json();
-            if(json.success){
+            if (json.success) {
                 dispatch(fetchCategorysSuccess(json.items));
                 return json;
             } else {
-                throw(json.message);
+                throw (json.message);
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Error:', error);
             return error;
         }
-    }; 
+    };
 }

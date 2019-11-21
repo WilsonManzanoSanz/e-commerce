@@ -4,10 +4,13 @@ import './form-input.style.scss';
 
 const FormInput = ({ handleChange, label, ...otherComponents }) => (
     <div className="form-group">
-        <input className="input" onChange={handleChange} {...otherComponents} />
+        {
+            !otherComponents.astextarea ? (<input className="input" onChange={handleChange} {...otherComponents} />) : 
+            (<textarea className="input" onChange={handleChange} {...otherComponents} ></textarea>)
+        }
         {
             label &&
-            (<label className={`${otherComponents.value.length ? 'shrink' : ''} label`}>
+            (<label className={`${otherComponents.value && otherComponents.value.length ? 'shrink' : ''} label`}>
                 {label}
             </label>)
         }
