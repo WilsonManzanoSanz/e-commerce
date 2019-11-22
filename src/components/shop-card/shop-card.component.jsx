@@ -13,11 +13,11 @@ const ShopCard = ({ item, addItem }) => {
             </div>
             <div className="content-footer">
                 <span className="name">{name}</span>
-                <span className="price">{price}</span>
+                <span className="price">${price}</span>
             </div>
             <Button classType="inverted" onClick={() => addItem(item)}>Add to Cart</Button>
         </div>
-    )
+    );
 };
 
 const mapDispatchToProps = dispatch => ({

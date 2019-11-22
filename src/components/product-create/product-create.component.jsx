@@ -7,6 +7,7 @@ import { fetchNewProduct } from '../../redux/product/product.action';
 import { selectCategories, } from '../../redux/product/product.selector';
 import { FormGroup, Label, Input } from 'reactstrap';
 import { createStructuredSelector } from 'reselect';
+import { uploadFile } from '../../core/upload';
 
 import './product-create.style.scss';
 
@@ -18,8 +19,10 @@ class ProductCreate extends React.Component{
             name: '',
             description: '',
             price: '',
-            dropDownValue: null
+            validationMessage: '',
+            categoryId: null
         };
+        this.file = null;
 
     }
 
@@ -29,28 +32,48 @@ class ProductCreate extends React.Component{
     };
 
     handleSubmit = async event => {
-        event.preventDefault();
+        event.preventDefault(); 
+        if(!this.state.categoryId){
+            this.setState({validationMessage: 'Choose a category'});
+            return;
+        }
+        if(!this.file){
+            this.setState({validationMessage: 'Upload a file'});
+            return;
+        }
         const { fetchNewProduct, onClose } = this.props;
-        console.log(this.state);
-        fetchNewProduct(this.state)
-        .then(response => {
-            this.state = {
+        try {
+            const response = await uploadFile(this.file);
+            await fetchNewProduct({...this.state, ...{photoUrl: response.path}});
+            this.setState = ({
                 name: '',
                 description: '',
                 price: '',
-                dropDownValue: null
-            };
+                categoryId: '',
+                validationMessage: ''
+            });
             onClose();
-        })
-        .catch(error => onClose());
+        } catch (error) {
+            onClose();
+        }
     }
 
-    changeValue(e) {
-        this.setState({dropDownValue: e.currentTarget.textContent})
+    changeValue = (e) => {
+        this.setState({categoryId: e.target.value});
+    }
+
+    saveFile(){
+        const inputFile = document.getElementById('product-image');
+        inputFile.click();
+    }
+
+    onChangeHandler = (event) =>{
+        this.file = event.target.files[0];
     }
     
     render(){
         const { categories } = this.props;
+        const { validationMessage } = this.state;
         return (
             <div className="product-create">
                 <h2 className="title">Create Product</h2>
@@ -62,14 +85,17 @@ class ProductCreate extends React.Component{
                     <FormInput name="price" type="number" label="How much is it cost?" value={this.state.price} handleChange={this.handleChange} required/>
                     <FormGroup>
                         <Label for="categories">Category</Label>
-                        <Input type="select" name="categoryId" id="categories" required>
-                        <option value={null}  onClick={this.changeValue} selected disabled>Select one</option>
+                        <Input type="select" name="categoryId" id="categories" defaultValue={''} onChange={this.changeValue} required>
+                        <option value={''}>Select one</option>
                         {
                             categories.map(value => (<option key={value.id} value={value.id}>{value.category}</option>))
                         }
                         
                         </Input>
                     </FormGroup>
+                    <Button classType="inverted" type="button" onClick={this.saveFile}>UPLOAD FILE</Button>
+                    <p className="error-message">{ validationMessage }</p>
+                    <input type="file" accept="image/*" name="file" id="product-image" style={{display:'none'}} onChange={this.onChangeHandler}/>
                     <div className="buttons">
                         <Button type="submit">SUBMIT</Button>
                     </div>
