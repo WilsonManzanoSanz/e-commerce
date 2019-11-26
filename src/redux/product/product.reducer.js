@@ -49,7 +49,7 @@ const productsReducer = (previousState = INITIAL_STATE, action) => {
             return {
                 ...previousState,
                 isFetchingProducts: false,
-                categories: action.payload
+                products: action.payload
             };
         case FETCH_PRODUCT_FAILURE:
             return {

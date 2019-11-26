@@ -21,7 +21,7 @@ class Collections extends React.Component {
             <div className="collections-overview">
                 {
                     categories.map(({ id, ...otherSectionProps }) => (
-                        <CollectionItem key={id} {...otherSectionProps} />
+                        <CollectionItem key={id} {...otherSectionProps} paginate={10000} />
                     ))
               }
             </div>

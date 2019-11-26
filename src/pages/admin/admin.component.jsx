@@ -1,14 +1,15 @@
 import React from 'react';
 import Button from '../../components/button/button.component';
 import Modal from '../../components/modal/modal.component';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { selectCategories, selectCategoriesIsFetching, selectProducts} from '../../redux/product/product.selector';
+import { fetchCategories, fetchProducts } from '../../redux/product/product.action';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import CategoryCreate from '../../components/category-create/category-create.component';
 import ProductCreate from '../../components/product-create/product-create.component';
 import CategoryList from '../../components/category-list/category-list.component';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { selectCategories, selectCategoriesIsFetching } from '../../redux/product/product.selector';
-import { fetchCategories } from '../../redux/product/product.action';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import ShopCard from '../../components/shop-card/shop-card.component';
 
 import './admin.style.scss';
 export class AdminPage extends React.Component{
@@ -38,12 +39,13 @@ export class AdminPage extends React.Component{
     };
 
     componentDidMount(){
-        const { fetchCategories } = this.props;
+        const { fetchCategories, fetchProducts } = this.props;
         fetchCategories();
+        fetchProducts();
     }
 
     render(){
-        const {categories} = this.props;
+        const { categories, products = [] } = this.props;
         return (
             <div className="admin-page">
             <hr></hr>
@@ -74,6 +76,14 @@ export class AdminPage extends React.Component{
                 <div>
                     <CategoryList categories={this.props.categories}/>
                 </div>
+            <hr></hr>
+            <div className="flex">
+            {
+                products.map(item => (
+                        <ShopCard key={item.id} item={item}></ShopCard>
+                ))
+            }
+            </div>
             </div>
         );
     }
@@ -81,11 +91,13 @@ export class AdminPage extends React.Component{
 
 const mapStateToProps = createStructuredSelector({
     categories: selectCategories,
+    products: selectProducts,
     isFetching: selectCategoriesIsFetching
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchCategories: category =>  dispatch(fetchCategories(category))
+    fetchCategories: category =>  dispatch(fetchCategories(category)),
+    fetchProducts: params =>  dispatch(fetchProducts(params))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminPage);

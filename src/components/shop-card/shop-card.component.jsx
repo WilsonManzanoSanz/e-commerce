@@ -6,10 +6,10 @@ import { addItem } from '../../redux/cart/cart.action';
 import './shop-card.style.scss'
 
 const ShopCard = ({ item, addItem }) => {
-    const { name, price, imageUrl } = item;
+    const { name, price, photoUrl } = item;
     return (
         <div className="shop-card">
-            <div className="image" style={{backgroundImage: `url(${imageUrl})`}}>
+            <div className="image" style={{backgroundImage: `url(${photoUrl ? photoUrl: 'http://emea.dynabook.com/images/local/en_EU/default/unknown_product_page.jpg'})`}}>
             </div>
             <div className="content-footer">
                 <span className="name">{name}</span>
