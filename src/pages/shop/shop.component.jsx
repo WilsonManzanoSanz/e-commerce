@@ -13,23 +13,8 @@ import { fetchCollectionsStartAsync } from '../../redux/shop/shop.action';
 const CollectionOverviewWithSpinner = WithSpinner(Collections);
 const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 class ShopPage extends React.Component {
-    /* constructor(props){
-        super(props);
-
-        this.state = { loading: true };
-        this.unSubscriobeFromSnapshot = null;
-    }*/
 
     componentDidMount(){
-        
-        /* const collectionRef = firestore.collection('collections');
-        const { updateCollections } = this.props;
-        this.unSubscriobeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
-            const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-            updateCollections(collectionsMap);
-            this.setState({loading: false});
-        });
-        */
         const { fetchCollectionsStartAsync } = this.props;
         fetchCollectionsStartAsync();
     }

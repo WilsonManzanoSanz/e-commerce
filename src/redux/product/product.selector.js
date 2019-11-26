@@ -11,3 +11,11 @@ export const selectCategoriesIsFetching = createSelector(
     [selectProduct],
     category => category.isFetchingCategories
 );
+
+export const selectCategory = collectionUrlParam =>
+  createSelector(
+    [selectCategories],
+    categories => {
+        return categories ?  categories.find(item => item.category.toLowerCase() === collectionUrlParam) : null
+    }
+);

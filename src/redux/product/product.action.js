@@ -49,11 +49,14 @@ export const fetchCategorysFailure = (errorMessage) => ({
 });
 
 
-export const fetchCategories = () => {
+export const fetchCategories = (params = {include: false}) => {
     return async dispatch => {
         fetchCategorysStart();
+        const url = new URL(`${BASE_URL}/categories`);
+
+        url.search = new URLSearchParams(params).toString();
         try {
-            const response = await fetch(`${BASE_URL}/categories`, {
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
