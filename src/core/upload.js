@@ -1,5 +1,5 @@
-const BASE_URL = `http://localhost:3002`;
-const URL = `${BASE_URL}/api/v1/upload`;
+import { BASE_URL } from '../core/config';
+const URL = `${BASE_URL}/upload`;
 
 export const uploadFile = (file) => {
     const data = new FormData();
@@ -13,8 +13,9 @@ export const uploadFile = (file) => {
             response => response.json() // if the response is a JSON object
         ).then(
             response => {
+                debugger;
                 if(response.success){
-                    response.data.path = `${BASE_URL}/${response.data.path}`;
+                    response.data.path = `${response.data.location}`;
                     resolve(response.data);
                 }
                 else {
