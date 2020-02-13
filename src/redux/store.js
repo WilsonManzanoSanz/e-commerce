@@ -6,6 +6,7 @@ import rootReducer from './root-reducer';
 
 const middlewares = [thunk, logger];
 const store = createStore(rootReducer, applyMiddleware(...middlewares));
+console.log(store.getState());
 const persistor = persistStore(store);
 
 export  { store, persistor };

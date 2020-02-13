@@ -12,16 +12,16 @@ class GoogleLoginPage extends React.Component {
             method: 'GET', 
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': this.props.match.params.token
-            }
+              'Authorization': this.props.match.params.token,
+            },
           });
           const json = await response.json();
           if(json.success){
-            setCurrentUser(json.data)
-            this.props.history.push('/');
+            setCurrentUser(json.data.data);
+            window.location.href = '/';
           } else {
-              //window.location.href = '/';
               alert(json.message);
+              window.location.href = '/';
               throw(json.message);
           }
         } catch (error) {

@@ -1,4 +1,5 @@
 import { BASE_URL } from '../../core/config';
+import {store} from '../store';
 
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
@@ -47,6 +48,30 @@ export const signUpWithPassword = (user) => {
             console.log(json);
             if(json.success){
                 dispatch(setCurrentUser(json.data));
+                return json;
+            } else {
+                throw(json.message);
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            return error;
+        }
+    }; 
+}
+
+export const logOut = () => {
+    return async dispatch => {
+        try {
+              const response = await fetch(`${BASE_URL}/logout`, {
+              method: 'POST', 
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${store.getState().user.currentUser.token}`
+              }
+            });
+            const json = await response.json();
+            if(json.success){
+                dispatch(setCurrentUser(null));
                 return json;
             } else {
                 throw(json.message);

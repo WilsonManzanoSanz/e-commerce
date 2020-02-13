@@ -9,6 +9,7 @@ import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import { selectCartHidden } from '../../redux/cart/cart.selector';
 import { selectCurrentUser} from '../../redux/user/user.selector';
 import { setCurrentUser } from '../../redux/user/user.action';
+import { logOut } from '../../redux/user/user.action';
 import { selectIsMobile } from '../../redux/ui/ui.selector';
 
 import { ReactComponent as Logo } from '../../assets/img/logo.svg';
@@ -16,7 +17,7 @@ import { ReactComponent as HamburguerMenu } from '../../assets/img/hamburguer.sv
 
 import './navbar.style.scss';
 
-const Navbar = ({ currentUser, hidden, isMobile, setCurrentUser}) => {
+const Navbar = ({ currentUser, hidden, isMobile, setCurrentUser, logOut}) => {
     const [isOpen, setOpenStatus] = useState(false);
     return (
         <div className="header">
@@ -68,7 +69,7 @@ const Navbar = ({ currentUser, hidden, isMobile, setCurrentUser}) => {
                                     </Link>
                                     {
                                         currentUser ?
-                                        <div className="item pointer" onClick={() => { setCurrentUser(null); setOpenStatus(!isOpen) }}>SIGN OUT</div>
+                                        <div className="item pointer" onClick={() => { logOut(); setOpenStatus(!isOpen) }}>SIGN OUT</div>
                                         :
                                         <Link className="item" to="/login" onClick={() => setOpenStatus(!isOpen)}>SIGN IN</Link>
                                     }
@@ -91,7 +92,8 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-    setCurrentUser: (user) => dispatch(setCurrentUser(user))
-})
+    setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+    logOut: () => dispatch(logOut())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

@@ -4,6 +4,8 @@ import Button from '../button/button.component';
 import { connect } from 'react-redux';
 import { signInWithPassword } from '../../redux/user/user.action';
 import { setCurrentUser } from '../../redux/user/user.action';
+import { BASE_URL } from '../../core/config';
+
 // import { signInWithGoogle } from '../../firebase/firebase.utils';
 
 import './sign-in.style.scss';
@@ -55,7 +57,7 @@ class SignIn extends React.Component {
                     <p className="error-message">{errorMessage}</p>
                     <div className="buttons">
                         <Button type="submit">SIGN IN</Button>
-                        <Button type="button" classType="secondary-button" onClick={() => window.location.href = 'http://localhost:3001/api/v1/auth/google'}>
+                        <Button type="button" classType="secondary-button" onClick={() => {window.location.href = 'http://localhost:3001/api/v1/auth/google'}}>
                             {''}
                             Sign in with Google {''}
                         </Button>
