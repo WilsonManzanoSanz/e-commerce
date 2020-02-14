@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import  CartIcon  from '../cart-icon/cart-icon.component';
-import CartDropdown from '../cart-dropdown/cart-dropdown.component';
+import  UserIcon  from '../user-icon/user-icon.component';
 
 import { selectCartHidden } from '../../redux/cart/cart.selector';
 import { selectCurrentUser} from '../../redux/user/user.selector';
@@ -34,17 +34,12 @@ const Navbar = ({ currentUser, hidden, isMobile, setCurrentUser, logOut}) => {
                             <Link className="item" to="/contact">
                                 CONTACT
                             </Link>
-                            {   currentUser && currentUser.role && currentUser.role.type === 'admin' &&
+                            {   currentUser && currentUser.role && currentUser.userType === 2 &&
                                 <Link className="item" onClick={() => setOpenStatus(!isOpen)} to="/admin">
                                     ADMIN
                                 </Link>
                             } 
-                            {
-                                currentUser ?
-                                <div className="item pointer" onClick={() => setCurrentUser(null)}>SIGN OUT</div>
-                                :
-                                <Link className="item" to="/login">SIGN IN</Link>
-                            }
+                            <UserIcon />
                             <CartIcon />
                         </div>
                     ) : (
@@ -64,9 +59,11 @@ const Navbar = ({ currentUser, hidden, isMobile, setCurrentUser, logOut}) => {
                                     <Link className="item" onClick={() => setOpenStatus(!isOpen)} to="/contact">
                                         CONTACT
                                     </Link>
-                                    <Link className="item" onClick={() => setOpenStatus(!isOpen)} to="/admin">
-                                        ADMIN
-                                    </Link>
+                                    {   currentUser && currentUser.role && currentUser.userType === 2 &&
+                                        <Link className="item" onClick={() => setOpenStatus(!isOpen)} to="/admin">
+                                            ADMIN
+                                        </Link>
+                                    }
                                     {
                                         currentUser ?
                                         <div className="item pointer" onClick={() => { logOut(); setOpenStatus(!isOpen) }}>SIGN OUT</div>
@@ -78,9 +75,6 @@ const Navbar = ({ currentUser, hidden, isMobile, setCurrentUser, logOut}) => {
                     ) : null
                 }
             </div>
-            {
-                hidden ? null : <CartDropdown />
-            }
         </div>
     );
 }

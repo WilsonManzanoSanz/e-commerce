@@ -22,6 +22,10 @@ class SignIn extends React.Component {
 
     }
 
+    goToGoogleAuth = () => {
+        window.location.href = `${BASE_URL}/auth/google`;
+    }
+
     handleChange = (e) => {
         const { value, name } = e.target;
         this.setState({ [name] : value });
@@ -57,7 +61,7 @@ class SignIn extends React.Component {
                     <p className="error-message">{errorMessage}</p>
                     <div className="buttons">
                         <Button type="submit">SIGN IN</Button>
-                        <Button type="button" classType="secondary-button" onClick={() => {window.location.href = 'http://localhost:3001/api/v1/auth/google'}}>
+                        <Button type="button" classType="secondary-button" onClick={this.goToGoogleAuth}>
                             {''}
                             Sign in with Google {''}
                         </Button>

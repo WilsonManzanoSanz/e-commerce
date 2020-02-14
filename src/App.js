@@ -14,6 +14,7 @@ import NotFound from './pages/notfound/notfound.component';
 import CheckoutPage from './pages/checkout/checkout.component';
 import GoogleLoginPage from './pages/google/google.component';
 import AdminPage from './pages/admin/admin.component';
+import PrivateRoute from './components/private-route/private-route.component';
 
 // import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
@@ -41,7 +42,7 @@ class App extends React.Component {
             <Route path="/shop" component={ShopPage}></Route>
             <Route path="/google/:token" component={GoogleLoginPage}></Route>
             <Route exact path="/checkout" component={CheckoutPage}></Route>
-            <Route exact path="/admin" component={AdminPage}></Route>
+            <PrivateRoute loggedIn={this.props.currentUser && (this.props.currentUser.userType === 2)} component={AdminPage} path="/admin"/> 
             <Route exact path="/login" render={() => this.props.currentUser ? (<Redirect  to="/"/>) : (<LoginPage />)}></Route>
             <Route component={NotFound}/>
           </Switch>

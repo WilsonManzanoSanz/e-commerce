@@ -1,7 +1,7 @@
-.cart-dropdown {
+.user-dropdown {
     position: absolute;
     width: 240px;
-    height: 340px;
+    height: auto;
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -11,20 +11,21 @@
     right: 0;
     z-index: 5;
   
-    .cart-items {
+    .user-items {
       height: 240px;
       display: flex;
       flex-direction: column;
       overflow: scroll;
     }
-
     .empty-message {
       font-size: 18px;
-      margin: 50px auto;
+      margin: 0 10px;
+      text-align: center;
+      display: block;
+      padding-bottom: 10px;
     }
-  
     button {
-      margin-top: auto;
+      margin: 0 auto 10px;
     }
   }
   

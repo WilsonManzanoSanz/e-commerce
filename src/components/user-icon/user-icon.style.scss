@@ -1,0 +1,14 @@
+.user-icon{
+    margin-top:  auto;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    svg{
+      width: 26px;
+      height: 26px;
+      align-self: center;
+    }
+  }

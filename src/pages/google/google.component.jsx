@@ -17,6 +17,8 @@ class GoogleLoginPage extends React.Component {
           });
           const json = await response.json();
           if(json.success){
+            // remove id & token from route params after saving to local storage
+            window.history.replaceState(null, null, `${window.location.origin}/user/redirect`);
             setCurrentUser(json.data.data);
             window.location.href = '/';
           } else {
