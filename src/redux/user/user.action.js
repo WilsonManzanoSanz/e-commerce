@@ -2,10 +2,20 @@ import { BASE_URL } from '../../core/config';
 import {store} from '../store';
 
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const TOGGLE_USER_DROPDOWN = 'TOGGLE_USER_DROPDOWN';
+export const CLOSE_USER_DROPDOWN = 'CLOSE_USER_DROPDOWN';
 
 export const setCurrentUser = user => ({
     type: SET_CURRENT_USER,
     payload: user
+});
+
+export const toggleUserDropdown = () => ({
+    type: TOGGLE_USER_DROPDOWN,
+});
+
+export const closeUserDropdown = () => ({
+    type: CLOSE_USER_DROPDOWN,
 });
 
 export const signInWithPassword = (email, password) => {
@@ -77,6 +87,7 @@ export const logOut = () => {
                 throw(json.message);
             }
           } catch (error) {
+            dispatch(setCurrentUser(null));
             console.error('Error:', error);
             return error;
         }

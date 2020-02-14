@@ -10,20 +10,20 @@ import { createStructuredSelector } from 'reselect';
 
 import './user-icon-dropdown.style.scss';
 
-const UserNavDropdown = ({currentUser, logOut, history}) => {
+const UserNavDropdown = ({currentUser, logOut, history, onClose}) => {
     return (
         <div className="user-dropdown">
         {
             currentUser ? (
                 <div>
                     <span className="empty-message">Hi {currentUser.displayName}</span>
-                    <Button classType="inverted" onClick={() => { history.push('/profile'); }}>PROFILE</Button>
-                     <Button  onClick={() => { logOut() }}> LOG OUT </Button>
+                    <Button classType="inverted" onClick={() => { onClose(); history.push('/profile'); }}>PROFILE</Button>
+                     <Button  onClick={() => { onClose(); logOut() }}> LOG OUT </Button>
                 </div>
             )  : (
             <div>
                 <span className="empty-message">Welcome</span>
-                <Button onClick={() => { history.push('/login'); }}>SIGN IN</Button>
+                <Button onClick={() => { onClose(); history.push('/login'); }}>SIGN IN</Button>
             </div>)
         }
         
