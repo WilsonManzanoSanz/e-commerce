@@ -107,7 +107,18 @@ export const logOut = () => {
 export const updateUser = (user) => {
     return async dispatch => {
         try {
-
+            const response = await fetch(`${BASE_URL}/users/${user.id}`, {
+            method: 'PUT', 
+            body: JSON.stringify(user), // data can be `string` or {object}!
+            headers: commonHeaders()
+            });
+            const json = await response.json();
+            if(json.success){
+                dispatch(setCurrentUser(json.data));
+                return json;
+            } else {
+                throw(json.message);
+            }
         } catch (error) {
             console.error('Error:', error);
             return error;

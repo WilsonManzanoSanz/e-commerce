@@ -1,0 +1,37 @@
+@import '../../variable.scss';
+.profile-page{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin: 30px auto 30px;
+    flex-wrap: wrap;
+    .profile-card{
+        max-width: 520px;
+        margin: auto;
+        width: 100%;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        @media screen and (min-width: $break-tablet) {
+            padding: 30px 40px;
+        }
+        .photo-container{
+            margin-bottom: 10px;
+            img{
+                max-width: 80%;
+                margin: auto;
+                display: block;
+                border-radius: 5px;
+            }
+        }
+    }
+    .buttons{
+        .inverted{
+            margin-bottom: 10px;
+        }
+        button{
+            margin: auto;
+            display: block;
+        }
+    }
+}
