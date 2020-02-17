@@ -1,12 +1,12 @@
 import React from 'react';
 import {BASE_URL} from '../../core/config';
-import { setCurrentUser } from '../../redux/user/user.action';
+import { setCurrentUser, setToken } from '../../redux/user/user.action';
 import {connect} from 'react-redux';
 
 class GoogleLoginPage extends React.Component {
 
     async componentDidMount(){
-        const { setCurrentUser } = this.props;
+        const { setCurrentUser, setToken } = this.props;
         try {
             const response = await fetch(`${BASE_URL}/token`, {
             method: 'GET', 
@@ -19,6 +19,7 @@ class GoogleLoginPage extends React.Component {
           if(json.success){
             // remove id & token from route params after saving to local storage
             window.history.replaceState(null, null, `${window.location.origin}/user/redirect`);
+            setToken(json.data.data.token);
             setCurrentUser(json.data.data);
             window.location.href = '/';
           } else {
@@ -36,7 +37,8 @@ class GoogleLoginPage extends React.Component {
 };
 
 const mapDispatchToProps = dispatch => ({
-    setCurrentUser: (user) => dispatch(setCurrentUser(user))
+    setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+    setToken:(token) => dispatch(setToken(token))
 });
 
 export default connect(null, mapDispatchToProps)(GoogleLoginPage);

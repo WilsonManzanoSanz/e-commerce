@@ -1,8 +1,9 @@
-import { SET_CURRENT_USER, TOGGLE_USER_DROPDOWN, CLOSE_USER_DROPDOWN } from './user.action';
+import { SET_CURRENT_USER, TOGGLE_USER_DROPDOWN, CLOSE_USER_DROPDOWN, SET_TOKEN } from './user.action';
 
 const INITIAL_STATE = {
     currentUser : null,
-    userDropdownStatus: false
+    userDropdownStatus: false,
+    token: null
 };
 
 const userReducer = (previousState = INITIAL_STATE, action) => {
@@ -15,6 +16,8 @@ const userReducer = (previousState = INITIAL_STATE, action) => {
             return {
                 ...previousState, userDropdownStatus: !previousState.userDropdownStatus
         };
+        case SET_TOKEN:
+            return {...previousState, token: action.payload }
         case SET_CURRENT_USER:
             return {...previousState, currentUser: action.payload }
         default: 
