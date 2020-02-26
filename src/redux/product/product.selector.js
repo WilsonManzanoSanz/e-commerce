@@ -17,10 +17,15 @@ export const selectCategoriesIsFetching = createSelector(
     category => category.isFetchingCategories
 );
 
-export const selectCategory = collectionUrlParam =>
-  createSelector(
-    [selectCategories],
-    categories => {
-        return categories ?  categories.find(item => item.category.toLowerCase() === collectionUrlParam) : null
-    }
+export const selectProductIsPosting = createSelector(
+    [selectProduct],
+    product => product.isPostingProducts
 );
+
+export const selectCategory = collectionUrlParam =>
+    createSelector(
+        [selectCategories],
+        categories => {
+            return categories ? categories.find(item => item.category.toLowerCase() === collectionUrlParam) : null
+        }
+    );

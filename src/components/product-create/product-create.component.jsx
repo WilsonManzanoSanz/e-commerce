@@ -4,7 +4,7 @@ import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 import { connect } from 'react-redux';
 import { fetchNewProduct } from '../../redux/product/product.action';
-import { selectCategories, } from '../../redux/product/product.selector';
+import { selectCategories, selectProductIsPosting } from '../../redux/product/product.selector';
 import { FormGroup, Label, Input } from 'reactstrap';
 import { createStructuredSelector } from 'reselect';
 import { uploadFile } from '../../core/upload';
@@ -33,6 +33,7 @@ class ProductCreate extends React.Component{
 
     handleSubmit = async event => {
         event.preventDefault(); 
+        /*
         if(!this.state.categoryId){
             this.setState({validationMessage: 'Choose a category'});
             return;
@@ -41,10 +42,11 @@ class ProductCreate extends React.Component{
             this.setState({validationMessage: 'Upload a file'});
             return;
         }
+        */
         const { fetchNewProduct, onClose } = this.props;
         try {
-            const response = await uploadFile(this.file);
-            await fetchNewProduct({...this.state, ...{photoUrl: response.path}});
+            // const response = await uploadFile(this.file);
+            fetchNewProduct({...this.state, ...{photoUrl: 'fakepath'}});
             this.setState = ({
                 name: '',
                 description: '',
@@ -70,6 +72,11 @@ class ProductCreate extends React.Component{
     onChangeHandler = (event) =>{
         this.file = event.target.files[0];
     }
+
+    componentDidUpdate(){
+        console.log('update', this.props.postingProduct);
+    }
+
     
     render(){
         const { categories } = this.props;
@@ -83,7 +90,7 @@ class ProductCreate extends React.Component{
                     <FormInput name="name" type="text" label="Add your product name" value={this.state.name} handleChange={this.handleChange} required/>
                     <FormInput name="description" astextarea="true" type="text" label="Add your product description" value={this.state.description} handleChange={this.handleChange} required/>
                     <FormInput name="price" type="number" label="How much is it cost?" value={this.state.price} handleChange={this.handleChange} required/>
-                    <FormGroup>
+                    {false && <FormGroup>
                         <Label for="categories">Category</Label>
                         <Input type="select" name="categoryId" id="categories" defaultValue={''} onChange={this.changeValue} required>
                         <option value={''}>Select one</option>
@@ -92,7 +99,7 @@ class ProductCreate extends React.Component{
                         }
                         
                         </Input>
-                    </FormGroup>
+                    </FormGroup>}
                     <Button classType="inverted" type="button" onClick={this.saveFile}>UPLOAD FILE</Button>
                     <p className="error-message">{ validationMessage }</p>
                     <input type="file" accept="image/*" name="file" id="product-image" style={{display:'none'}} onChange={this.onChangeHandler}/>
@@ -111,6 +118,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = createStructuredSelector({
     categories: selectCategories,
+    postingProduct: selectProductIsPosting
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductCreate);

@@ -10,12 +10,16 @@ export const FETCH_PRODUCT_FAILURE = 'FETCH_PRODUCT_FAILURE';
 export const FETCH_PRODUCT_SUCCESS = 'FETCH_PRODUCT_SUCCESS';
 export const FETCH_PRODUCT_START = 'FETCH_PRODUCT_FAILURE';
 
+export const POST_PRODUCT_FAILURE = 'POST_PRODUCT_FAILURE';
+export const POST_PRODUCT_SUCCESS = 'POST_PRODUCT_SUCCESS';
+export const POST_PRODUCT_START = 'POST_PRODUCT_FAILURE';
+
 export const addCategory = category => ({
     type: ADD_CATEGORY,
     payload: category
 });
 
-export const addProduct= product => ({
+export const addProduct = product => ({
     type: ADD_PRODUCT,
     payload: product
 });
@@ -34,6 +38,20 @@ export const fetchProductsFailure = (errorMessage) => ({
     payload: errorMessage
 });
 
+export const postProductsStart = () => ({
+    type: POST_PRODUCT_START,
+});
+
+export const postProductsSuccess = (product) => ({
+    type: POST_PRODUCT_SUCCESS,
+    payload: product
+});
+
+export const postProductsFailure = (errorMessage) => ({
+    type: POST_PRODUCT_FAILURE,
+    payload: errorMessage
+});
+
 export const fetchCategorysStart = () => ({
     type: FETCH_CATEGORYS_START,
 });
@@ -49,7 +67,7 @@ export const fetchCategorysFailure = (errorMessage) => ({
 });
 
 
-export const fetchCategories = (params = {include: false}) => {
+export const fetchCategories = (params = { include: false }) => {
     return async dispatch => {
         fetchCategorysStart();
         const url = new URL(`${BASE_URL}/categories`);
@@ -129,6 +147,9 @@ export const fetchNewCategory = (category) => {
 export const fetchNewProduct = (product) => {
     return async dispatch => {
         try {
+            dispatch(postProductsStart());
+            setTimeout(() => dispatch(postProductsSuccess(product)), 1000);
+            /*
             const response = await fetch(`${BASE_URL}/products`, {
                 method: 'POST',
                 body: JSON.stringify(product), // data can be `string` or {object}!
@@ -143,8 +164,10 @@ export const fetchNewProduct = (product) => {
             } else {
                 throw (json.message);
             }
+            */
         } catch (error) {
             console.error('Error:', error);
+            dispatch(postProductsFailure());
             return error;
         }
     };

@@ -1,12 +1,15 @@
-import { 
-    ADD_CATEGORY, 
-    ADD_PRODUCT, 
-    FETCH_CATEGORYS_START, 
-    FETCH_CATEGORYS_SUCCESS, 
-    FETCH_CATEGORYS_FAILURE, 
-    FETCH_PRODUCT_FAILURE, 
-    FETCH_PRODUCT_SUCCESS, 
-    FETCH_PRODUCT_START 
+import {
+    ADD_CATEGORY,
+    ADD_PRODUCT,
+    FETCH_CATEGORYS_START,
+    FETCH_CATEGORYS_SUCCESS,
+    FETCH_CATEGORYS_FAILURE,
+    FETCH_PRODUCT_FAILURE,
+    FETCH_PRODUCT_SUCCESS,
+    FETCH_PRODUCT_START,
+    POST_PRODUCT_FAILURE,
+    POST_PRODUCT_SUCCESS,
+    POST_PRODUCT_START
 } from './product.action';
 
 const INITIAL_STATE = {
@@ -14,15 +17,16 @@ const INITIAL_STATE = {
     products: [],
     isFetchingCategories: false,
     isFetchingProducts: false,
+    isPostingProducts: false
 };
 
 
 const productsReducer = (previousState = INITIAL_STATE, action) => {
     switch (action.type) {
         case ADD_CATEGORY:
-            return { ...previousState, categories: [...previousState.categories, action.payload] };
+            return {...previousState, categories: [...previousState.categories, action.payload] };
         case ADD_PRODUCT:
-            return { ...previousState, products: [...previousState.products, action.payload] };
+            return {...previousState, products: [...previousState.products, action.payload] };
         case FETCH_CATEGORYS_START:
             return {
                 ...previousState,
@@ -56,10 +60,27 @@ const productsReducer = (previousState = INITIAL_STATE, action) => {
                 ...previousState,
                 isFetchingProducts: false,
                 errorMessage: action.payload
-            };    
+            };
+        case POST_PRODUCT_START:
+            return {
+                ...previousState,
+                isPostingProducts: true
+            };
+        case POST_PRODUCT_SUCCESS:
+            return {
+                ...previousState,
+                isPostingProducts: false,
+                products: [...previousState.products, action.payload]
+            };
+        case POST_PRODUCT_FAILURE:
+            return {
+                ...previousState,
+                isPostingProducts: false,
+                errorMessage: action.payload
+            };
         default:
             return previousState;
-    }
+    };
 }
 
 export default productsReducer;

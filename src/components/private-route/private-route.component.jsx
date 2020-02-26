@@ -1,17 +1,16 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-const PrivateRoute = ({Component, loggedIn, ...rest}) => {
-    return(
-        <Route {...rest}
-            render={
-                props => loggedIn ? (
-                    <Component {...rest} {...props} />
-                ): (
-                <Redirect to={{pathname: '/login', state: {from: props.location}}} />
-                )
-            } 
-        />
+const PrivateRoute = ({component: Component, loggedIn, ...rest}) => {
+    return (
+
+        // Show the component only when the user is logged in
+        // Otherwise, redirect the user to /signin page
+        <Route {...rest} render={props => (
+            true ?
+                <Component {...props} />
+            : <Redirect to="/login" />
+        )} />
     );
 };
 
