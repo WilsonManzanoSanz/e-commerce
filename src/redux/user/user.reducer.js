@@ -1,9 +1,14 @@
-import { SET_CURRENT_USER, TOGGLE_USER_DROPDOWN, CLOSE_USER_DROPDOWN, SET_TOKEN } from './user.action';
+import { SET_CURRENT_USER, TOGGLE_USER_DROPDOWN, CLOSE_USER_DROPDOWN, SET_TOKEN, FETCH_PUT_REQUEST, FETCH_PUT_FAILURE, FETCH_PUT_SUCCESS } from './user.action';
 
 const INITIAL_STATE = {
     currentUser : null,
     userDropdownStatus: false,
-    token: null
+    token: null,
+    putUser: {
+        pending: false,
+        payload: [],
+        error: null
+    }
 };
 
 const userReducer = (previousState = INITIAL_STATE, action) => {
@@ -20,6 +25,12 @@ const userReducer = (previousState = INITIAL_STATE, action) => {
             return {...previousState, token: action.payload }
         case SET_CURRENT_USER:
             return {...previousState, currentUser: action.payload }
+        case FETCH_PUT_REQUEST:
+            return {...previousState, putUser: { pending: true } }
+        case FETCH_PUT_SUCCESS:
+            return {...previousState, putUser: { pending: false, payload: action.payload } }
+        case FETCH_PUT_FAILURE:
+            return {...previousState, putUser: { pending: false, error: action.payload } }
         default: 
             return previousState;
     }

@@ -5,6 +5,9 @@ export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const SET_TOKEN = 'SET_TOKEN';
 export const TOGGLE_USER_DROPDOWN = 'TOGGLE_USER_DROPDOWN';
 export const CLOSE_USER_DROPDOWN = 'CLOSE_USER_DROPDOWN';
+export const FETCH_PUT_REQUEST = 'FETCH_PUT_REQUEST';
+export const FETCH_PUT_FAILURE = 'FETCH_PUT_FAILURE';
+export const FETCH_PUT_SUCCESS = 'FETCH_PUT_SUCCESS';
 
 export const setCurrentUser = user => ({
     type: SET_CURRENT_USER,
@@ -24,6 +27,19 @@ export const closeUserDropdown = () => ({
     type: CLOSE_USER_DROPDOWN,
 });
 
+export const fetchPutUserStart = () => ({
+    type: FETCH_PUT_REQUEST,
+});
+
+export const fetchPutUserSuccess = (user) => ({
+    type: FETCH_PUT_SUCCESS,
+    payload: user
+});
+
+export const fetchPutUserStartFailure = (errorMessage) => ({
+    type: FETCH_PUT_FAILURE,
+    payload: errorMessage
+});
 
 const commonHeaders = () => {
     return {
@@ -41,7 +57,6 @@ export const signInWithPassword = (email, password) => {
               headers: commonHeaders()
             });
             const json = await response.json();
-            console.log(json);
             if(json.success){
                 dispatch(setToken(json.data.token))
                 dispatch(setCurrentUser(json.data));
@@ -66,7 +81,6 @@ export const signUpWithPassword = (user) => {
               headers: commonHeaders()
             });
             const json = await response.json();
-            console.log(json);
             if(json.success){
                 dispatch(setToken(json.data.token))
                 dispatch(setCurrentUser(json.data));
@@ -105,8 +119,10 @@ export const logOut = () => {
 }
 
 export const updateUser = (user) => {
+    console.log('called');
     return async dispatch => {
         try {
+            dispatch(fetchPutUserStart());
             const response = await fetch(`${BASE_URL}/users/${user.id}`, {
             method: 'PUT', 
             body: JSON.stringify(user), // data can be `string` or {object}!
@@ -114,9 +130,10 @@ export const updateUser = (user) => {
             });
             const json = await response.json();
             if(json.success){
-                dispatch(setCurrentUser(json.data));
+                dispatch(fetchPutUserSuccess(json.data));
                 return json;
             } else {
+                dispatch(fetchPutUserStartFailure());
                 throw(json.message);
             }
         } catch (error) {

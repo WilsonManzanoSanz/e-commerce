@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormInput from '../../components/form-input/form-input.component';
 import Button from '../../components/button/button.component';
 import { Select } from '@material-ui/core';
+import { updateUser,  setCurrentUser } from '../../redux/user/user.action';
 import  DateInput  from '../../components/date-picker/date-picker.component';
 
 import './profile.style.scss';
@@ -25,6 +26,11 @@ class ProfilePage extends React.Component{
             validationMessage: '',
             age: 0,
         };
+    }
+
+    componentDidUpdate(prevState, prevProps){
+        console.log(prevProps);
+        console.log(prevState);
     }
 
     componentDidMount(){
@@ -46,15 +52,15 @@ class ProfilePage extends React.Component{
 
     handleSubmit = async event => {
         event.preventDefault();
-        // const { fetchNewCategory, onClose } = this.props;
-        if(!this.file){
-            this.setState({validationMessage: 'Upload a file'});
-            return;
-        }
+        const { updateUser, setCurrentUser } = this.props;
+        console.log(updateUser);
         try {
-            const response = await uploadFile(this.file);
-            // await fetchNewCategory({...this.state, ...{photoUrl: response.path}});
-            this.setState({category: ''});
+            let fileURL;
+            if(this.file){
+                fileURL = await uploadFile(this.file);
+            }
+            await updateUser({...this.state, ...{photoUrl: fileURL.path}});
+            // this.setState({category: ''});
              // onClose();
         } catch (error) {
             // onClose();
@@ -82,9 +88,9 @@ class ProfilePage extends React.Component{
                     <FormInput name="displayName" type="text" label="Your full name" value={this.state.displayName} handleChange={this.handleChange} required/>
                     <FormInput name="phone" type="text" label="Your cellphone number" value={this.state.phone} handleChange={this.handleChange}/>
                     <FormInput name="address" type="text" label="Your full address" value={this.state.address} handleChange={this.handleChange}/>
-                    <FormInput name="city" type="text" label="Your full name" value={this.state.city} handleChange={this.handleChange}/>
+                    <FormInput name="city" type="text" label="City" value={this.state.city} handleChange={this.handleChange}/>
                     <FormInput name="password" type="password" label="Set your new passwrod" value={this.state.password} handleChange={this.handleChange}/>
-                    <FormInput name="passwordRepeated" type="password" label="Repeat your new password" value={this.state.confirmPassword} handleChange={this.handleChange}/>
+                    <FormInput name="confirmPassword" type="password" label="Repeat your new password" value={this.state.confirmPassword} handleChange={this.handleChange}/>
                     <DateInput
                         selected={this.state.date}
                         onSelect={this.handleSelect} //when day is clicked
@@ -105,6 +111,11 @@ class ProfilePage extends React.Component{
 
 const mapStateToProps = createStructuredSelector({
     currentUser: selectCurrentUser,
-})
+});
 
-export default connect(mapStateToProps, null)(ProfilePage);
+const mapDispatchToProps = dispatch => ({
+    updateUser: () => dispatch(updateUser()),
+    setCurrentUser: () => dispatch(setCurrentUser())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
