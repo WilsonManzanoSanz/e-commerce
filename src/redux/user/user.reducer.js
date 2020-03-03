@@ -5,7 +5,7 @@ const INITIAL_STATE = {
     userDropdownStatus: false,
     token: null,
     putUser: {
-        pending: false,
+        loading: false,
         payload: [],
         error: null
     }
@@ -26,11 +26,11 @@ const userReducer = (previousState = INITIAL_STATE, action) => {
         case SET_CURRENT_USER:
             return {...previousState, currentUser: action.payload }
         case FETCH_PUT_REQUEST:
-            return {...previousState, putUser: { pending: true } }
+            return {...previousState, putUser: { loading: true } }
         case FETCH_PUT_SUCCESS:
-            return {...previousState, putUser: { pending: false, payload: action.payload } }
+            return {...previousState, putUser: { loading: false, payload: action.payload } }
         case FETCH_PUT_FAILURE:
-            return {...previousState, putUser: { pending: false, error: action.payload } }
+            return {...previousState, putUser: { loading: false, error: action.payload } }
         default: 
             return previousState;
     }

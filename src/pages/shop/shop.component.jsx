@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Collections from '../../components/collections/collections.component';
 import CollectionPage from '../collection/collection.component';
-import WithSpinner from '../../components/spinner/spinner.component';
+import WithSpinner from '../../components/spinner-page/spinner-page.component';
 // import { updateCollections } from '../../redux/shop/shop.action';
 import { createStructuredSelector } from 'reselect';
 import { selectIsCollectionsFetching } from '../../redux/shop/shop.selector';

@@ -119,7 +119,6 @@ export const logOut = () => {
 }
 
 export const updateUser = (user) => {
-    console.log('called');
     return async dispatch => {
         try {
             dispatch(fetchPutUserStart());
