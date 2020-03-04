@@ -5,12 +5,11 @@ import { selectCurrentUser, selectFetchPutUser } from '../../redux/user/user.sel
 import { uploadFile } from '../../core/upload';
 import FormInput from '../../components/form-input/form-input.component';
 import Button from '../../components/button/button.component';
-/* eslint-disable */
 import { Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
-/* eslint-enable */
 import Spinner from '../../components/spinner/spinner.component';
 import { updateUser,  setCurrentUser } from '../../redux/user/user.action';
-import  DateInput  from '../../components/date-picker/date-picker.component';
+import { Redirect } from 'react-router-dom';
+// import  DateInput  from '../../components/date-picker/date-picker.component';
 
 import './profile.style.scss';
 
@@ -24,7 +23,7 @@ class ProfilePage extends React.Component{
             address: '',
             city: 0,
             department: '',
-            password:'',
+            newpassword:'',
             confirmPassword: '',
             validationMessage: '',
             idCard: 0,
@@ -83,7 +82,10 @@ class ProfilePage extends React.Component{
     handleSubmit = async event => {
         event.preventDefault();
         const { updateUser } = this.props;
-        console.log(updateUser);
+        if(this.state.newpassword !== this.state.confirmPassword){
+            this.setState({validationMessage: 'Passwords do not match'})
+            return;
+        }
         try {
             let fileURL = {};
             if(this.file){
@@ -106,6 +108,9 @@ class ProfilePage extends React.Component{
             this.setState({
                 departments: json
             })
+            if(this.state.department){
+                this.getCities(this.state.department);
+            }
             return json;
         } catch(error){
             console.error(error);
@@ -137,15 +142,22 @@ class ProfilePage extends React.Component{
         this.file = event.target.files[0];
     }
 
+    renderRedirect = () => {
+        if (!this.props.currentUser) {
+          return <Redirect to='/login' />
+        }
+    }
+
     render(){
         const { currentUser } = this.props;
         const { userResponse } = this.props;
-        const { departments, cities, loadingCities } = this.state;
+        const { departments, cities } = this.state;
         return (
         <div className="profile-page">
+            {this.renderRedirect()}
             <div className="profile-card">
                 <div className="photo-container">
-                    <img src={currentUser.photoUrl ? (currentUser.photoUrl) : ('https://www.seekpng.com/png/detail/413-4139803_unknown-profile-profile-picture-unknown.png')} alt="profile pic"/>
+                    <img src={currentUser && currentUser.photoUrl ? (currentUser.photoUrl) : ('https://www.seekpng.com/png/detail/413-4139803_unknown-profile-profile-picture-unknown.png')} alt="profile pic"/>
                 </div>
                 <form className="form-profile" id="user-form" onSubmit={this.handleSubmit}>
                     <FormInput name="displayName" type="text" label="Your full name" value={this.state.displayName} handleChange={this.handleChange} required/>
@@ -157,7 +169,7 @@ class ProfilePage extends React.Component{
                         <Select
                             labelId="label-select-department"
                             id="select-department"
-                            value={this.state.department}
+                            value={`${this.state.department}`}
                             onChange={this.handleChangeDeparment}
                             name="department"
                             >
@@ -173,7 +185,7 @@ class ProfilePage extends React.Component{
                         <Select
                             labelId="label-select-city"
                             id="select-city"
-                            value={this.state.city}
+                            value={`${this.state.city}`}
                             onChange={this.handleChange}
                             name="city"
                             >
@@ -183,13 +195,17 @@ class ProfilePage extends React.Component{
                         </Select>
                     </FormControl>
                     
-                    <FormInput name="password" type="password" label="Set your new passwrod" value={this.state.password} handleChange={this.handleChange}/>
+                    <FormInput name="newpassword" type="password" label="Set your new passwrod" value={this.state.newpassword} handleChange={this.handleChange}/>
                     <FormInput name="confirmPassword" type="password" label="Repeat your new password" value={this.state.confirmPassword} handleChange={this.handleChange}/>
-                    <DateInput
-                        selected={this.state.date}
-                        onSelect={this.handleSelect} //when day is clicked
-                        onChange={this.handleChange} //only when value has changed
-                    />
+                    {
+                        /*
+                        <DateInput
+                            selected={this.state.date}
+                            onSelect={this.handleSelect} //when day is clicked
+                            onChange={this.handleChange} //only when value has changed
+                        />
+                        */
+                    }
                     <p className="error-message">{ this.validationMessage }</p>
                     <input type="file" name="file" accept="image/*" id="category-image" style={{display:'none'}} onChange={this.onChangeHandler}/>
                     <div className="buttons">
