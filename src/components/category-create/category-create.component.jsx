@@ -5,6 +5,7 @@ import Button from '../button/button.component';
 import { connect } from 'react-redux';
 import { fetchNewCategory } from '../../redux/product/product.action';
 import { uploadFile } from '../../core/upload';
+import PropTypes from 'prop-types';
 
 import './category-create.style.scss';
 
@@ -18,6 +19,12 @@ class CategoryCreate extends React.Component{
         };
 
         this.file = null;
+    }
+
+    componentDidMount(){
+        if(this.props.initialState.id){
+            this.setState({category: this.props.initialState.id})
+        }
     }
 
     handleChange = (e) => {
@@ -53,12 +60,17 @@ class CategoryCreate extends React.Component{
 
     render(){
         const { validationMessage } = this.state;
+        const { edit, initialState = {id: 0} } = this.props;
+        console.log(initialState);
+        const title = edit ? 'Edit' : 'Create';
         return (
             <div className="category-create">
-                <h2 className="title">Create Category</h2>
-                <span className="description">Add a new category for your product</span>
-
+                <h2 className="title">{`${title} Category`}</h2>
+                <span className="description">{`${title} a new category for your product`}</span>
                 <form onSubmit={this.handleSubmit}>
+                    {   
+                        this.initialState && <input style={{display: 'none'}} name="id" value={this.initialState.id}/>
+                    }
                     <FormInput name="category" type="text" label="Add your category" value={this.state.category} handleChange={this.handleChange} required/>
                     <Button classType="inverted" type="button" onClick={this.saveFile}>UPLOAD FILE</Button>
                     <p className="error-message">{ validationMessage }</p>
@@ -75,5 +87,10 @@ class CategoryCreate extends React.Component{
 const mapDispatchToProps = dispatch => ({
     fetchNewCategory: category =>  dispatch(fetchNewCategory(category))
 });
+
+CategoryCreate.propTypes = {
+    edit: PropTypes.bool,
+    initialState: PropTypes.object
+  };
 
 export default connect(null, mapDispatchToProps)(CategoryCreate);
