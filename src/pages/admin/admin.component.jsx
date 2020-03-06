@@ -20,7 +20,7 @@ export class AdminPage extends React.Component{
         this.state = {
             categoryCreate: {
                 edit: false,
-                initialState: {}
+                initialState: new Category(null, '')
             },
             productModal: false,
             category: '',
@@ -91,12 +91,12 @@ export class AdminPage extends React.Component{
                         </DropdownMenu>  
                     </Dropdown>
                     <span className="spacer"></span>
-                    <Button className="primary-button admin-button" onClick={() => this.showCategory()}>Create a Category</Button>
+                    <Button className="primary-button admin-button" onClick={() => this.showCategory(new Category(null, ''))}>Create a Category</Button>
                     <Button className="primary-button admin-button" onClick={() => this.showProduct()}>Create a Product</Button>
                 </div>
                 <div>
-                    <Modal onClose={this.showCategory} show={this.state.categoryCreate.edit}>
-                        <CategoryCreate onClose={this.showCategory} edit={this.state.categoryCreate.edit} initialState={this.state.categoryCreate.initialState}></CategoryCreate>
+                    <Modal onClose={() => this.showCategory(new Category(null, ''))} show={this.state.categoryCreate.edit}>
+                        <CategoryCreate  edit={this.state.categoryCreate.edit} initialState={this.state.categoryCreate.initialState}></CategoryCreate>
                     </Modal>
                     <Modal onClose={this.showProduct} show={this.state.productModal}>
                         <ProductCreate onClose={this.showProduct}></ProductCreate>

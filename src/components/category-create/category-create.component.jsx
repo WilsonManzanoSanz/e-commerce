@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { fetchNewCategory } from '../../redux/product/product.action';
 import { uploadFile } from '../../core/upload';
 import PropTypes from 'prop-types';
+import { Category } from '../../core/models/category';
 
 import './category-create.style.scss';
 
@@ -19,6 +20,13 @@ class CategoryCreate extends React.Component{
         };
 
         this.file = null;
+    }
+    
+
+    static getDerivedStateFromProps(props, state){
+        return ({
+            category: props.initialState.category
+        })
     }
 
     componentDidMount(){
@@ -90,7 +98,7 @@ const mapDispatchToProps = dispatch => ({
 
 CategoryCreate.propTypes = {
     edit: PropTypes.bool,
-    initialState: PropTypes.object
+    initialState: PropTypes.instanceOf(Category)
   };
 
 export default connect(null, mapDispatchToProps)(CategoryCreate);
