@@ -1,0 +1,26 @@
+.admin-button{
+    display: flex;
+    align-self: center;
+    margin-top: 5px;
+    margin-left: 20px;
+}
+
+hr{
+    margin-top: 30px;
+}
+
+.category-dropdown{
+    padding-left: 20px;
+    margin: auto;
+    .btn{
+        color: black;
+        background: white;
+    }
+}
+
+.category-dropdown.show{
+    .btn{
+        color: white;
+        background: black;
+    }
+}

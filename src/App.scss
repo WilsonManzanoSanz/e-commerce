@@ -1,13 +1,11 @@
-$break-tablet:768px;
-$break-tablet-xl:1024px;
-$break-desktop:1160px;
-$break-desktop-xl:1500px;
-
-$roboto-font: 'Roboto', Arial, Helvetica, sans-serif;
-$raleway-font: 'Raleway', Arial, Helvetica, sans-serif;
+@import './variable.scss';
 
 body{
   font-family: 'Open Sans Condensed', Arial, Helvetica, sans-serif;
+}
+
+*{
+  box-sizing: border-box;
 }
 
 .wrapper {
@@ -30,4 +28,20 @@ body{
   @media screen and (min-width: $break-desktop-xl) {
       max-width: 1400px;
   }
+}
+
+.flex{
+  display: flex;
+}
+
+.spacer{
+  flex: 1 1 auto;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.MuiFormControl-root{
+  min-width: 120px !important;
 }

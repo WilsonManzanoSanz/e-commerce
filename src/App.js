@@ -1,21 +1,66 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import Navbar from './components/navbar/navbar.component.jsx';
+import { connect } from 'react-redux';
+import { setCurrentUser } from './redux/user/user.action';
+import { getUser } from './redux/user/user.action';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser} from './redux/user/user.selector';
+
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
+import LoginPage from './pages/login/login.component';
 import NotFound from './pages/notfound/notfound.component';
+import CheckoutPage from './pages/checkout/checkout.component';
+import GoogleLoginPage from './pages/google/google.component';
+import AdminPage from './pages/admin/admin.component';
+import ProfilePage from './pages/profile/profile.component'
+
+import PrivateRoute from './components/private-route/private-route.component';
+// import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 import './App.scss';
 
-function App() {
-  return (
-    <div className="container wrapper">
-      <Switch>
-        <Route exact path="/" component={HomePage}></Route>
-        <Route exact path="/shop" component={ShopPage}></Route>
-        <Route component={NotFound}/>
-      </Switch>
-    </div>
-  );
+class App extends React.Component {
+
+  componentDidMount(){
+    const { getUser, currentUser } = this.props;
+    if(currentUser && currentUser.id){
+      getUser(currentUser.id);
+    } 
+  }
+
+  componentWillUnmount(){
+  }
+
+  render (){
+    return (
+      <div>
+        <Navbar />
+        <div className="container wrapper">
+          <Switch>
+            <Route exact path="/" component={HomePage}></Route>
+            <Route path="/shop" component={ShopPage}></Route>
+            <Route path="/google/:token" component={GoogleLoginPage}></Route>
+            <Route exact path="/checkout" component={CheckoutPage}></Route>
+            <Route exact path="/profile" component={ProfilePage}></Route>
+            <PrivateRoute loggedIn={this.props.currentUser && (this.props.currentUser.userType === 2)} component={AdminPage} path="/admin"/> 
+            <Route exact path="/login" render={() => this.props.currentUser ? (<Redirect  to="/"/>) : (<LoginPage />)}></Route>
+            <Route component={NotFound}/>
+          </Switch>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+})
+
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user)),
+  getUser: id => dispatch(getUser(id))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

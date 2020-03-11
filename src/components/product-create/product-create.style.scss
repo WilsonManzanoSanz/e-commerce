@@ -1,0 +1,19 @@
+@import '../../variable.scss';
+.product-create{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+
+    .title{
+        margin: 0px 0 10px;
+        text-align: center;
+    }
+
+    .description{
+        text-align: center;
+    }
+
+    .primary-button{
+        margin: 40px auto 10px;
+    }
+}
