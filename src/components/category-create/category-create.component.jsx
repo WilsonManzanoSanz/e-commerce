@@ -13,26 +13,28 @@ import './category-create.style.scss';
 class CategoryCreate extends React.Component{
     constructor(props) {
         super(props);
-
         this.state = {
-            category: '',
+            category: props.initialState.category,
             validationMessage: '',
+            id: props.initialState.id
         };
 
         this.file = null;
     }
     
-
+    /*
     static getDerivedStateFromProps(props, state){
         return ({
             category: props.initialState.category
         })
     }
+    */
 
     componentDidMount(){
+        /*
         if(this.props.initialState.id){
             this.setState({category: this.props.initialState.id})
-        }
+        }*/
     }
 
     handleChange = (e) => {
@@ -68,8 +70,7 @@ class CategoryCreate extends React.Component{
 
     render(){
         const { validationMessage } = this.state;
-        const { edit, initialState = {id: 0} } = this.props;
-        console.log(initialState);
+        const { edit } = this.props;
         const title = edit ? 'Edit' : 'Create';
         return (
             <div className="category-create">

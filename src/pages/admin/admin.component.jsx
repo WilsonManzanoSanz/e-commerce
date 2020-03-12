@@ -20,7 +20,8 @@ export class AdminPage extends React.Component{
         this.state = {
             categoryCreate: {
                 edit: false,
-                initialState: new Category(null, '')
+                initialState: new Category(null, ''),
+                showModal: false
             },
             productModal: false,
             category: '',
@@ -29,12 +30,15 @@ export class AdminPage extends React.Component{
     }
 
     showCategory = (initialState = {}) => {
-        this.setState(prevstate => ({
-            categoryCreate: {
-                edit: !prevstate.categoryCreate.edit,
-                initialState: initialState
+        this.setState(prevstate => {
+            return {
+                categoryCreate: {
+                    showModal: !prevstate.categoryCreate.showModal,
+                    initialState: initialState,
+                    edit: !!initialState.id,
+                }
             }
-        }));
+        });
     };
 
     showProduct = e => {
@@ -95,8 +99,8 @@ export class AdminPage extends React.Component{
                     <Button className="primary-button admin-button" onClick={() => this.showProduct()}>Create a Product</Button>
                 </div>
                 <div>
-                    <Modal onClose={() => this.showCategory(new Category(null, ''))} show={this.state.categoryCreate.edit}>
-                        <CategoryCreate  edit={this.state.categoryCreate.edit} initialState={this.state.categoryCreate.initialState}></CategoryCreate>
+                    <Modal onClose={() => this.showCategory(new Category(null, ''))} show={this.state.categoryCreate.showModal}>
+                        <CategoryCreate  edit={this.state.categoryCreate.edit} initialState={this.state.categoryCreate.initialState} key={this.state.categoryCreate.initialState.id}></CategoryCreate>
                     </Modal>
                     <Modal onClose={this.showProduct} show={this.state.productModal}>
                         <ProductCreate onClose={this.showProduct}></ProductCreate>
