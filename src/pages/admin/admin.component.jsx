@@ -6,13 +6,15 @@ import { Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
 import { createStructuredSelector } from 'reselect';
 import { selectCategories, selectCategoriesIsFetching, selectProducts} from '../../redux/product/product.selector';
 import { fetchCategories, fetchProducts } from '../../redux/product/product.action';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Dropdown, DropdownToggle, } from 'reactstrap';
 import CategoryCreate from '../../components/category-create/category-create.component';
 import ProductCreate from '../../components/product-create/product-create.component';
 import CategoryList from '../../components/category-list/category-list.component';
 import ShopCard from '../../components/shop-card/shop-card.component';
 import { Category } from '../../core/models/category';
 
+import { ReactComponent as EditIcon } from '../../assets/img/icons/edit-icon.svg';
+import { ReactComponent as DeleteIcon } from '../../assets/img/icons/delete-icon.svg';
 import './admin.style.scss';
 export class AdminPage extends React.Component{
     constructor(props){
@@ -25,7 +27,8 @@ export class AdminPage extends React.Component{
             },
             productModal: false,
             category: '',
-            categoryDropdown: false
+            categoryEditList: false,
+            confirmDeleteCategory: false
         };
     }
 
@@ -48,7 +51,7 @@ export class AdminPage extends React.Component{
     };
 
     toggle = () => {
-        this.setState(prevState => ({categoryDropdown: !prevState.categoryDropdown}))
+        this.setState(prevState => ({categoryEditList: !prevState.categoryEditList}))
     };
 
     componentDidMount(){
@@ -60,6 +63,16 @@ export class AdminPage extends React.Component{
     handleChangeCategories = (e) => {
         const { value, name } = e.target;
         this.setState({ [name] : value });
+    }
+
+    onResultCategoryModal = (result) => {
+        console.log(result);
+    }
+
+    showConfirmDialog = () => {
+        this.setState((prevSate) => { 
+            return {confirmDeleteCategory: prevSate.confirmDeleteCategory};
+        });
     }
 
     render(){
@@ -84,26 +97,41 @@ export class AdminPage extends React.Component{
                             }
                         </Select>
                     </FormControl>
-                    <Dropdown className="category-dropdown" isOpen={this.state.categoryDropdown} toggle={this.toggle} style={{paddingRight: '20px'}}>
+                    <Dropdown className="category-dropdown" toggle={this.toggle} style={{paddingRight: '20px'}}>
                         <DropdownToggle caret>
                             EDIT 
                         </DropdownToggle>
-                        <DropdownMenu>
-                            {
-                                categories.map((value) => <DropdownItem onClick={() => this.showCategory(new Category(value.id, value.category))} key={value.id}>{value.category}</DropdownItem>)
-                            }
-                        </DropdownMenu>  
                     </Dropdown>
                     <span className="spacer"></span>
                     <Button className="primary-button admin-button" onClick={() => this.showCategory(new Category(null, ''))}>Create a Category</Button>
                     <Button className="primary-button admin-button" onClick={() => this.showProduct()}>Create a Product</Button>
                 </div>
+                {
+                    this.state.categoryEditList &&
+                    <React.Fragment>
+                        <div className="edit-category">
+                            {
+                                categories.map((value) => 
+                                <div className="edit-category-item" key={value.id}>
+                                      <span className="edit-category-item-name">{value.category}</span>
+                                      <span className="spacer"></span>
+                                      <EditIcon className="edit-category-item-icon" onClick={() => this.showCategory(new Category(value.id, value.category))}></EditIcon>
+                                      <DeleteIcon className="edit-category-item-icon" onClose={this.showConfirmDialog}></DeleteIcon>
+                                </div>
+                                )
+                            }
+                        </div>
+                    </React.Fragment>
+                }
                 <div>
-                    <Modal onClose={() => this.showCategory(new Category(null, ''))} show={this.state.categoryCreate.showModal}>
+                    <Modal onClose={() => this.showCategory(new Category(null, ''))} onResult={this.onResultCategoryModal} show={this.state.categoryCreate.showModal}>
                         <CategoryCreate onClose={() => this.showCategory(new Category(null, ''))}  edit={this.state.categoryCreate.edit} initialState={this.state.categoryCreate.initialState} key={this.state.categoryCreate.initialState.id}></CategoryCreate>
                     </Modal>
                     <Modal onClose={this.showProduct} show={this.state.productModal}>
                         <ProductCreate onClose={this.showProduct}></ProductCreate>
+                    </Modal>
+                    <Modal onClose={ this.showConfirmDialog } show={this.state.confirmDeleteCategory}>
+                    
                     </Modal>
                 </div>
                 <div>

@@ -24,3 +24,22 @@ hr{
         background: black;
     }
 }
+
+.edit-category{
+    padding: 30px 0;
+    max-width: 300px;
+    &-item{
+        display: flex;
+        width: 100%;
+        padding: 5px 0;
+        &-name{
+            font-size: 20px;
+        }
+        &-icon{
+            cursor: pointer;
+            padding: 5px;
+            height: 30px;
+            width: 30px;
+        }
+    }
+}

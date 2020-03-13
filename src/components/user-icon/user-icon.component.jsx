@@ -6,7 +6,7 @@ import {toggleUserDropdown, closeUserDropdown} from '../../redux/user/user.actio
 import {selectCartHidden} from '../../redux/cart/cart.selector';
 import {selectDropdownStatus} from '../../redux/user/user.selector';
 import UserNavDropdown from '../user-icon-dropdown/user-icon-dropdown.component'
-import { ReactComponent as Icon } from '../../assets/img/user-icon.svg';
+import { ReactComponent as Icon } from '../../assets/img/icons/user-icon.svg';
 
 import './user-icon.style.scss';
 

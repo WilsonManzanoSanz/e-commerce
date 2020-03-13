@@ -13,7 +13,7 @@ import { logOut } from '../../redux/user/user.action';
 import { selectIsMobile } from '../../redux/ui/ui.selector';
 
 import { ReactComponent as Logo } from '../../assets/img/logo.svg';
-import { ReactComponent as HamburguerMenu } from '../../assets/img/hamburguer.svg';
+import { ReactComponent as HamburguerMenu } from '../../assets/img/icons/hamburguer.svg';
 
 import './navbar.style.scss';
 
