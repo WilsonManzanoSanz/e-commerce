@@ -2,9 +2,9 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-import { firebaseConfig } from './firebase.config';
+// import { firebaseConfig } from './firebase.config';
 
-firebase.initializeApp(firebaseConfig);
+// firebase.initializeApp(firebaseConfig);
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
@@ -14,20 +14,26 @@ provider.setCustomParameters({ prompt: 'select_account' });
 
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
-export const createUserProfileDocument = async (userAuth, additionalData) => {
+export const createUserProfileDocument = async(userAuth, additionalData) => {
     if (!userAuth) return;
 
     const userRef = firestore.doc(`users/${userAuth.uid}`);
     const snapShot = await userRef.get();
 
-    if(!snapShot.exists){
+    if (!snapShot.exists) {
         const { displayName, photoURL, email, uid, phoneNumber } = userAuth;
         const createAt = new Date();
         try {
             await userRef.set({
-                displayName, email, photoURL, uid, createAt, phoneNumber, ...additionalData
+                displayName,
+                email,
+                photoURL,
+                uid,
+                createAt,
+                phoneNumber,
+                ...additionalData
             });
-        } catch(error) {
+        } catch (error) {
             console.error('error creating the user', error.message);
         }
     }
@@ -45,16 +51,16 @@ export const convertCollectionsSnapshotToMap = (collections) => {
             items
         }
     });
-    
+
     return transformedCollection.reduce((accumulator, collection) => {
         accumulator[collection.title.toLowerCase()] = collection;
         return accumulator;
     }, {});
 }
 
-export const addCollectionsAndDocuments = async (collectionKey, objectToAdd) => {
+export const addCollectionsAndDocuments = async(collectionKey, objectToAdd) => {
     const collectionRef = firestore.collection(collectionKey);
-    
+
     const batch = firestore.batch();
     objectToAdd.forEach(obj => {
         const newDocRef = collectionRef.doc();

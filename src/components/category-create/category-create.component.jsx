@@ -24,6 +24,9 @@ class CategoryCreate extends React.Component{
     
     /*
     static getDerivedStateFromProps(props, state){
+        console.log('props', props);
+        console.log('state', state);
+        debugger;
         return ({
             category: props.initialState.category
         })
