@@ -2,6 +2,8 @@ import { BASE_URL, commonHeaders } from '../../core/config';
 
 export const ADD_CATEGORY = 'ADD_CATEGORY';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
+export const EDIT_CATEGORY = 'EDIT_CATEGORY';
+export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 export const FETCH_CATEGORYS_FAILURE = 'FETCH_CATEGORYS_FAILURE';
 export const FETCH_CATEGORYS_SUCCESS = 'FETCH_CATEGORYS_SUCCESS';
 export const FETCH_CATEGORYS_START = 'FETCH_CATEGORYS_FAILURE';
@@ -14,6 +16,30 @@ export const FETCH_PRODUCT_START = 'FETCH_PRODUCT_FAILURE';
 export const addCategory = category => ({
     type: ADD_CATEGORY,
     payload: category
+});
+
+export const updateCategory = product => ({
+    type: EDIT_CATEGORY,
+    payload: product
+});
+
+export const deleteCategory = product => ({
+    type: EDIT_CATEGORY,
+    payload: product
+});
+
+export const fetchCategorysStart = () => ({
+    type: FETCH_CATEGORYS_START,
+});
+
+export const fetchCategorysSuccess = (categories) => ({
+    type: FETCH_CATEGORYS_SUCCESS,
+    payload: categories
+});
+
+export const fetchCategorysFailure = (errorMessage) => ({
+    type: FETCH_CATEGORYS_FAILURE,
+    payload: errorMessage
 });
 
 export const addProduct = product => ({
@@ -32,20 +58,6 @@ export const fetchProductsSuccess = (products) => ({
 
 export const fetchProductsFailure = (errorMessage) => ({
     type: FETCH_PRODUCT_FAILURE,
-    payload: errorMessage
-});
-
-export const fetchCategorysStart = () => ({
-    type: FETCH_CATEGORYS_START,
-});
-
-export const fetchCategorysSuccess = (categories) => ({
-    type: FETCH_CATEGORYS_SUCCESS,
-    payload: categories
-});
-
-export const fetchCategorysFailure = (errorMessage) => ({
-    type: FETCH_CATEGORYS_FAILURE,
     payload: errorMessage
 });
 
@@ -131,7 +143,28 @@ export const fetchPutCategory = (category) => {
             });
             const json = await response.json();
             if (json.success) {
-                dispatch(addCategory(json.data));
+                dispatch(updateCategory(json.data));
+                return json;
+            } else {
+                throw (json.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            return error;
+        }
+    };
+};
+
+export const fetchDelteCategory = (category) => {
+    return async dispatch => {
+        try {
+            const response = await fetch(`${BASE_URL}/categories/${category.id}`, {
+                method: 'DELETE',
+                headers: commonHeaders()
+            });
+            const json = await response.json();
+            if (json.success) {
+                dispatch(updateCategory(json.data));
                 return json;
             } else {
                 throw (json.message);
