@@ -3,7 +3,7 @@ import React from 'react';
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 import { connect } from 'react-redux';
-import { fetchNewCategory } from '../../redux/product/product.action';
+import { fetchNewCategory, fetchPutCategory } from '../../redux/product/product.action';
 import { uploadFile } from '../../core/upload';
 import PropTypes from 'prop-types';
 import { Category } from '../../core/models/category';
@@ -47,19 +47,38 @@ class CategoryCreate extends React.Component{
 
     handleSubmit = async event => {
         event.preventDefault();
-        const { fetchNewCategory, onClose } = this.props;
-        if(!this.file){
+        const { onClose, edit } = this.props;
+        if(!this.file && !edit){
             this.setState({validationMessage: 'Upload a file'});
             return;
         }
         try {
-            const response = await uploadFile(this.file);
-            await fetchNewCategory({...this.state, ...{photoUrl: response.path}});
+            if(edit){
+                await this.updateCategory();
+            } else {
+                await this.addNewCategory();
+            }
             this.setState({category: ''});
             onClose();
         } catch (error) {
             onClose();
         }
+    }
+
+    addNewCategory = async () => {
+        const {fetchNewCategory} = this.props;
+        const response = await uploadFile(this.file);
+        return await fetchNewCategory({...this.state, ...{photoUrl: response.path}});
+    }
+
+    updateCategory = async () => {
+        const {fetchPutCategory} = this.props;
+        let response = null;
+        if(this.file){
+            response = await uploadFile(this.file);
+        }
+        const putCategory = this.file ? {...this.state, ...{photoUrl: response.path}} : this.state;
+        return await fetchPutCategory(putCategory);
     }
 
     saveFile(){
@@ -97,7 +116,8 @@ class CategoryCreate extends React.Component{
 }
 
 const mapDispatchToProps = dispatch => ({
-    fetchNewCategory: category =>  dispatch(fetchNewCategory(category))
+    fetchNewCategory: category =>  dispatch(fetchNewCategory(category)),
+    fetchPutCategory: category => dispatch(fetchPutCategory(category))
 });
 
 CategoryCreate.propTypes = {

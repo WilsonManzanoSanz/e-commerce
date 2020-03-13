@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../core/config';
+import { BASE_URL, commonHeaders } from '../../core/config';
 
 export const ADD_CATEGORY = 'ADD_CATEGORY';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
@@ -10,16 +10,13 @@ export const FETCH_PRODUCT_FAILURE = 'FETCH_PRODUCT_FAILURE';
 export const FETCH_PRODUCT_SUCCESS = 'FETCH_PRODUCT_SUCCESS';
 export const FETCH_PRODUCT_START = 'FETCH_PRODUCT_FAILURE';
 
-export const FETCH_PUT_REQUEST = 'FETCH_PUT_REQUEST_CATEGORY';
-export const FETCH_PUT_FAILURE_CATEGORY = 'FETCH_PUT_FAILURE_CATEGORY';
-export const FETCH_PUT_SUCCESS = 'FETCH_PUT_SUCCESS_CATEGORY';
 
 export const addCategory = category => ({
     type: ADD_CATEGORY,
     payload: category
 });
 
-export const addProduct= product => ({
+export const addProduct = product => ({
     type: ADD_PRODUCT,
     payload: product
 });
@@ -53,7 +50,7 @@ export const fetchCategorysFailure = (errorMessage) => ({
 });
 
 
-export const fetchCategories = (params = {include: false}) => {
+export const fetchCategories = (params = { include: false }) => {
     return async dispatch => {
         fetchCategorysStart();
         const url = new URL(`${BASE_URL}/categories`);
@@ -62,9 +59,7 @@ export const fetchCategories = (params = {include: false}) => {
         try {
             const response = await fetch(url, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: commonHeaders()
             });
             const json = await response.json();
             if (json.success) {
@@ -87,9 +82,7 @@ export const fetchProducts = () => {
         try {
             const response = await fetch(`${BASE_URL}/products`, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: commonHeaders()
             });
             const json = await response.json();
             if (json.success) {
@@ -112,9 +105,29 @@ export const fetchNewCategory = (category) => {
             const response = await fetch(`${BASE_URL}/categories`, {
                 method: 'POST',
                 body: JSON.stringify(category), // data can be `string` or {object}!
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: commonHeaders()
+            });
+            const json = await response.json();
+            if (json.success) {
+                dispatch(addCategory(json.data));
+                return json;
+            } else {
+                throw (json.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            return error;
+        }
+    };
+};
+
+export const fetchPutCategory = (category) => {
+    return async dispatch => {
+        try {
+            const response = await fetch(`${BASE_URL}/categories/${category.id}`, {
+                method: 'PUT',
+                body: JSON.stringify(category), // data can be `string` or {object}!
+                headers: commonHeaders()
             });
             const json = await response.json();
             if (json.success) {
@@ -136,9 +149,7 @@ export const fetchNewProduct = (product) => {
             const response = await fetch(`${BASE_URL}/products`, {
                 method: 'POST',
                 body: JSON.stringify(product), // data can be `string` or {object}!
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: commonHeaders()
             });
             const json = await response.json();
             if (json.success) {

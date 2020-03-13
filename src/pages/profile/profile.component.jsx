@@ -150,7 +150,7 @@ class ProfilePage extends React.Component{
 
     render(){
         const { currentUser } = this.props;
-        const { userResponse } = this.props;
+        const { userResponse = {} } = this.props;
         const { departments, cities } = this.state;
         return (
         <div className="profile-page">

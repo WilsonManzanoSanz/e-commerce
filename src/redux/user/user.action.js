@@ -1,5 +1,4 @@
-import { BASE_URL } from '../../core/config';
-import {store} from '../store';
+import { BASE_URL, commonHeaders } from '../../core/config';
 
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const SET_TOKEN = 'SET_TOKEN';
@@ -41,81 +40,74 @@ export const fetchPutUserStartFailure = (errorMessage) => ({
     payload: errorMessage
 });
 
-const commonHeaders = () => {
-    return {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${store.getState().user.token}`
-    };
-};
-
 export const signInWithPassword = (email, password) => {
     return async dispatch => {
         try {
-              const response = await fetch(`${BASE_URL}/login`, {
-              method: 'POST', 
-              body: JSON.stringify({email, password}), // data can be `string` or {object}!
-              headers: commonHeaders()
+            const response = await fetch(`${BASE_URL}/login`, {
+                method: 'POST',
+                body: JSON.stringify({ email, password }), // data can be `string` or {object}!
+                headers: commonHeaders()
             });
             const json = await response.json();
-            if(json.success){
+            if (json.success) {
                 dispatch(setToken(json.data.token))
                 dispatch(setCurrentUser(json.data));
                 return json;
             } else {
-                throw(json.message);
+                throw (json.message);
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Error:', error);
             return error;
         }
-    }; 
+    };
 }
 
 
 export const signUpWithPassword = (user) => {
     return async dispatch => {
         try {
-              const response = await fetch(`${BASE_URL}/register`, {
-              method: 'POST', 
-              body: JSON.stringify(user), // data can be `string` or {object}!
-              headers: commonHeaders()
+            const response = await fetch(`${BASE_URL}/register`, {
+                method: 'POST',
+                body: JSON.stringify(user), // data can be `string` or {object}!
+                headers: commonHeaders()
             });
             const json = await response.json();
-            if(json.success){
+            if (json.success) {
                 dispatch(setToken(json.data.token))
                 dispatch(setCurrentUser(json.data));
                 return json;
             } else {
-                throw(json.message);
+                throw (json.message);
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Error:', error);
             return error;
         }
-    }; 
+    };
 }
 
 export const logOut = () => {
     return async dispatch => {
         try {
-              const response = await fetch(`${BASE_URL}/logout`, {
-              method: 'POST', 
-              headers: commonHeaders()
+            const response = await fetch(`${BASE_URL}/logout`, {
+                method: 'POST',
+                headers: commonHeaders()
             });
             const json = await response.json();
-            if(json.success){
+            if (json.success) {
                 dispatch(setToken(null))
                 dispatch(setCurrentUser(null));
                 return json;
             } else {
-                throw(json.message);
+                throw (json.message);
             }
-          } catch (error) {
+        } catch (error) {
             dispatch(setCurrentUser(null));
             console.error('Error:', error);
             return error;
         }
-    }; 
+    };
 }
 
 export const updateUser = (user) => {
@@ -123,17 +115,17 @@ export const updateUser = (user) => {
         try {
             dispatch(fetchPutUserStart());
             const response = await fetch(`${BASE_URL}/users/${user.id}`, {
-            method: 'PUT', 
-            body: JSON.stringify(user), // data can be `string` or {object}!
-            headers: commonHeaders()
+                method: 'PUT',
+                body: JSON.stringify(user), // data can be `string` or {object}!
+                headers: commonHeaders()
             });
             const json = await response.json();
-            if(json.success){
+            if (json.success) {
                 dispatch(fetchPutUserSuccess(json.data));
                 return json;
             } else {
                 dispatch(fetchPutUserStartFailure());
-                throw(json.message);
+                throw (json.message);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -146,20 +138,20 @@ export const updateUser = (user) => {
 export const getUser = (id) => {
     return async dispatch => {
         try {
-              const response = await fetch(`${BASE_URL}/users/${id}`, {
-              method: 'GET', 
-              headers: commonHeaders()
+            const response = await fetch(`${BASE_URL}/users/${id}`, {
+                method: 'GET',
+                headers: commonHeaders()
             });
             const json = await response.json();
-            if(json.success){
+            if (json.success) {
                 dispatch(setCurrentUser(json.data));
                 return json;
             } else {
-                throw(json.message);
+                throw (json.message);
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Error:', error);
             return error;
         }
-    }; 
+    };
 }
