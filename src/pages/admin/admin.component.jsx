@@ -21,7 +21,6 @@ export class AdminPage extends React.Component{
             productModal: false,
             category: '',
             categoryEditList: false,
-            confirmDeleteCategory: false
         };
     }
 
@@ -44,12 +43,6 @@ export class AdminPage extends React.Component{
     handleChangeCategories = (e) => {
         const { value, name } = e.target;
         this.setState({ [name] : value });
-    }
-
-    showConfirmDialog = () => {
-        this.setState((prevSate) => { 
-            return {confirmDeleteCategory: prevSate.confirmDeleteCategory};
-        });
     }
 
     render(){
@@ -88,9 +81,6 @@ export class AdminPage extends React.Component{
                 <div>
                     <Modal onClose={this.showProduct} show={this.state.productModal}>
                         <ProductCreate onClose={this.showProduct}></ProductCreate>
-                    </Modal>
-                    <Modal onClose={ this.showConfirmDialog } show={this.state.confirmDeleteCategory}>
-                    
                     </Modal>
                 </div>
                 <div>

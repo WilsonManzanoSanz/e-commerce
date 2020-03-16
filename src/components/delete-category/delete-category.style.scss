@@ -1,0 +1,14 @@
+.delete-category{
+    &-title{
+        padding: 20px;
+    }
+    &-buttons{
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        flex-wrap: wrap;
+        .inverted{
+            margin-left: 20px;;
+        }
+    }
+}

@@ -24,7 +24,7 @@ export const updateCategory = product => ({
 });
 
 export const deleteCategory = product => ({
-    type: EDIT_CATEGORY,
+    type: DELETE_CATEGORY,
     payload: product
 });
 

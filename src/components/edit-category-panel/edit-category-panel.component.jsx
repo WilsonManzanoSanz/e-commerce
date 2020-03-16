@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCategories, selectCategoriesIsFetching} from '../../redux/product/product.selector';
-import { fetchCategories, fetchProducts } from '../../redux/product/product.action';
+import { fetchCategories, fetchProducts, deleteCategory } from '../../redux/product/product.action';
 import Button from '../../components/button/button.component';
 import { Category } from '../../core/models/category';
 import Modal from '../../components/modal/modal.component';
+import DeleteCategory from '../../components/delete-category/delete-category.component';
 import CategoryCreate from '../../components/category-create/category-create.component';
 
 import { ReactComponent as EditIcon } from '../../assets/img/icons/edit-icon.svg';
@@ -23,7 +24,18 @@ class EditCategoryPanel extends React.Component{
                 initialState: new Category(null, ''),
                 showModal: false
             },
+            confirmDeleteCategory: false,
+            actualCategory: false
         };
+    }
+
+    toggleConfirmDialog = (id) => {
+        this.setState((prevSate) => { 
+            return { 
+                actualCategory : id,
+                confirmDeleteCategory: !prevSate.confirmDeleteCategory 
+            };
+        });
     }
 
     showCategory = (initialState = {}) => {
@@ -37,6 +49,14 @@ class EditCategoryPanel extends React.Component{
             }
         });
     };
+
+    onResultConfirm = (result) => {
+        const { deleteCategory } = this.props;
+        if(result){
+            deleteCategory({id: this.state.actualCategory});
+        }
+        this.toggleConfirmDialog();
+    }
 
     componentDidMount(){
         const { fetchCategories } = this.props;
@@ -55,7 +75,7 @@ class EditCategoryPanel extends React.Component{
                                 <span className="edit-category-item-name">{value.category}</span>
                                 <span className="spacer"></span>
                                 <EditIcon className="edit-category-item-icon" onClick={() => this.showCategory(new Category(value.id, value.category))}></EditIcon>
-                                <DeleteIcon className="edit-category-item-icon" onClose={this.showConfirmDialog}></DeleteIcon>
+                                <DeleteIcon className="edit-category-item-icon" onClick={() => this.toggleConfirmDialog(value.id)}></DeleteIcon>
                         </div>
                         )
                     }
@@ -68,6 +88,9 @@ class EditCategoryPanel extends React.Component{
             <Modal onClose={() => this.showCategory(new Category(null, ''))} onResult={this.onResultCategoryModal} show={this.state.categoryCreate.showModal}>
                 <CategoryCreate onClose={() => this.showCategory(new Category(null, ''))}  edit={this.state.categoryCreate.edit} initialState={this.state.categoryCreate.initialState} key={this.state.categoryCreate.initialState.id}></CategoryCreate>
             </Modal>
+            <Modal onClose={ this.toggleConfirmDialog } show={this.state.confirmDeleteCategory}>
+                <DeleteCategory onResult={this.onResultConfirm} />
+            </Modal>
         </div>);
     }
 }
@@ -79,7 +102,8 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
     fetchCategories: category =>  dispatch(fetchCategories(category)),
-    fetchProducts: params =>  dispatch(fetchProducts(params))
+    fetchProducts: params =>  dispatch(fetchProducts(params)),
+    deleteCategory: product => dispatch(deleteCategory(product))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditCategoryPanel);
