@@ -36,6 +36,7 @@ class ProfilePage extends React.Component{
 
     componentDidUpdate(prevState, prevProps){
         if(prevState.userResponse && prevState.userResponse.loading && !this.props.userResponse.loading){
+            this.props.setCurrentUser(this.props.userResponse.payload);
             this.props.history.push('/');
         }
     }

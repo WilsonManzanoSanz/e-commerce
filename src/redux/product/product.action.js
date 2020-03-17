@@ -155,7 +155,7 @@ export const fetchPutCategory = (category) => {
     };
 };
 
-export const fetchDelteCategory = (category) => {
+export const fetchDeleteCategory = (category) => {
     return async dispatch => {
         try {
             const response = await fetch(`${BASE_URL}/categories/${category.id}`, {
@@ -164,7 +164,7 @@ export const fetchDelteCategory = (category) => {
             });
             const json = await response.json();
             if (json.success) {
-                dispatch(updateCategory(json.data));
+                dispatch(deleteCategory(json.data));
                 return json;
             } else {
                 throw (json.message);
