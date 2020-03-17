@@ -21,7 +21,9 @@ export class AdminPage extends React.Component{
             productModal: false,
             category: '',
             categoryEditList: false,
+            categoriesLoaded: false
         };
+        this.addAll = false;
     }
 
     showProduct = e => {
@@ -34,19 +36,36 @@ export class AdminPage extends React.Component{
         this.setState(prevState => ({categoryEditList: !prevState.categoryEditList}))
     };
 
-    componentDidMount(){
+    async componentDidMount(){
         const { fetchCategories, fetchProducts } = this.props;
-        fetchCategories();
         fetchProducts();
+        await fetchCategories();
+    }
+
+    componentDidUpdate(prevState, prevProps){
+        if(prevState.categories.length !== this.props.categories.length){
+            this.addAll = true;
+            this.setState({categoriesLoaded: true});
+        }
     }
 
     handleChangeCategories = (e) => {
         const { value, name } = e.target;
         this.setState({ [name] : value });
+        if(value){
+            this.props.fetchProducts({filterBy: 'categoryId', value: value})
+        }
+        else {
+            this.props.fetchProducts();
+        }
     }
 
     render(){
         const { categories, products = [] } = this.props;
+        if(this.addAll && (categories[0] && categories[0].value !== 'all')){
+            categories.unshift({value: 'all', category: 'All'});
+            this.addAll = false;
+        }
         return (
             <div className="admin-page">
             <hr></hr>
