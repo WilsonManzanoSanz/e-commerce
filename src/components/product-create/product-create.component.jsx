@@ -45,7 +45,7 @@ class ProductCreate extends React.Component{
         try {
             const response = await uploadFile(this.file);
             await fetchNewProduct({...this.state, ...{photoUrl: response.path}});
-            this.setState = ({
+            this.setState({
                 name: '',
                 description: '',
                 price: '',

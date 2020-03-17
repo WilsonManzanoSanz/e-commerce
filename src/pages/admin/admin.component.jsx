@@ -62,8 +62,9 @@ export class AdminPage extends React.Component{
 
     render(){
         const { categories, products = [] } = this.props;
-        if(this.addAll && (categories[0] && categories[0].value !== 'all')){
-            categories.unshift({value: 'all', category: 'All'});
+        const selectCategories = [...categories];
+        if(this.addAll && (selectCategories[0] && selectCategories[0].value !== 'all')){
+            selectCategories.unshift({value: 'all', category: 'All', id: 0});
             this.addAll = false;
         }
         return (
@@ -80,7 +81,7 @@ export class AdminPage extends React.Component{
                             onChange={this.handleChangeCategories}
                             name="category">
                             {   
-                                categories.map((value, idx) => <MenuItem key={idx} value={value.id}>{value.category}</MenuItem>)
+                                selectCategories.map((value, idx) => <MenuItem key={idx} value={value.id}>{value.category}</MenuItem>)
                                 
                             }
                         </Select>
