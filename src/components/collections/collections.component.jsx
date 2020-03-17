@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectCollectionsForPreview } from '../../redux/shop/shop.selector';
+// import { selectCollectionsForPreview } from '../../redux/shop/shop.selector';
 import { fetchCategories } from '../../redux/product/product.action';
 import { selectCategories, } from '../../redux/product/product.selector';
 import CollectionItem from '../collection-item/collection-item.component';
@@ -31,7 +31,7 @@ class Collections extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
     categories: selectCategories,
-    collections: selectCollectionsForPreview
+    // collections: selectCollectionsForPreview
 });
 
 const mapDispatchToProps = dispatch => ({
