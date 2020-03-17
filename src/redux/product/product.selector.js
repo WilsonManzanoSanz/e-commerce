@@ -12,6 +12,11 @@ export const selectProducts = createSelector(
     product => product.products
 );
 
+export const selectIsFetchingProducts = createSelector(
+    [selectProduct],
+    product => product.isFetchingProducts
+);
+
 export const selectCategoriesIsFetching = createSelector(
     [selectProduct],
     category => category.isFetchingCategories

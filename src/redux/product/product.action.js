@@ -1,4 +1,4 @@
-import { BASE_URL, commonHeaders } from '../../core/config';
+import { BASE_URL, commonHeaders, addParams } from '../../core/config';
 
 export const ADD_CATEGORY = 'ADD_CATEGORY';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
@@ -65,11 +65,8 @@ export const fetchProductsFailure = (errorMessage) => ({
 export const fetchCategories = (params = { include: false }) => {
     return async dispatch => {
         fetchCategorysStart();
-        const url = new URL(`${BASE_URL}/categories`);
-
-        url.search = new URLSearchParams(params).toString();
         try {
-            const response = await fetch(url, {
+            const response = await fetch(addParams(`${BASE_URL}/categories`, params), {
                 method: 'GET',
                 headers: commonHeaders()
             });
@@ -88,11 +85,11 @@ export const fetchCategories = (params = { include: false }) => {
 }
 
 
-export const fetchProducts = () => {
+export const fetchProducts = (params) => {
     return async dispatch => {
         fetchProductsStart();
         try {
-            const response = await fetch(`${BASE_URL}/products`, {
+            const response = await fetch(addParams(`${BASE_URL}/products`, params), {
                 method: 'GET',
                 headers: commonHeaders()
             });

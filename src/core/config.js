@@ -7,4 +7,10 @@ export const commonHeaders = () => {
     };
 };
 
+export const addParams = (oldUrl, params) => {
+    const url = new URL(oldUrl);
+    url.search = new URLSearchParams(params).toString();
+    return url;
+}
+
 export const BASE_URL = 'http://localhost:3001/api/v1';

@@ -1,27 +1,46 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ShopCard from '../../components/shop-card/shop-card.component';
-import { fetchCategories } from '../../redux/product/product.action';
-import { selectCategory } from '../../redux/product/product.selector';
+import { fetchCategories, fetchProducts } from '../../redux/product/product.action';
+import { selectCategory, selectProducts, selectIsFetchingProducts } from '../../redux/product/product.selector';
 
 import './collection.style.scss';
 
 class CollectionPage extends React.Component {
-    componentDidMount(){
-        const { fetchCategories } = this.props;
-        fetchCategories({include: true});
+    constructor(props){
+        super(props);
+        this.state = {
+            category: {}
+        };
+    }
+
+    async componentDidMount(){
+        const { fetchCategories, fetchProducts } = this.props;
+        const id = this.props.match.params.collectionId;
+        const categoryResponse = await fetchCategories({filterBy: 'category', value: id});
+        if(categoryResponse.data.items){
+            fetchProducts({filterBy: 'categoryId', value: categoryResponse.data.items[0].id});
+        }
+        this.setState({category: categoryResponse});
+        // fetchProducts({filterBy: 'category', thi});
+    }
+
+    componentDidUpdate(prevState, prevProps){
+        if(prevState.selectIsFetchingProducts && prevState.selectIsFetchingProducts && !this.props.selectIsFetchingProducts){
+            console.log('finished');
+        }
     }
 
 
     render(){
-        let {category = {category: '', products: []}} = this.props;
-        console.log('props,', this.props);
+        let {category = {category: ''}, products =  []} = this.props;
+        console.log('products', products);
         return (
             <div className="collection-page">
                 <h2 className="title">{ category.category }</h2>
                 <div className="items">
                     {
-                        category.products.map(
+                        products && products.map(
                             item =>  <ShopCard key={item.id} item={item}/>
                         )
                     }
@@ -31,11 +50,14 @@ class CollectionPage extends React.Component {
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchCategories: (params) => dispatch(fetchCategories(params))
+    fetchCategories: (params) => dispatch(fetchCategories(params)),
+    fetchProducts: (params) => dispatch(fetchProducts(params))
   });
 
 const mapStateTopProps = (state, ownProps) => ({
-    category: selectCategory(ownProps.match.params.collectionId)(state)
+    category: selectCategory(ownProps.match.params.collectionId)(state),
+    products: selectProducts(state),
+    isFetchingProducts: selectIsFetchingProducts(state)
 })
 
 export default connect(mapStateTopProps, mapDispatchToProps)(CollectionPage);
