@@ -7,6 +7,17 @@
     position: relative;
     margin-bottom: 20px;
 
+    &-edit{
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      fill: gray;
+      cursor: pointer;
+      &:hover{
+        fill: black;
+      }
+    }
+
     .image {
       width: 100%;
       height: 95%;

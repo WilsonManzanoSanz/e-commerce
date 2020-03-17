@@ -9,9 +9,9 @@ import { fetchCategories, fetchProducts } from '../../redux/product/product.acti
 import { Dropdown, DropdownToggle, } from 'reactstrap';
 import EditCategoryPanel from '../../components/edit-category-panel/edit-category-panel.component';
 import ProductCreate from '../../components/product-create/product-create.component';
-import CategoryList from '../../components/category-list/category-list.component';
+// import CategoryList from '../../components/category-list/category-list.component';
 import ShopCard from '../../components/shop-card/shop-card.component';
-// import { Category } from '../../core/models/category';
+ import { Product } from '../../core/models/product';
 
 import './admin.style.scss';
 export class AdminPage extends React.Component{
@@ -21,16 +21,15 @@ export class AdminPage extends React.Component{
             productModal: false,
             category: '',
             categoryEditList: false,
-            categoriesLoaded: false
+            categoriesLoaded: false,
+            productCreate: {
+                edit: false,
+                initialState: new Product(0, '', '', 0, 0, ''),
+                showModal: false
+            },
         };
         this.addAll = false;
     }
-
-    showProduct = e => {
-        this.setState(prevstate => ({
-            productModal: !prevstate.productModal
-        }));
-    };
 
     toggle = () => {
         this.setState(prevState => ({categoryEditList: !prevState.categoryEditList}))
@@ -60,6 +59,18 @@ export class AdminPage extends React.Component{
         }
     }
 
+    showProductModal = (initialState = new Product(0, '', '', 0, 0, '')) => {
+        this.setState(prevstate => {
+            return {
+                productCreate: {
+                    showModal: !prevstate.productCreate.showModal,
+                    initialState: initialState,
+                    edit: !!initialState.id,
+                }
+            }
+        });
+    };
+
     render(){
         const { categories, products = [] } = this.props;
         const selectCategories = [...categories];
@@ -69,7 +80,7 @@ export class AdminPage extends React.Component{
         }
         return (
             <div className="admin-page">
-            <hr></hr>
+                <hr></hr>
                 <div className="flex">
                     <h1 className="title"> Admin page </h1>
                     <FormControl style={{width: '200px', marginLeft: '20px'}}>
@@ -92,28 +103,26 @@ export class AdminPage extends React.Component{
                         </DropdownToggle>
                     </Dropdown>
                     <span className="spacer"></span>
-                    <Button className="primary-button admin-button" onClick={() => this.showProduct()}>Create a Product</Button>
+                    <Button className="primary-button admin-button" onClick={() => this.showProductModal()}>Create a Product</Button>
                 </div>
                 {
                     this.state.categoryEditList && <EditCategoryPanel />
                     
                 }
                 <div>
-                    <Modal onClose={this.showProduct} show={this.state.productModal}>
-                        <ProductCreate onClose={this.showProduct}></ProductCreate>
+                    <Modal onClose={() => this.showProductModal()} show={this.state.productCreate.showModal}>
+                        <ProductCreate onClose={() => this.showProductModal()}  edit={this.state.productCreate.edit} 
+                        initialState={this.state.productCreate.initialState} key={this.state.productCreate.initialState.id} />
                     </Modal>
                 </div>
-                <div>
-                    <CategoryList categories={this.props.categories}/>
+                <hr></hr>
+                <div className="flex">
+                {
+                    products.map(item => (
+                            <ShopCard key={item.id} item={item} editModal={this.showProductModal}></ShopCard>
+                    ))
+                }
                 </div>
-            <hr></hr>
-            <div className="flex">
-            {
-                products.map(item => (
-                        <ShopCard key={item.id} item={item}></ShopCard>
-                ))
-            }
-            </div>
             </div>
         );
     }
