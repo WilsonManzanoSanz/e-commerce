@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import { Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
 import { fetchNewProduct, fetchPutProduct } from '../../redux/product/product.action';
 import { selectCategories, } from '../../redux/product/product.selector';
-import { FormGroup, Label } from 'reactstrap';
 import { createStructuredSelector } from 'reselect';
 import { uploadFile } from '../../core/upload';
 // import { Product } from '../../core/models/product';
@@ -78,10 +77,6 @@ class ProductCreate extends React.Component{
         return await fetchPutProduct(putProduct);
     }
 
-    changeValue = (e) => {
-        this.setState({categoryId: e.target.value});
-    }
-
     saveFile(){
         const inputFile = document.getElementById('product-image');
         inputFile.click();
@@ -103,24 +98,35 @@ class ProductCreate extends React.Component{
                     <FormInput name="name" type="text" label="Add your product name" value={this.state.name} handleChange={this.handleChange} required/>
                     <FormInput name="description" astextarea="true" type="text" label="Add your product description" value={this.state.description} handleChange={this.handleChange} required/>
                     <FormInput name="price" type="number" min="1" label="How much is it cost?" value={this.state.price} handleChange={this.handleChange} required/>
-                    <FormGroup>
-                        <Label for="categories">Category</Label>
-                        <FormControl>
-                        <InputLabel id="label-select-category">Category</InputLabel>
-                            <Select
-                                labelId="label-select-category"
-                                id="select-category"
-                                value={`${this.state.categoryId}`}
-                                onChange={this.changeValue}
-                                name="categoryId"
-                                >
-                                {   
-                                    categories.map((value, idx) => <MenuItem key={idx} value={value.id}>{value.category}</MenuItem>)
-                                    
-                                }
-                            </Select>
-                        </FormControl>
-                    </FormGroup>
+                    <FormControl>
+                    <InputLabel id="label-select-category">Category</InputLabel>
+                        <Select
+                            labelId="label-select-category"
+                            id="select-category"
+                            value={`${this.state.categoryId}`}
+                            onChange={this.handleChange}
+                            name="categoryId"
+                            >
+                            {   
+                                categories.map((value, idx) => <MenuItem key={idx} value={value.id}>{value.category}</MenuItem>)
+                                
+                            }
+                        </Select>
+                    </FormControl>
+                    <FormControl>
+                    <InputLabel id="label-select-disable">Disable</InputLabel>
+                        <Select
+                            labelId="label-select-disable"
+                            id="select-disable"
+                            value={`${this.state.disable}`}
+                            onChange={this.handleChange}
+
+                            name="disable"
+                            >
+                            <MenuItem key={0} value={0}>False</MenuItem>
+                            <MenuItem key={1} value={1}>True</MenuItem>
+                        </Select>
+                    </FormControl>
                     <Button classType="inverted" type="button" onClick={this.saveFile}>UPLOAD FILE</Button>
                     <p className="error-message">{ validationMessage }</p>
                     <input type="file" accept="image/*" name="file" id="product-image" style={{display:'none'}} onChange={this.onChangeHandler}/>

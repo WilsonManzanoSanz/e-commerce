@@ -9,7 +9,8 @@ import {
     FETCH_PRODUCT_START, 
     EDIT_CATEGORY,
     DELETE_CATEGORY,
-    EDIT_PRODUCT
+    EDIT_PRODUCT,
+    DELETE_PRODUCT
 } from './product.action';
 
 const INITIAL_STATE = {
@@ -38,6 +39,8 @@ const productsReducer = (previousState = INITIAL_STATE, action) => {
                 elem.id === action.payload.id ? 
                 {...elem, ...action.payload} : 
                 elem) };
+        case DELETE_PRODUCT:
+            return { ...previousState, products: previousState.products.filter(elem => elem.id !== action.payload.id )};       
         case FETCH_CATEGORYS_START:
             return {
                 ...previousState,

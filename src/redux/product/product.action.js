@@ -5,6 +5,7 @@ export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const EDIT_PRODUCT = 'EDIT_PRODUCT';
 export const EDIT_CATEGORY = 'EDIT_CATEGORY';
 export const DELETE_CATEGORY = 'DELETE_CATEGORY';
+export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const FETCH_CATEGORYS_FAILURE = 'FETCH_CATEGORYS_FAILURE';
 export const FETCH_CATEGORYS_SUCCESS = 'FETCH_CATEGORYS_SUCCESS';
 export const FETCH_CATEGORYS_START = 'FETCH_CATEGORYS_FAILURE';
@@ -24,9 +25,9 @@ export const updateCategory = product => ({
     payload: product
 });
 
-export const deleteCategory = product => ({
+export const deleteCategory = category => ({
     type: DELETE_CATEGORY,
-    payload: product
+    payload: category
 });
 
 export const fetchCategorysStart = () => ({
@@ -50,6 +51,11 @@ export const addProduct = product => ({
 
 export const updateProduct = product => ({
     type: EDIT_PRODUCT,
+    payload: product
+});
+
+export const deleteProduct = product => ({
+    type: DELETE_PRODUCT,
     payload: product
 });
 
@@ -211,7 +217,11 @@ export const fetchPutProduct = (product) => {
             });
             const json = await response.json();
             if (json.success) {
-                dispatch(updateProduct(json.data));
+                if(json.data.disable){
+                    dispatch(deleteProduct(json.data));
+                } else {
+                    dispatch(updateProduct(json.data));
+                }
                 return json;
             } else {
                 throw (json.message);

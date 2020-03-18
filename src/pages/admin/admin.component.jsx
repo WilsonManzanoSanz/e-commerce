@@ -24,7 +24,7 @@ export class AdminPage extends React.Component{
             categoriesLoaded: false,
             productCreate: {
                 edit: false,
-                initialState: new Product(0, '', '', 0, 0, ''),
+                initialState: new Product(0, '', '', 0, 0, '', 0),
                 showModal: false
             },
         };
@@ -59,7 +59,7 @@ export class AdminPage extends React.Component{
         }
     }
 
-    showProductModal = (initialState = new Product(0, '', '', 0, 0, '')) => {
+    showProductModal = (initialState = new Product(0, '', '', 0, 0, '', 0)) => {
         this.setState(prevstate => {
             return {
                 productCreate: {
