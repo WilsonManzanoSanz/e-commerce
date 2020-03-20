@@ -1,11 +1,15 @@
+@import '../../variable.scss';
 .user-icon{
     margin-top:  auto;
-    width: 45px;
-    height: 45px;
+    width: auto;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     cursor: pointer;
+    @media screen and (min-width: $break-tablet){
+      padding: 0 10px;
+    }
     svg{
       width: 26px;
       height: 26px;

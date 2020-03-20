@@ -1,22 +1,31 @@
+@import '../../variable.scss';
 .cart-icon {
-    width: 45px;
-    height: 45px;
-    position: relative;
+    width: auto;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-  
+    @media screen and (min-width: $break-tablet){
+      padding-left: 10px;
+      position: relative;
+    }
     .shopping-icon {
-      width: 24px;
-      height: 24px;
+      width: auto;
+      height: 25px;
+      @media screen and (min-width: $break-tablet){
+        margin-top: -2px; 
+      }
     }
   
     .item-count {
       position: absolute;
       font-size: 10px;
       font-weight: bold;
-      bottom: 12px;
+      bottom: 4px;
+      @media screen and (min-width: $break-tablet){
+        bottom: 2px;
+      }
     }
   }
   

@@ -1,8 +1,18 @@
 import { createSelector } from 'reselect';
 
-const selectMobile = state => state.ui;
+const selectUi = state => state.ui;
 
 export const selectIsMobile = createSelector(
-  [selectMobile],
+  [selectUi],
   mobile => mobile.isMobile
+);
+
+export const selectDropdownStatus = createSelector(
+  [selectUi],
+  (user) => user.userDropdownStatus
+);
+
+export const selectCartHidden = createSelector(
+  [selectUi],
+  cart => cart.hiddenCart
 );

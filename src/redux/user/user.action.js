@@ -2,8 +2,6 @@ import { BASE_URL, commonHeaders } from '../../core/config';
 
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const SET_TOKEN = 'SET_TOKEN';
-export const TOGGLE_USER_DROPDOWN = 'TOGGLE_USER_DROPDOWN';
-export const CLOSE_USER_DROPDOWN = 'CLOSE_USER_DROPDOWN';
 export const FETCH_PUT_REQUEST = 'FETCH_PUT_REQUEST';
 export const FETCH_PUT_FAILURE = 'FETCH_PUT_FAILURE';
 export const FETCH_PUT_SUCCESS = 'FETCH_PUT_SUCCESS';
@@ -16,14 +14,6 @@ export const setCurrentUser = user => ({
 export const setToken = token => ({
     type: SET_TOKEN,
     payload: token
-});
-
-export const toggleUserDropdown = () => ({
-    type: TOGGLE_USER_DROPDOWN,
-});
-
-export const closeUserDropdown = () => ({
-    type: CLOSE_USER_DROPDOWN,
 });
 
 export const fetchPutUserStart = () => ({

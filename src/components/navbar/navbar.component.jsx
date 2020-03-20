@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import  CartIcon  from '../cart-icon/cart-icon.component';
 import  UserIcon  from '../user-icon/user-icon.component';
 
-import { selectCartHidden } from '../../redux/cart/cart.selector';
+import { selectCartHidden } from '../../redux/ui/ui.selector';
 import { selectCurrentUser} from '../../redux/user/user.selector';
 import { setCurrentUser } from '../../redux/user/user.action';
 import { logOut } from '../../redux/user/user.action';
@@ -45,6 +45,7 @@ const Navbar = ({ currentUser, hidden, isMobile, setCurrentUser, logOut}) => {
                     ) : (
                         <div className="right-items-mobile">
                             <CartIcon/>
+                            <UserIcon />
                             <HamburguerMenu className="hambuguer-menu item" onClick={() => setOpenStatus(!isOpen)}/>
                         </div>
                     )
