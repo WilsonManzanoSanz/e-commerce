@@ -25,7 +25,7 @@ class UserIcon extends React.Component{
       outsiteClickDropdown = (e) => {
         const element = document.querySelector('#user-icon');
         if (element && !element.contains(e.target)) {
-          this.props.toggleUserDropdown();
+          this.props.closeUserDropdown();
           document.body.removeEventListener('click', this.outsiteClickDropdown);
         }
       }

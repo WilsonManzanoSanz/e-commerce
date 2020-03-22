@@ -23,7 +23,7 @@ class CartIcon extends React.Component{
   outsiteClickDropdown = (e) => {
     const element = document.querySelector('#cart-icon');
     if (element && !element.contains(e.target)) {
-      this.props.toggleCartHidden();
+      this.props.closeCartHidden();
       document.body.removeEventListener('click', this.outsiteClickDropdown);
     }
   }
