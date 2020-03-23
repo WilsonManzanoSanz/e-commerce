@@ -1,6 +1,13 @@
 @import '../../variable.scss';
+
+#navbar-header{
+  position: fixed;
+  width: 100%;
+  z-index: 60;
+  height: 60px;
+}
 .navbar {
-    height: 70px;
+    height: 60px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -11,8 +18,11 @@
       height: auto;
       display: flex;
       justify-content: center;
-      flex-direction: column;
+      flex-direction: row;
       margin: auto 0;
+      @media screen and (min-width: $break-tablet){
+        flex-direction: column;;
+      }
       svg{
         height: 30px;
         width: auto;
@@ -55,7 +65,7 @@
     .dropdown-navbar{
       position: fixed;
       width: 100%;
-      top: 70px;
+      top: 60px;
       height: auto;
       background: white;
       left: 0;

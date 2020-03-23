@@ -37,7 +37,7 @@ class App extends React.Component {
     return (
       <div>
         <Navbar />
-        <div className="container wrapper">
+        <div className="container wrapper first-container">
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
             <Route path="/shop" component={ShopPage}></Route>

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import  CartIcon  from '../cart-icon/cart-icon.component';
 import  UserIcon  from '../user-icon/user-icon.component';
+import SearchNavbar from '../search-navbar/search-navbar.component';
 
 import { selectCartHidden } from '../../redux/ui/ui.selector';
 import { selectCurrentUser} from '../../redux/user/user.selector';
@@ -19,11 +20,24 @@ import './navbar.style.scss';
 
 const Navbar = ({ currentUser, hidden, isMobile, setCurrentUser, logOut}) => {
     const [isOpen, setOpenStatus] = useState(false);
+
+    const NavbarIcons = () => (
+        <React.Fragment>
+            <UserIcon />
+            <SearchNavbar />
+            <CartIcon />
+        </React.Fragment>
+    );
+
     return (
-        <div className="header">
+        <div className="header" id="navbar-header">
             <div className="wrapper container navbar">
                 <Link className="logo-container" to="/">
                     <Logo className="logo"/>
+                    {
+                        isMobile && 
+                        <HamburguerMenu className="hambuguer-menu item" onClick={() => setOpenStatus(!isOpen)}/>
+                    }
                 </Link>
                 {
                     !(isMobile) ? (
@@ -39,14 +53,11 @@ const Navbar = ({ currentUser, hidden, isMobile, setCurrentUser, logOut}) => {
                                     ADMIN
                                 </Link>
                             } 
-                            <UserIcon />
-                            <CartIcon />
+                            <NavbarIcons></NavbarIcons>
                         </div>
                     ) : (
                         <div className="right-items-mobile">
-                            <CartIcon/>
-                            <UserIcon />
-                            <HamburguerMenu className="hambuguer-menu item" onClick={() => setOpenStatus(!isOpen)}/>
+                            <NavbarIcons></NavbarIcons>
                         </div>
                     )
                 }

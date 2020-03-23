@@ -1,0 +1,24 @@
+.search-navbar{
+    position: relative;
+    &-icon{
+        width: auto;
+        height: 26px;
+    }
+    &-input{
+        position: fixed;
+        top: 30px;
+        width: 100%;
+        padding: 0 20px;
+        left: 0;
+        input{
+            width: 100%;
+        }
+        &-delete{
+            position: absolute;
+            top: 35px;
+            height: 30px;
+            width: auto;
+            right: 20px;
+        }
+    }
+}
