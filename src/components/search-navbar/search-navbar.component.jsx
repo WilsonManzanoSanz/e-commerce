@@ -66,14 +66,15 @@ class SearchNavbar extends React.Component{
             {
                 showInput && 
                 <div className="search-navbar-input">
-                    <FormInput name="productSearch" type="text" label="Type what you're looking for..." value={this.state.productSearch} handleChange={this.handleChange} required/>
-                    <DeleteIcon className="search-navbar-input-delete" onClick={() => this.setState({showInput: false})}/>
-                    <div className="search-navbar-items">
-                        {
-                        products.map((item, idx) => <p className="search-navbar-item" key={idx}>{item.name}</p>)
-                        }
+                    <div className="form-group container">
+                        <input className={`${this.state.productSearch.value ? 'focused': ''} input`} name="productSearch" value={this.state.productSearch} onChange={this.handleChange}/> 
+                        <DeleteIcon className="search-navbar-input-delete" onClick={() => this.setState({showInput: false})}/>
+                        <div className="search-navbar-items">
+                            {
+                            products.map((item, idx) => <p className="search-navbar-item" key={idx}>{item.name}</p>)
+                            }
+                        </div>
                     </div>
-                    
                 </div>
             }
         </div>);  
