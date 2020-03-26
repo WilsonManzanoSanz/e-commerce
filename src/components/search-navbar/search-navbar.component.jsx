@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import { ReactComponent as SearchIcon } from '../../assets/img/icons/search.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/img/icons/delete-icon.svg';
 import { fetchProducts } from '../../redux/product/product.action';
-import FormInput from '../form-input/form-input.component';
+import { Link } from 'react-router-dom';
 
 import './search-navbar.style.scss'
 
@@ -55,7 +55,9 @@ class SearchNavbar extends React.Component{
         })
     }
 
-    
+    closeSearch = () => {
+        this.setState({showInput: false})
+    }
 
 
     render(){
@@ -67,11 +69,11 @@ class SearchNavbar extends React.Component{
                 showInput && 
                 <div className="search-navbar-input">
                     <div className="form-group container">
-                        <input className={`${this.state.productSearch.value ? 'focused': ''} input`} name="productSearch" value={this.state.productSearch} onChange={this.handleChange}/> 
-                        <DeleteIcon className="search-navbar-input-delete" onClick={() => this.setState({showInput: false})}/>
+                        <input className={`${this.state.productSearch.value ? 'focused': ''} input`} autoComplete="off" name="productSearch" value={this.state.productSearch} placeholder="What're you looking for...?" onChange={this.handleChange}/> 
+                        <DeleteIcon className="search-navbar-input-delete" onClick={this.closeSearch}/>
                         <div className="search-navbar-items">
                             {
-                            products.map((item, idx) => <p className="search-navbar-item" key={idx}>{item.name}</p>)
+                            products.map((item, idx) => <Link to={`/product/${item.id}?name=${item.name}`} onClick={this.closeSearch} key={idx}><p className="search-navbar-item">{item.name}</p></Link>)
                             }
                         </div>
                     </div>

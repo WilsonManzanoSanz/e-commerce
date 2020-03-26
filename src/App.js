@@ -14,7 +14,8 @@ import NotFound from './pages/notfound/notfound.component';
 import CheckoutPage from './pages/checkout/checkout.component';
 import GoogleLoginPage from './pages/google/google.component';
 import AdminPage from './pages/admin/admin.component';
-import ProfilePage from './pages/profile/profile.component'
+import ProfilePage from './pages/profile/profile.component';
+import ProductsPage from './pages/products/products.component';
 
 import PrivateRoute from './components/private-route/private-route.component';
 // import { auth, createUserProfileDocument } from './firebase/firebase.utils';
@@ -41,6 +42,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
             <Route path="/shop" component={ShopPage}></Route>
+            <Route path="/products" component={ProductsPage}></Route>
             <Route path="/google/:token" component={GoogleLoginPage}></Route>
             <Route exact path="/checkout" component={CheckoutPage}></Route>
             <Route exact path="/profile" component={ProfilePage}></Route>
