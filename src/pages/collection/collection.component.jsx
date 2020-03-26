@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ShopCard from '../../components/shop-card/shop-card.component';
-import { fetchCategories, fetchProducts } from '../../redux/product/product.action';
+import { fetchCategories, fetchGlobalProducts } from '../../redux/product/product.action';
 import { selectCategory, selectProducts, selectIsFetchingProducts } from '../../redux/product/product.selector';
 
 import './collection.style.scss';
@@ -50,7 +50,7 @@ class CollectionPage extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
     fetchCategories: (params) => dispatch(fetchCategories(params)),
-    fetchProducts: (params) => dispatch(fetchProducts(params))
+    fetchProducts: (params) => dispatch(fetchGlobalProducts(params))
   });
 
 const mapStateTopProps = (state, ownProps) => ({

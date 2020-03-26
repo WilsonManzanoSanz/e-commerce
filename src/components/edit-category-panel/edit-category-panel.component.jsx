@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCategories, selectCategoriesIsFetching} from '../../redux/product/product.selector';
-import { fetchCategories, fetchProducts, fetchDeleteCategory } from '../../redux/product/product.action';
+import { fetchCategories, fetchGlobalProducts, fetchDeleteCategory } from '../../redux/product/product.action';
 import Button from '../../components/button/button.component';
 import { Category } from '../../core/models/category';
 import Modal from '../../components/modal/modal.component';
@@ -102,7 +102,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
     fetchCategories: category =>  dispatch(fetchCategories(category)),
-    fetchProducts: params =>  dispatch(fetchProducts(params)),
+    fetchProducts: params =>  dispatch(fetchGlobalProducts(params)),
     deleteCategory: product => dispatch(fetchDeleteCategory(product))
 });
 

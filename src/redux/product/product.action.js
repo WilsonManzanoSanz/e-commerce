@@ -10,6 +10,10 @@ export const FETCH_CATEGORYS_FAILURE = 'FETCH_CATEGORYS_FAILURE';
 export const FETCH_CATEGORYS_SUCCESS = 'FETCH_CATEGORYS_SUCCESS';
 export const FETCH_CATEGORYS_START = 'FETCH_CATEGORYS_FAILURE';
 
+export const FETCH_GLOBAL_PRODUCT_FAILURE = 'FETCH_GLOBAL_PRODUCT_FAILURE';
+export const FETCH_GLOBAL_PRODUCT_SUCCESS = 'FETCH_GLOBAL_PRODUCT_SUCCESS';
+export const FETCH_GLOBAL_PRODUCT_START = 'FETCH_GLOBAL_PRODUCT_FAILURE';
+
 export const FETCH_PRODUCT_FAILURE = 'FETCH_PRODUCT_FAILURE';
 export const FETCH_PRODUCT_SUCCESS = 'FETCH_PRODUCT_SUCCESS';
 export const FETCH_PRODUCT_START = 'FETCH_PRODUCT_FAILURE';
@@ -59,6 +63,20 @@ export const deleteProduct = product => ({
     payload: product
 });
 
+export const fetchGlobalProductsStart = () => ({
+    type: FETCH_GLOBAL_PRODUCT_START,
+});
+
+export const fetchGlobalProductsSuccess = (products) => ({
+    type: FETCH_GLOBAL_PRODUCT_SUCCESS,
+    payload: products
+});
+
+export const fetchGlobalProductsFailure = (errorMessage) => ({
+    type: FETCH_GLOBAL_PRODUCT_FAILURE,
+    payload: errorMessage
+});
+
 export const fetchProductsStart = () => ({
     type: FETCH_PRODUCT_START,
 });
@@ -69,7 +87,7 @@ export const fetchProductsSuccess = (products) => ({
 });
 
 export const fetchProductsFailure = (errorMessage) => ({
-    type: FETCH_PRODUCT_FAILURE,
+    type: FETCH_GLOBAL_PRODUCT_FAILURE,
     payload: errorMessage
 });
 
@@ -90,12 +108,35 @@ export const fetchCategories = (params = { include: false }) => {
                 throw (json.message);
             }
         } catch (error) {
-            fetchProductsFailure(error);
+            fetchGlobalProductsFailure(error);
             return error;
         }
     };
 }
 
+
+export const fetchGlobalProducts = (params) => {
+    return async dispatch => {
+        fetchGlobalProductsStart();
+        try {
+            const response = await fetch(addParams(`${BASE_URL}/products`, params), {
+                method: 'GET',
+                headers: commonHeaders()
+            });
+            const json = await response.json();
+            if (json.success) {
+                dispatch(fetchGlobalProductsSuccess(json.data.items));
+                return json;
+            } else {
+                throw (json.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            fetchGlobalProductsFailure(error);
+            return error;
+        }
+    };
+}
 
 export const fetchProducts = (params) => {
     return async dispatch => {

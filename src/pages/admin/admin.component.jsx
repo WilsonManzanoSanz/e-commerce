@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
 import { createStructuredSelector } from 'reselect';
 import { selectCategories, selectCategoriesIsFetching, selectProducts} from '../../redux/product/product.selector';
-import { fetchCategories, fetchProducts } from '../../redux/product/product.action';
+import { fetchCategories, fetchGlobalProducts } from '../../redux/product/product.action';
 import { Dropdown, DropdownToggle, } from 'reactstrap';
 import EditCategoryPanel from '../../components/edit-category-panel/edit-category-panel.component';
 import ProductCreate from '../../components/product-create/product-create.component';
@@ -136,7 +136,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
     fetchCategories: category =>  dispatch(fetchCategories(category)),
-    fetchProducts: params =>  dispatch(fetchProducts(params))
+    fetchProducts: params =>  dispatch(fetchGlobalProducts(params))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminPage);

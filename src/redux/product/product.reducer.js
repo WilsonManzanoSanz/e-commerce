@@ -4,9 +4,12 @@ import {
     FETCH_CATEGORYS_START, 
     FETCH_CATEGORYS_SUCCESS, 
     FETCH_CATEGORYS_FAILURE, 
-    FETCH_PRODUCT_FAILURE, 
-    FETCH_PRODUCT_SUCCESS, 
-    FETCH_PRODUCT_START, 
+    FETCH_GLOBAL_PRODUCT_FAILURE, 
+    FETCH_GLOBAL_PRODUCT_SUCCESS, 
+    FETCH_GLOBAL_PRODUCT_START, 
+    FETCH_PRODUCT_START,
+    FETCH_PRODUCT_FAILURE,
+    FETCH_PRODUCT_SUCCESS,
     EDIT_CATEGORY,
     DELETE_CATEGORY,
     EDIT_PRODUCT,
@@ -16,6 +19,11 @@ import {
 const INITIAL_STATE = {
     categories: [],
     products: [],
+    fetchProducts: {
+        isLoading: false,
+        payload: {},
+        errorMessage: ''
+    },
     isFetchingCategories: false,
     isFetchingProducts: false,
 };
@@ -58,23 +66,46 @@ const productsReducer = (previousState = INITIAL_STATE, action) => {
                 isFetchingCategories: false,
                 errorMessage: action.payload
             };
-        case FETCH_PRODUCT_START:
+        case FETCH_GLOBAL_PRODUCT_START:
             return {
                 ...previousState,
                 isFetchingProducts: true
             };
-        case FETCH_PRODUCT_SUCCESS:
+        case FETCH_GLOBAL_PRODUCT_SUCCESS:
             return {
                 ...previousState,
                 isFetchingProducts: false,
                 products: action.payload
             };
-        case FETCH_PRODUCT_FAILURE:
+        case FETCH_GLOBAL_PRODUCT_FAILURE:
             return {
                 ...previousState,
                 isFetchingProducts: false,
                 errorMessage: action.payload
-            };    
+            };  
+        case FETCH_PRODUCT_START:
+            return {
+                ...previousState,
+                fetchProducts: {
+                    isLoading: true
+                }
+            };
+        case FETCH_PRODUCT_SUCCESS:
+            return {
+                ...previousState,
+                fetchProducts: {
+                    isLoading: false,
+                    errorMessage: action.payload.errorMessage
+                }
+            };
+        case FETCH_PRODUCT_FAILURE:
+            return {
+                ...previousState,
+                fetchProducts: {
+                    isLoading: false,
+                    payload: action.payload
+                }
+            };      
         default:
             return previousState;
     }
