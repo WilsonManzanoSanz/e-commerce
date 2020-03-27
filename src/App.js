@@ -15,7 +15,7 @@ import CheckoutPage from './pages/checkout/checkout.component';
 import GoogleLoginPage from './pages/google/google.component';
 import AdminPage from './pages/admin/admin.component';
 import ProfilePage from './pages/profile/profile.component';
-import ProductsPage from './pages/products/products.component';
+import ProductsPage from './pages/products/products-page.component';
 
 import PrivateRoute from './components/private-route/private-route.component';
 // import { auth, createUserProfileDocument } from './firebase/firebase.utils';

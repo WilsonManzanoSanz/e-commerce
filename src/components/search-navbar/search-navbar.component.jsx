@@ -4,6 +4,7 @@ import { ReactComponent as SearchIcon } from '../../assets/img/icons/search.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/img/icons/delete-icon.svg';
 import { fetchProducts } from '../../redux/product/product.action';
 import { Link } from 'react-router-dom';
+import { withRouter } from "react-router";
 
 import './search-navbar.style.scss'
 
@@ -56,8 +57,15 @@ class SearchNavbar extends React.Component{
     }
 
     closeSearch = () => {
-        this.setState({showInput: false})
+        this.setState({showInput: false, productSearch: ''})
     }
+
+    keyPress = (e) => {
+        if(e.keyCode === 13){
+           this.props.history.push(`/products?search_query=${this.state.productSearch}`);
+           this.closeSearch();
+        }
+     }
 
 
     render(){
@@ -69,7 +77,7 @@ class SearchNavbar extends React.Component{
                 showInput && 
                 <div className="search-navbar-input">
                     <div className="form-group container">
-                        <input className={`${this.state.productSearch.value ? 'focused': ''} input`} autoComplete="off" name="productSearch" value={this.state.productSearch} placeholder="What're you looking for...?" onChange={this.handleChange}/> 
+                        <input className={`${this.state.productSearch.value ? 'focused': ''} input`} autoComplete="off" name="productSearch" value={this.state.productSearch} placeholder="What're you looking for...?" onKeyDown={this.keyPress} onChange={this.handleChange}/> 
                         <DeleteIcon className="search-navbar-input-delete" onClick={this.closeSearch}/>
                         <div className="search-navbar-items">
                             {
@@ -87,4 +95,4 @@ const mapDispatchToProps = dispatch => ({
     fetchProducts: params =>  dispatch(fetchProducts(params)),
 });
 
-export default connect(null, mapDispatchToProps)(SearchNavbar);
+export default withRouter(connect(null, mapDispatchToProps)(SearchNavbar));

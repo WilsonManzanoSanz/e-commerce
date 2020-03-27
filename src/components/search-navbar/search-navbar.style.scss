@@ -6,9 +6,9 @@
     }
     &-input{
         position: fixed;
-        top: 30px;
+        top: 50px;
         width: 100%;
-        padding: 0 20px;
+        padding: 10px 20px 0;
         left: 0;
         input{
             width: 100%;
@@ -23,6 +23,9 @@
         .form-group{
             position: relative;
             background-color: white;
+            input{
+                margin-top: 0px;
+            }
         }
     }
     &-items{

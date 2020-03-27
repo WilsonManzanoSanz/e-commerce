@@ -1,42 +1,39 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { fetchProducts } from '../../redux/product/product.action';
+import { fetchGlobalProducts } from '../../redux/product/product.action';
 import WithSpinner from '../../components/spinner-page/spinner-page.component';
 import ProductsPage from './products.component';
 import {selectIsFetchingProducts} from '../../redux/product/product.selector';
+const WithSpinnerProducts = WithSpinner(ProductsPage);
 
 class Products extends React.Component{
     constructor(props){
         super(props);
+        const params = new URLSearchParams(props.location.search);
         this.state = {
-            products: []
+            products: [],
+            query: params.get('search_query')
         }
-        this.query = '';
-    }
-
-    componentDidUpdate(){
-
+        // this.query = '';
     }
 
     async componentDidMount(){
-        try{
-            const productsResponse = await fetchProducts({name: this.query});
-
-        } catch(error) {
-            console.error(error);
-        }
     }
 
+    componentDidUpdate(prevProps, prevState){
+        const params = new URLSearchParams(this.props.location.search);
+        const query = params.get('search_query');
+        if(query !== this.state.query){
+            this.setState({'query': query});
+        }
+    }
+    
     render(){
         const {isSearchFetching, ...props} = this.props;
-        const otherProps = {...props, ...this.state.products};
-        const params = new URLSearchParams(this.props.location.search);
-        this.query = params.get('search_query'); // bar
-        const WithSpinnerProducts = WithSpinner(ProductsPage);
         return(<div>
                 {
-                    this.query ? <WithSpinnerProducts isLoading={isSearchFetching} { ...otherProps } />
+                    this.state.query ? <WithSpinnerProducts isLoading={isSearchFetching} { ...props } query={this.state.query} />
                     : <Redirect to="/"></Redirect>
                 }
             </div>);
@@ -46,13 +43,13 @@ class Products extends React.Component{
 
 const mapStateToProps = (state) => {
     return {
-        selectIsFetchingProducts: selectIsFetchingProducts(state.products)
+        selectIsFetchingProducts: selectIsFetchingProducts(state)
     }
 }
 
 
 const mapDispatchToProps = dispatch => ({
-    fetchProducts: params =>  dispatch(fetchProducts(params)),
+    fetchProducts: params =>  dispatch(fetchGlobalProducts(params)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Products);
