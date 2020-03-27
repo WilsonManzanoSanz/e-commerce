@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectProducts } from '../../redux/product/product.selector';
 import { fetchGlobalProducts } from '../../redux/product/product.action';
 import ShopCard from '../../components/shop-card/shop-card.component';
-import FormInput from '../../components/form-input/form-input.component'
+import FormInput from '../../components/form-input/form-input.component';
 
 class Products extends React.Component{
     constructor(props){

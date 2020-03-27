@@ -161,6 +161,29 @@ export const fetchProducts = (params) => {
     };
 }
 
+export const fetchProduct = (id) => {
+    return async dispatch => {
+        fetchProductsStart();
+        try {
+            const response = await fetch((`${BASE_URL}/products/${id}`), {
+                method: 'GET',
+                headers: commonHeaders()
+            });
+            const json = await response.json();
+            if (json.success) {
+                dispatch(fetchProductsSuccess(json.data.items));
+                return json;
+            } else {
+                throw (json.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            fetchProductsFailure(error);
+            return error;
+        }
+    };
+}
+
 export const fetchNewCategory = (category) => {
     return async dispatch => {
         try {

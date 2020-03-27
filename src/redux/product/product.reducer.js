@@ -95,7 +95,7 @@ const productsReducer = (previousState = INITIAL_STATE, action) => {
                 ...previousState,
                 fetchProducts: {
                     isLoading: false,
-                    errorMessage: action.payload.errorMessage
+                    payload: action.payload  
                 }
             };
         case FETCH_PRODUCT_FAILURE:
@@ -103,7 +103,7 @@ const productsReducer = (previousState = INITIAL_STATE, action) => {
                 ...previousState,
                 fetchProducts: {
                     isLoading: false,
-                    payload: action.payload
+                    errorMessage: action.payload
                 }
             };      
         default:
