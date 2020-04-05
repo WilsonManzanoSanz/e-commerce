@@ -17,9 +17,10 @@ import AdminPage from './pages/admin/admin.component';
 import ProfilePage from './pages/profile/profile.component';
 import ProductsPage from './pages/products/products-page.component';
 import ProductPage from './pages/product/product.component';
-
+import ShippingPage from './pages/shipping/shipping.component';
 import PrivateRoute from './components/private-route/private-route.component';
 // import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { REDIRECT_URL } from './core/constant';
 
 import './App.scss';
 
@@ -35,7 +36,17 @@ class App extends React.Component {
   componentWillUnmount(){
   }
 
+  redirectTo(){
+    const url = sessionStorage.getItem(REDIRECT_URL);
+    if(url){
+      sessionStorage.removeItem(REDIRECT_URL);
+      return url;
+    }
+    return '/';
+  }
+
   render (){
+    console.log('session', sessionStorage.getItem(REDIRECT_URL));
     return (
       <div>
         <Navbar />
@@ -48,8 +59,9 @@ class App extends React.Component {
             <Route path="/google/:token" component={GoogleLoginPage}></Route>
             <Route exact path="/checkout" component={CheckoutPage}></Route>
             <Route exact path="/profile" component={ProfilePage}></Route>
+            <Route exact path="/shipping" component={ShippingPage}></Route>
             <PrivateRoute loggedIn={this.props.currentUser && (this.props.currentUser.userType === 2)} component={AdminPage} path="/admin"/> 
-            <Route exact path="/login" render={() => this.props.currentUser ? (<Redirect  to="/"/>) : (<LoginPage />)}></Route>
+            <Route exact path="/login" render={() => this.props.currentUser ? (<Redirect  to={this.redirectTo()}/>) : (<LoginPage />)}></Route>
             <Route component={NotFound}/>
           </Switch>
         </div>

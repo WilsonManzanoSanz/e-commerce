@@ -21,10 +21,10 @@ class GoogleLoginPage extends React.Component {
             window.history.replaceState(null, null, `${window.location.origin}/user/redirect`);
             setToken(json.data.data.token);
             setCurrentUser(json.data.data);
-            window.location.href = '/';
+            this.props.history.push('/login');
           } else {
               alert(json.message);
-              window.location.href = '/';
+              this.props.history.push('/login');
               throw(json.message);
           }
         } catch (error) {

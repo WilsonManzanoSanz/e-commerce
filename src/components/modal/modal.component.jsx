@@ -14,10 +14,12 @@ class Modal extends React.Component {
     render() {
         return <div  className={this.props.show  ? 'custom-modal is-visible': 'custom-modal'} onClick={ e => this.onClose(e) }>
                 <div className="custom-modal-dialog">
-                    <div className="flex custom-modal-header">
-                        <span className="spacer"></span>
-                        <span className="close" id="close-modal-button" onClick={ e => this.onClose(e) }>&#10005;</span>
-                    </div>
+                    {
+                        !this.props.confirmDialog && <div className="flex custom-modal-header">
+                            <span className="spacer"></span>
+                            <span className="close" id="close-modal-button" onClick={ e => this.onClose(e) }>&#10005;</span>
+                        </div>
+                    }
                     <div className="modal-body">
                         {this.props.children}
                     </div>
@@ -28,7 +30,8 @@ class Modal extends React.Component {
 
 Modal.propTypes = {
     onClose: PropTypes.func.isRequired,
-    show: PropTypes.bool.isRequired
+    show: PropTypes.bool.isRequired,
+    confirmDialog: PropTypes.bool
 };
 
 export default Modal;

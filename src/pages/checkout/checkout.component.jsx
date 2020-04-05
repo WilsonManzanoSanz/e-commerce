@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Button from '../../components/button/button.component';
+import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { selectCartItems, selectCartTotal } from '../../redux/cart/cart.selector';
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
@@ -10,16 +12,19 @@ import './checkout.style.scss';
 const CheckoutPage = ({cartItems, total}) => (
     <div className="checkout-page">
         <div className="checkout-header">
-            <div className="header-block">
+            <div className="header-block product">
                 <span>Product</span>
             </div>
-            <div className="header-block">
+            <div className="header-block name">
                 <span>Description</span>
             </div>
-            <div className="header-block">
+            <div className="header-block quantity">
                 <span>Quantity</span>
             </div>
-            <div className="header-block">
+            <div className="header-block price">
+                <span>Price</span>
+            </div>
+            <div className="header-block remove">
                 <span>Remove</span>
             </div>
         </div>
@@ -29,6 +34,9 @@ const CheckoutPage = ({cartItems, total}) => (
         }
         <div className="total">
             <span>TOTAL: ${total}</span>
+            <Link className="no-decoration" to="/shipping">
+                <Button>Go To Shipping</Button>
+            </Link>
         </div>
         <div className="test-warning">
             *Please use the following test credit card for payment* 
