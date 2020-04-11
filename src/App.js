@@ -46,7 +46,6 @@ class App extends React.Component {
   }
 
   render (){
-    console.log('session', sessionStorage.getItem(REDIRECT_URL));
     return (
       <div>
         <Navbar />
