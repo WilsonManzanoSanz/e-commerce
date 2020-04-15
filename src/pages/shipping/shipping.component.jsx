@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { selectShippingInfo } from '../../redux/purchase/purchase.selector';
 import { selectCurrentUser } from '../../redux/user/user.selector';
 import Button from '../../components/button/button.component';
 import Modal from '../../components/modal/modal.component';
 import { REDIRECT_URL } from '../../core/constant';
+import { setShippingInfo } from '../../redux/purchase/purchase.action';
 
 import './shipping.style.scss'
 import ShippingForm from '../../components/shipping-form/shipping-form.component';
@@ -15,6 +17,7 @@ class ShippingPage extends React.Component{
         this.state  = { 
             shippingInfo: {
                 id: 0,
+                ...props.currentShipping
             }
         };
     }
@@ -25,17 +28,12 @@ class ShippingPage extends React.Component{
     }
 
     handleSubmit = async (formValues) => {
-        // const { updateUser } = this.props;
-        try {
-            const payload = this.deleteUnsedProperties(formValues);
-            console.log(payload);
-        } catch (error) {
-            console.error(error);
-        }
+        this.props.setShippingInfo(formValues);
     }
 
     loadUserInfo = () => {
         this.setState({shippingInfo: this.props.currentUser});
+        this.props.setShippingInfo(this.props.currentUser);
     }
 
     deleteUnsedProperties(object){
@@ -76,6 +74,11 @@ class ShippingPage extends React.Component{
 
 const mapStateToProps = createStructuredSelector({
     currentUser: selectCurrentUser,
+    currentShipping: selectShippingInfo
 });
 
-export default connect(mapStateToProps)(ShippingPage);
+const mapDispatchToProps = dispatch => ({
+    setShippingInfo: (user) => dispatch(setShippingInfo(user)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShippingPage);
