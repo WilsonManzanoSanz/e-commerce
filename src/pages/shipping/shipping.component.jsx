@@ -11,6 +11,41 @@ import { setShippingInfo } from '../../redux/purchase/purchase.action';
 import './shipping.style.scss'
 import ShippingForm from '../../components/shipping-form/shipping-form.component';
 
+const  data={
+    //Parametros compra (obligatorio)
+    name: "Vestido Mujer Primavera",
+    description: "Vestido Mujer Primavera",
+    invoice: "1",
+    currency: "cop",
+    amount: "12000",
+    tax_base: "0",
+    tax: "0",
+    country: "co",
+    lang: "en",
+
+    //Onpage="false" - Standard="true"
+    external: "false",
+
+
+    //Atributos opcionales
+    extra1: "extra1",
+    extra2: "extra2",
+    extra3: "extra3",
+    // confirmation: "http://secure2.payco.co/prueba_curl.php",
+    response: "http://localhost:3000/confirmation",
+
+    //Atributos cliente
+    email_billing: 'wilson.manzanosanz@gmail.com',
+    name_billing: "Andres Perez",
+    address_billing: "Carrera 19 numero 14 91",
+    type_doc_billing: "cc",
+    mobilephone_billing: "3050000000",
+    number_doc_billing: "100000000",
+
+   //atributo deshabilitación metodo de pago
+    // methodsDisable: ["TDC", "PSE","SP","CASH","DP"]
+};
+
 class ShippingPage extends React.Component{
     constructor(props){
         super(props);
@@ -48,6 +83,10 @@ class ShippingPage extends React.Component{
         return defaultValues;
     }
 
+    goCheckout = () => {
+        window.handler.open(data);
+    }
+
     render(){
         return(
         <div className="shipping-page">
@@ -61,6 +100,9 @@ class ShippingPage extends React.Component{
             </div>
             <div className="card">
                 <ShippingForm handleSubmit={this.handleSubmit} info={this.state.shippingInfo} key={this.state.shippingInfo.id}></ShippingForm>
+            </div>
+            <div>
+                <Button classType="" onClick={this.goCheckout}>CHECKOUT</Button>
             </div>
             <Modal show={!this.props.currentUser} onClose={() => console.log('noclose')} confirmDialog={true}>
                 <h2 style={{textAlign: 'center', paddingTop: '10px'}} className="title">Ups! One more step</h2> 

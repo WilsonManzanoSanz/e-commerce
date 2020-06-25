@@ -18,6 +18,7 @@ import ProfilePage from './pages/profile/profile.component';
 import ProductsPage from './pages/products/products-page.component';
 import ProductPage from './pages/product/product.component';
 import ShippingPage from './pages/shipping/shipping.component';
+import ConfirmationPage from './pages/confirmation/confirmation.component';
 import PrivateRoute from './components/private-route/private-route.component';
 // import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { REDIRECT_URL } from './core/constant';
@@ -56,6 +57,7 @@ class App extends React.Component {
             <Route path="/products" component={ProductsPage}></Route>
             <Route path="/product/:id" component={ProductPage}></Route>
             <Route path="/google/:token" component={GoogleLoginPage}></Route>
+            <Route path="/confirmation" component={ConfirmationPage}></Route>
             <Route exact path="/checkout" component={CheckoutPage}></Route>
             <Route exact path="/profile" component={ProfilePage}></Route>
             <Route exact path="/shipping" component={ShippingPage}></Route>
