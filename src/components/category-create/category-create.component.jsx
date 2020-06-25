@@ -17,9 +17,10 @@ class CategoryCreate extends React.Component{
         this.state = {
             category: props.initialState.category,
             validationMessage: '',
-            id: props.initialState.id
+            id: props.initialState.id,
+            fileName: props.initialState.photoUrl,
         };
-
+        console.log(props);
         this.file = null;
     }
     
@@ -56,8 +57,10 @@ class CategoryCreate extends React.Component{
         try {
             if(edit){
                 await this.updateCategory();
+                this.state({fileName: ''});
             } else {
                 await this.addNewCategory();
+                this.state({fileName: ''});
             }
             this.setState({category: ''});
             onClose();
@@ -89,10 +92,11 @@ class CategoryCreate extends React.Component{
     
     onChangeHandler = (event) =>{
         this.file = event.target.files[0];
+        this.setState({fileName: event.target.files[0].name})
     }
 
     render(){
-        const { validationMessage } = this.state;
+        const { validationMessage, fileName } = this.state;
         const { edit } = this.props;
         const title = edit ? 'Edit' : 'Create';
         return (
@@ -111,13 +115,13 @@ class CategoryCreate extends React.Component{
                             id="select-disable"
                             value={`${this.state.disable}`}
                             onChange={this.handleChange}
-
                             name="disable"
                             >
                             <MenuItem key={0} value={0}>False</MenuItem>
                             <MenuItem key={1} value={1}>True</MenuItem>
                         </Select>
                     </FormControl>
+                    <p>Filename {fileName ? fileName.replace('https://e-commerce-react-files.s3.amazonaws.com/', '') : ''} </p>
                     <Button classType="inverted" type="button" onClick={this.saveFile}>UPLOAD FILE</Button>
                     <p className="error-message">{ validationMessage }</p>
                     <input type="file" name="file" accept="image/*" id="category-image" style={{display:'none'}} onChange={this.onChangeHandler}/>

@@ -74,7 +74,7 @@ class EditCategoryPanel extends React.Component{
                         <div className="edit-category-item" key={value.id}>
                                 <span className="edit-category-item-name">{value.category}</span>
                                 <span className="spacer"></span>
-                                <EditIcon className="edit-category-item-icon" onClick={() => this.showCategory(new Category(value.id, value.category))}></EditIcon>
+                                <EditIcon className="edit-category-item-icon" onClick={() => this.showCategory(new Category(value.id, value.category, value.photoUrl))}></EditIcon>
                                 <DeleteIcon className="edit-category-item-icon" onClick={() => this.toggleConfirmDialog(value.id)}></DeleteIcon>
                         </div>
                         )
