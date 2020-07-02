@@ -92,7 +92,7 @@ class CategoryCreate extends React.Component{
     
     onChangeHandler = (event) =>{
         this.file = event.target.files[0];
-        this.setState({fileName: event.target.files[0].name})
+        this.setState({fileName: event.target.files[0].name});
     }
 
     render(){
@@ -121,7 +121,9 @@ class CategoryCreate extends React.Component{
                             <MenuItem key={1} value={1}>True</MenuItem>
                         </Select>
                     </FormControl>
-                    <p>Filename {fileName ? fileName.replace('https://e-commerce-react-files.s3.amazonaws.com/', '') : ''} </p>
+                    {
+                        fileName && <p className="filename">Filename {fileName ? fileName.replace('https://e-commerce-react-files.s3.amazonaws.com/', '') : ''} </p>
+                    }
                     <Button classType="inverted" type="button" onClick={this.saveFile}>UPLOAD FILE</Button>
                     <p className="error-message">{ validationMessage }</p>
                     <input type="file" name="file" accept="image/*" id="category-image" style={{display:'none'}} onChange={this.onChangeHandler}/>

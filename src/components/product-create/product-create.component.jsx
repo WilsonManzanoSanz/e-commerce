@@ -17,11 +17,11 @@ class ProductCreate extends React.Component{
     constructor(props) {
         super(props);
 
-        this.state = { ...props.initialState, 
+        this.state = { ...props.initialState,
             validationMessage: '',
+            fileName: props.initialState.photoUrl,
         };
         this.file = null;
-
     }
 
     handleChange = (e) => {
@@ -84,11 +84,12 @@ class ProductCreate extends React.Component{
 
     onChangeHandler = (event) =>{
         this.file = event.target.files[0];
+        this.setState({fileName: event.target.files[0].name});
     }
     
     render(){
         const { categories , edit } = this.props;
-        const { validationMessage } = this.state;
+        const { validationMessage, fileName } = this.state;
         const title = edit ? 'Edit' : 'Create';
         return (
             <div className="product-create">
@@ -120,13 +121,15 @@ class ProductCreate extends React.Component{
                             id="select-disable"
                             value={`${this.state.disable}`}
                             onChange={this.handleChange}
-
                             name="disable"
                             >
                             <MenuItem key={0} value={0}>False</MenuItem>
                             <MenuItem key={1} value={1}>True</MenuItem>
                         </Select>
                     </FormControl>
+                    {
+                        fileName && <p className="filename">Filename {fileName ? fileName.replace('https://e-commerce-react-files.s3.amazonaws.com/', '') : ''} </p>
+                    }
                     <Button classType="inverted" type="button" onClick={this.saveFile}>UPLOAD FILE</Button>
                     <p className="error-message">{ validationMessage }</p>
                     <input type="file" accept="image/*" name="file" id="product-image" style={{display:'none'}} onChange={this.onChangeHandler}/>
