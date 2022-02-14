@@ -16,7 +16,8 @@ class SignUp extends React.Component {
             password: '',
             displayName: '',
             confirmPassword: '',
-            errorMessage: ''
+            errorMessage: '',
+            loading: false,
         };
     }
 
@@ -31,6 +32,7 @@ class SignUp extends React.Component {
             this.setState({errorMessage: ''});
         }
         try {
+            this.setState({loading: true})
             const res = await signUpWithPassword(this.state);
             if(!res.success){
                 console.log('triggered', res);
@@ -40,6 +42,8 @@ class SignUp extends React.Component {
         } catch (error) {
             console.log('triggered', error);
             this.setState({errorMessage:error});
+        } finally {
+            this.setState({loading: false});
         }
     }
 

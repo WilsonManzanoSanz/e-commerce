@@ -9,6 +9,8 @@ import { Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
 import Spinner from '../../components/spinner/spinner.component';
 import { updateUser,  setCurrentUser } from '../../redux/user/user.action';
 import { Redirect } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import  DateInput  from '../../components/date-picker/date-picker.component';
 
 import './profile.style.scss';
@@ -31,6 +33,7 @@ class ProfilePage extends React.Component{
             departments: [],
             cities: [],
             loadingCities: false,
+            imageUploading: false
         };
     }
 
@@ -87,10 +90,12 @@ class ProfilePage extends React.Component{
             return;
         }
         try {
+            this.setState({imageUploading: true});
             let fileURL = {};
             if(this.file){
                 fileURL = await uploadFile(this.file);
             }
+            this.setState({imageUploading: false});
             const newUser = this.deleteUnsedProperties({...this.state, ...{photoUrl: fileURL.path}});
             await updateUser(newUser);
             // this.setState({category: ''});
@@ -98,6 +103,9 @@ class ProfilePage extends React.Component{
         } catch (error) {
             // onClose();
             console.error(error);
+        } finally { 
+            this.setState({imageUploading: false});
+            toast.error("Something went wrong");
         }
     }
 
@@ -207,7 +215,7 @@ class ProfilePage extends React.Component{
                         */
                     }
                     <p className="error-message">{ this.validationMessage }</p>
-                    <input type="file" name="file" accept="image/*" id="category-image" style={{display:'none'}} onChange={this.onChangeHandler}/>
+                    { this.state.imageUploading ? (<Spinner/>) :  <input type="file" name="file" accept="image/*" id="category-image" style={{display:'none'}} onChange={this.onChangeHandler}/> }
                     <div className="buttons">
                         { userResponse.loading ? (
                             <Spinner/>
@@ -221,6 +229,7 @@ class ProfilePage extends React.Component{
                     </div>
                 </form>
             </div>
+            <ToastContainer/>
         </div>);
     }
 } 

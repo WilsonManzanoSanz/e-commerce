@@ -96,7 +96,7 @@ export class AdminPage extends React.Component{
                 </div>
                 <div>
                     <Modal onClose={() => this.showCategory(new Category(null, ''))} show={this.state.categoryCreate.edit}>
-                        <CategoryCreate  edit={this.state.categoryCreate.edit} initialState={this.state.categoryCreate.initialState}></CategoryCreate>
+                        <CategoryCreate onClose={this.showCategory} edit={this.state.categoryCreate.id} initialState={this.state.categoryCreate.initialState}></CategoryCreate>
                     </Modal>
                     <Modal onClose={this.showProduct} show={this.state.productModal}>
                         <ProductCreate onClose={this.showProduct}></ProductCreate>
