@@ -1,11 +1,11 @@
-import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/firebase.utils';
+// import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/firebase.utils';
 
 export const UPDATE_COLLECTIONS = 'UPDATE_COLLECTIONS';
 export const FETCH_COLLECTIONS_START = 'FETCH_COLLECTIONS_START';
 export const FETCH_COLLECTIONS_SUCCESS = 'FETCH_COLLECTIONS_SUCESS';
 export const FETCH_COLLECTIONS_FAILURE = 'FETCH_COLLECTIONS_FAILURE';
 
-const collectionRef = firestore.collection('collections');
+// const collectionRef = firestore.collection('collections');
 
 export const updateCollections = (collectionsMap) => ({
     type: UPDATE_COLLECTIONS,
@@ -29,11 +29,7 @@ export const fetchCollectionsFailure = (errorMessage) => ({
 export const fetchCollectionsStartAsync = () => {
     return dispatch => {
         dispatch(fetchCollectionsStart());
-        collectionRef.get().then(async snapshot => {
-            const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-            dispatch(fetchCollectionsSuccess(collectionsMap))
-            //this.setState({loading: false});
-        }).catch(error => dispatch(fetchCollectionsFailure(error.message)));
+        dispatch(fetchCollectionsSuccess([]))
     };
     
 }
