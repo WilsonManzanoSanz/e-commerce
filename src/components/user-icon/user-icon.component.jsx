@@ -1,35 +1,24 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {createStructuredSelector} from 'reselect';
-import {closeCartHidden} from '../../redux/cart/cart.action';
-import {toggleUserDropdown, closeUserDropdown} from '../../redux/user/user.action';
-import {selectCartHidden} from '../../redux/cart/cart.selector';
-import {selectDropdownStatus} from '../../redux/user/user.selector';
+import React, {useRef} from 'react';
+import {closeUserDropdown} from '../../redux/user/user.action';
 import UserNavDropdown from '../user-icon-dropdown/user-icon-dropdown.component'
 import { ReactComponent as Icon } from '../../assets/img/user-icon.svg';
+import useDropdownToggler from '../../shared/hooks/use-dropdown-toggler';
 
 import './user-icon.style.scss';
 
-const UserIcon = ({dropdownStatus, toggleUserDropdown, closeCartHidden, closeUserDropdown}) => {
-    // const [isOpen, toggleStatus] = useState(false);
+const UserIcon = () => {
+    const dropdownContent = useRef(null);
+    const trigger = useRef(null);
+    const {isOpen, toggleDropdownEvent} = useDropdownToggler(dropdownContent, trigger);
+
     return(
         <div className="user-icon">
-            <Icon onClick={(e) => {  closeCartHidden(); toggleUserDropdown()}} />
+            <Icon ref={trigger} onClick={() => {toggleDropdownEvent()}} />
             {
-                !dropdownStatus ? null : <UserNavDropdown onClose={closeUserDropdown} />
+                isOpen ? <UserNavDropdown onClose={closeUserDropdown} ref={dropdownContent} /> : null
             }
         </div>
     );
 };
-const mapStateToProps = createStructuredSelector({
-    hiddenCart: selectCartHidden,
-    dropdownStatus: selectDropdownStatus,
-})
 
-const mapDispatchToProps = dispatch => ({
-    closeCartHidden: () => dispatch(closeCartHidden()),
-    toggleUserDropdown: () => dispatch(toggleUserDropdown()),
-    closeUserDropdown: () => dispatch(closeUserDropdown()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserIcon);
+export default UserIcon;

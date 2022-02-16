@@ -1,16 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-
 import { selectCartItems } from '../../redux/cart/cart.selector';
 import CartItem from '../cart-item/cart-item.component';
 import Button from '../button/button.component';
+import { useHistory } from "react-router-dom";
 
 import './cart-dropdown.style.scss';
 // import { toggleCartHidden } from '../../redux/cart/cart.action';
 
-const CartDropdown = ({ cartItems, history, onClose }) => (
-    <div className="cart-dropdown">
+const CartDropdown = React.forwardRef(({ cartItems, onClose }, ref) => {
+    let history = useHistory();
+    return (
+    <div className="cart-dropdown" ref={ref}>
         <div className="cart-items">
             {
                 cartItems.length ? (
@@ -22,10 +23,11 @@ const CartDropdown = ({ cartItems, history, onClose }) => (
         </div>
         <Button onClick={() => { onClose(); history.push('/checkout'); }}>GO TO CHECKOUT</Button>
     </div>
-);
+    );
+});
 
 const mapStateProps = (state) => ({
     cartItems: selectCartItems(state)
 })
 
-export default withRouter(connect(mapStateProps)(CartDropdown));
+export default connect(mapStateProps, null, null, {forwardRef: true})(CartDropdown);

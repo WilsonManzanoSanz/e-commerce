@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from "react-router-dom";
+import {useHistory} from 'react-router-dom';
 import { selectCurrentUser} from '../../redux/user/user.selector';
 // import { setCurrentUser } from '../../redux/user/user.action';
 import { logOut } from '../../redux/user/user.action';
@@ -10,9 +10,10 @@ import { createStructuredSelector } from 'reselect';
 
 import './user-icon-dropdown.style.scss';
 
-const UserNavDropdown = ({currentUser, logOut, history, onClose}) => {
+const UserNavDropdown = React.forwardRef(({currentUser, logOut, onClose}, ref) => {
+    let history = useHistory();
     return (
-        <div className="user-dropdown">
+        <div className="user-dropdown" ref={ref}>
         {
             currentUser ? (
                 <div>
@@ -30,7 +31,7 @@ const UserNavDropdown = ({currentUser, logOut, history, onClose}) => {
         
     </div>
     );  
-};
+});
 
 const mapStateToProps = createStructuredSelector({
     currentUser: selectCurrentUser,
@@ -42,4 +43,4 @@ const mapDispatchToProps = dispatch => ({
     logOut: () => dispatch(logOut())
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserNavDropdown));
+export default connect(mapStateToProps, mapDispatchToProps, null, {forwardRef: true})(UserNavDropdown);
