@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-// import { auth } from '../../firebase/firebase.utils';
+import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import  CartIcon  from '../cart-icon/cart-icon.component';
@@ -11,14 +10,16 @@ import { selectCurrentUser} from '../../redux/user/user.selector';
 import { setCurrentUser } from '../../redux/user/user.action';
 import { logOut } from '../../redux/user/user.action';
 import { selectIsMobile } from '../../redux/ui/ui.selector';
-
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { ReactComponent as Logo } from '../../assets/img/logo.svg';
 import { ReactComponent as HamburguerMenu } from '../../assets/img/hamburguer.svg';
 
 import './navbar.style.scss';
 
-const Navbar = ({ currentUser, hidden, isMobile, setCurrentUser, logOut}) => {
+const Navbar = ({ currentUser, isMobile, logOut}) => {
+    const history = useHistory();
     const [isOpen, setOpenStatus] = useState(false);
+    const [isAdminDropdown, toggleAdminDropdown] = useState(false);
     return (
         <div className="header">
             <div className="wrapper container navbar">
@@ -35,9 +36,15 @@ const Navbar = ({ currentUser, hidden, isMobile, setCurrentUser, logOut}) => {
                                 CONTACT
                             </Link>
                             {   currentUser && currentUser.role && currentUser.userType === 2 &&
-                                <Link className="item" onClick={() => setOpenStatus(!isOpen)} to="/admin">
-                                    ADMIN
-                                </Link>
+                                <Dropdown  className="item item--dropdown" isOpen={isAdminDropdown} toggle={() => toggleAdminDropdown(!isAdminDropdown)} style={{paddingRight: '20px'}}>
+                                    <DropdownToggle color={'button'}>
+                                        EDIT 
+                                    </DropdownToggle>
+                                    <DropdownMenu>
+                                        <DropdownItem onClick={() => history.push('/admin/products')} key={1}>Admin Products</DropdownItem>
+                                        <DropdownItem onClick={() => history.push('/admin/categories')} key={2}>Admin Catagories</DropdownItem>
+                                    </DropdownMenu>  
+                                </Dropdown>
                             } 
                             <UserIcon />
                             <CartIcon />

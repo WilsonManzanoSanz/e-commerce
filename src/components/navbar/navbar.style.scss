@@ -35,6 +35,14 @@
       .item {
         padding: 10px 15px;
         margin-top: auto;
+        width: 60px;
+        box-sizing: border-box;
+        &--dropdown{
+          padding-bottom: 3px;
+          button{
+            font-weight: 500;
+          }
+        }
       }
       .cart-icon{
         margin-top: auto;

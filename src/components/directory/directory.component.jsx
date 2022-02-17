@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuItem from '../menu-item/menu-item.component';
+import HomePageCard from '../menu-item/menu-item.component';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCategories, } from '../../redux/product/product.selector';
@@ -10,7 +10,7 @@ import './directory.style.scss';
 const Directory = ({ categories }) => (
     <div className='directory-menu'>
       {categories.map(({ id, ...otherSectionProps }) => (
-        <MenuItem key={id} {...otherSectionProps} />
+        <HomePageCard key={id} {...otherSectionProps} />
       ))}
     </div>
 );

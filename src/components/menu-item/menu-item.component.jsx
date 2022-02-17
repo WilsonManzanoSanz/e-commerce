@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import './menu-item.style.scss';
 
-const MenuItem = ({category, photoUrl, size, history, linkUrl, match }) => {
+const HomePageCard = ({category, photoUrl, size, history,}) => {
     return (
     <div className={`${size} menu-item`} onClick={() => history.push(`shop/${category.toLowerCase()}`)}>
         <div className="background-image" style={{
@@ -16,4 +16,4 @@ const MenuItem = ({category, photoUrl, size, history, linkUrl, match }) => {
     </div>);
 }
 
-export default withRouter(MenuItem);
+export default withRouter(HomePageCard);
