@@ -2,10 +2,11 @@ import React, {useState} from 'react';
 import FormInput from '../form-input/form-input.component';
 import { useDispatch } from 'react-redux';
 import { uploadFile } from '../../core/upload';
-import { fetchNewCategory } from '../../redux/product/product.action';
+import { fetchNewCategory, fetchUpdateCategory } from '../../redux/product/product.action';
 import Button from '../button/button.component';
 
 const CategoryCreate = ({initialState: category, onClose}: {initialState: any, onClose: Function}) => {
+
     const [categoryForm, setCategory] = useState(category);
     const [validationMessage, setValidationMessage] = useState('');
     let file: any = null;
@@ -15,19 +16,24 @@ const CategoryCreate = ({initialState: category, onClose}: {initialState: any, o
     const handleSubmit = async (event: any) => {
         event.preventDefault();
 
-        if(!file){
+        if(!file && !categoryForm.photoUrl){
             setValidationMessage( 'Upload a file');
             return;
         }
         try {
-            const response = await uploadFile(file);
-            await dispatch(fetchNewCategory({...categoryForm, ...{photoUrl: response.path}}));
+            let photoUrl = categoryForm.photoUrl;
+            if(file){
+                const response = await uploadFile(file);
+                photoUrl = response.path;
+            }
+            categoryForm.id ? await dispatch(fetchUpdateCategory({...categoryForm, ...{photoUrl}})) : await dispatch(fetchNewCategory({...categoryForm, ...{photoUrl}}));
             onClose(categoryForm);
             setCategory({category: ''});
         } catch (error) {
             onClose({category: ''});
         }
     }
+    
 
     const handleChange = (e: any) => {
         const { value, name } = e.target;

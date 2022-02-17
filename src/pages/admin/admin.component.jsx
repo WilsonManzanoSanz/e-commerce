@@ -9,7 +9,6 @@ import { fetchCategories, fetchProducts } from '../../redux/product/product.acti
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import CategoryCreate from '../../components/category-create/category-create.component';
 import ProductCreate from '../../components/product-create/product-create.component';
-import CategoryList from '../../components/category-list/category-list.component';
 import ShopCard from '../../components/shop-card/shop-card.component';
 import { Category } from '../../core/models/category';
 
@@ -101,9 +100,6 @@ export class AdminPage extends React.Component{
                     <Modal onClose={this.showProduct} show={this.state.productModal}>
                         <ProductCreate onClose={this.showProduct}></ProductCreate>
                     </Modal>
-                </div>
-                <div>
-                    <CategoryList categories={this.props.categories}/>
                 </div>
             <hr></hr>
             <div className="flex">

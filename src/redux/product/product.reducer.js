@@ -1,12 +1,14 @@
+import {ArrayInsert} from '../../shared/utils/utils';
 import { 
     ADD_CATEGORY, 
     ADD_PRODUCT, 
+    UPDATE_CATEGORY,
     FETCH_CATEGORYS_START, 
     FETCH_CATEGORYS_SUCCESS, 
     FETCH_CATEGORYS_FAILURE, 
     FETCH_PRODUCT_FAILURE, 
     FETCH_PRODUCT_SUCCESS, 
-    FETCH_PRODUCT_START 
+    FETCH_PRODUCT_START, 
 } from './product.action';
 
 const INITIAL_STATE = {
@@ -21,6 +23,9 @@ const productsReducer = (previousState = INITIAL_STATE, action) => {
     switch (action.type) {
         case ADD_CATEGORY:
             return { ...previousState, categories: [...previousState.categories, action.payload] };
+        case UPDATE_CATEGORY:
+            const idx = previousState.categories.findIndex(el => el.id === action.payload.id);
+            return { ...previousState, categories: ArrayInsert(previousState.categories, action.payload, idx) };
         case ADD_PRODUCT:
             return { ...previousState, products: [...previousState.products, action.payload] };
         case FETCH_CATEGORYS_START:
