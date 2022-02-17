@@ -5,7 +5,7 @@ import './menu-item.style.scss';
 
 const HomePageCard = ({category, photoUrl, size, history,}) => {
     return (
-    <div className={`${size} menu-item`} onClick={() => history.push(`shop/${category.toLowerCase()}`)}>
+    <div className={`${size || ''} menu-item`} onClick={() => history.push(`shop/${category.toLowerCase()}`)}>
         <div className="background-image" style={{
             backgroundImage: `url(${photoUrl})`
         }}/>

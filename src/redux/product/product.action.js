@@ -49,7 +49,7 @@ export const fetchCategorysFailure = (errorMessage) => ({
 });
 
 
-export const fetchCategories = (params = {include: false}) => {
+export const fetchCategories = (params) => {
     return async dispatch => {
         fetchCategorysStart();
         const url = new URL(`${BASE_URL}/categories`);
