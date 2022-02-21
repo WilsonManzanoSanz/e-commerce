@@ -18,11 +18,16 @@ import ProfilePage from './pages/profile/profile.component';
 import Categories from './pages/catogories/categories';
 
 import PrivateRoute from './components/private-route/private-route.component';
-// import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import './App.scss';
 
 class App extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.queryClient = new QueryClient();
+  }
 
   componentDidMount(){
     const { getUser, currentUser } = this.props;
@@ -36,22 +41,24 @@ class App extends React.Component {
 
   render (){
     return (
-      <div>
-        <Navbar />
-        <div className="container wrapper">
-          <Switch>
-            <Route exact path="/" component={HomePage}></Route>
-            <Route path="/shop" component={ShopPage}></Route>
-            <Route path="/google/:token" component={GoogleLoginPage}></Route>
-            <Route exact path="/checkout" component={CheckoutPage}></Route>
-            <Route exact path="/profile" component={ProfilePage}></Route>
-            <PrivateRoute loggedIn={this.props.currentUser && (this.props.currentUser.userType === 2)} component={AdminPage} path="/admin/products"/> 
-            <PrivateRoute loggedIn={this.props.currentUser && (this.props.currentUser.userType === 2)} component={Categories} path="/admin/categories"/> 
-            <Route exact path="/login" render={() => this.props.currentUser ? (<Redirect  to="/"/>) : (<LoginPage />)}></Route>
-            <Route component={NotFound}/>
-          </Switch>
+      <QueryClientProvider client={this.queryClient}>
+        <div>
+            <Navbar />
+            <div className="container wrapper">
+              <Switch>
+                <Route exact path="/" component={HomePage}></Route>
+                <Route path="/shop" component={ShopPage}></Route>
+                <Route path="/google/:token" component={GoogleLoginPage}></Route>
+                <Route exact path="/checkout" component={CheckoutPage}></Route>
+                <Route exact path="/profile" component={ProfilePage}></Route>
+                <PrivateRoute loggedIn={this.props.currentUser && (this.props.currentUser.userType === 2)} component={AdminPage} path="/admin/products"/> 
+                <PrivateRoute loggedIn={this.props.currentUser && (this.props.currentUser.userType === 2)} component={Categories} path="/admin/categories"/> 
+                <Route exact path="/login" render={() => this.props.currentUser ? (<Redirect  to="/"/>) : (<LoginPage />)}></Route>
+                <Route component={NotFound}/>
+              </Switch>
+            </div>
         </div>
-      </div>
+      </QueryClientProvider>
     );
   }
 }
