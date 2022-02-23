@@ -1,4 +1,4 @@
-import { BASE_URL } from '../core/config';
+import { BASE_URL } from './http-const';
 const URL = `${BASE_URL}/upload`.replace(':3001', ':3002');
 
 export const uploadFile = (file) => {

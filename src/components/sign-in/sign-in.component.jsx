@@ -4,7 +4,7 @@ import Button from '../button/button.component';
 import { connect } from 'react-redux';
 import { signInWithPassword } from '../../redux/user/user.action';
 import { setCurrentUser } from '../../redux/user/user.action';
-import { BASE_URL } from '../../core/config';
+import { BASE_URL } from '../../core/http-const';
 
 // import { signInWithGoogle } from '../../firebase/firebase.utils';
 
