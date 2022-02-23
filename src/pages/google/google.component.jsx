@@ -1,12 +1,13 @@
 import React from 'react';
-import {BASE_URL} from '../../core/config';
+import {BASE_URL} from '../../core/http-const';
 import { setCurrentUser, setToken } from '../../redux/user/user.action';
 import {connect} from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 class GoogleLoginPage extends React.Component {
 
     async componentDidMount(){
-        const { setCurrentUser, setToken } = this.props;
+        const { setCurrentUser, setToken, history } = this.props;
         try {
             const response = await fetch(`${BASE_URL}/token`, {
             method: 'GET', 
@@ -21,10 +22,10 @@ class GoogleLoginPage extends React.Component {
             window.history.replaceState(null, null, `${window.location.origin}/user/redirect`);
             setToken(json.data.data.token);
             setCurrentUser(json.data.data);
-            window.location.href = '/';
+            history.push('/');
           } else {
               alert(json.message);
-              window.location.href = '/';
+              history.push('/');
               throw(json.message);
           }
         } catch (error) {
@@ -41,4 +42,4 @@ const mapDispatchToProps = dispatch => ({
     setToken:(token) => dispatch(setToken(token))
 });
 
-export default connect(null, mapDispatchToProps)(GoogleLoginPage);
+export default withRouter(connect(null, mapDispatchToProps)(GoogleLoginPage));
