@@ -54,6 +54,8 @@ class ProductCreate extends React.Component{
             });
             onClose();
         } catch (error) {
+            alert('Something wrong happens');
+            console.error(error);
             onClose();
         }
     }
