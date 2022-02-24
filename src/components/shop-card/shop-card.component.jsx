@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../button/button.component';
+import Button from '../ui/button/button.component';
 import { connect } from 'react-redux';
 import { addItem } from '../../redux/cart/cart.action';
 
@@ -14,7 +14,7 @@ const ShopCard = ({ item, addItem }) => {
             <div className="content-footer">
                 <span className="name">{name}</span>
                 <span className="price">${price}</span>
-            </div>
+            </div>∫
             <Button classType="inverted" onClick={() => addItem(item)}>Add to Cart</Button>
         </div>
     );

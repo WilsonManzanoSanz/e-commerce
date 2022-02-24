@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import CategoryCreate from "../../components/category-create/category-create.component";
-import Modal from "../../components/modal/modal.component";
+import Modal from "../../components/ui/modal/modal.component";
 import { fetchCategories } from "../../redux/product/product.action";
 import { selectCategories } from "../../redux/product/product.selector";
 import Category from "../../components/category/category";

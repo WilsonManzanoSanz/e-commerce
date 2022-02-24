@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from '../../components/button/button.component';
-import Modal from '../../components/modal/modal.component';
+import Button from '../../components/ui/button/button.component';
+import Modal from '../../components/ui/modal/modal.component';
 import { connect } from 'react-redux';
 import { Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
 import { createStructuredSelector } from 'reselect';

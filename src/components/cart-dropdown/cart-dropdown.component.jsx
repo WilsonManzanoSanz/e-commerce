@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { selectCartItems } from '../../redux/cart/cart.selector';
 import CartItem from '../cart-item/cart-item.component';
-import Button from '../button/button.component';
+import Button from './../ui/button/button.component';
 import { useHistory } from "react-router-dom";
 
 import './cart-dropdown.style.scss';

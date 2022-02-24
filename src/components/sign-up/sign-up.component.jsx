@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import FormInput from '../form-input/form-input.component';
-import Button from '../button/button.component';
+import FormInput from '../ui/form-input/form-input.component';
+import Button from '../ui/button/button.component';
 // import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 import { signUpWithPassword } from '../../redux/user/user.action';
 

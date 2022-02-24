@@ -1,6 +1,6 @@
 $sub-color: grey;
 $main-color: black;
-@import '../../variable.scss';
+@import '../../../variable.scss';
 
 @mixin shrinkLabel {
   top: -14px;

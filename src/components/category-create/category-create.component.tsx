@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import FormInput from '../form-input/form-input.component';
+import FormInput from '../ui/form-input/form-input.component';
 import { useDispatch } from 'react-redux';
 import { uploadFile } from '../../core/upload';
 import { fetchNewCategory, fetchUpdateCategory } from '../../redux/product/product.action';
-import Button from '../button/button.component';
+import Button from '../ui/button/button.component';
 
 const CategoryCreate = ({initialState: category, onClose}: {initialState: any, onClose: Function}) => {
 

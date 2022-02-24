@@ -1,7 +1,7 @@
 import React from 'react';
 
-import FormInput from '../form-input/form-input.component';
-import Button from '../button/button.component';
+import FormInput from '../ui/form-input/form-input.component';
+import Button from '../ui/button/button.component';
 import { connect } from 'react-redux';
 import { fetchNewProduct } from '../../redux/product/product.action';
 import { selectCategories, } from '../../redux/product/product.selector';

@@ -5,7 +5,7 @@ import { selectCurrentUser} from '../../redux/user/user.selector';
 // import { setCurrentUser } from '../../redux/user/user.action';
 import { logOut } from '../../redux/user/user.action';
 import { selectIsMobile } from '../../redux/ui/ui.selector';
-import Button from '../button/button.component';
+import Button from '../ui/button/button.component';
 import { createStructuredSelector } from 'reselect';
 
 import './user-icon-dropdown.style.scss';
