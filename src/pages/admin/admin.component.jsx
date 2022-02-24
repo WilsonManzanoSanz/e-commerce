@@ -6,11 +6,10 @@ import { Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
 import { createStructuredSelector } from 'reselect';
 import { selectCategories, selectCategoriesIsFetching, selectProducts} from '../../redux/product/product.selector';
 import { fetchCategories, fetchProducts } from '../../redux/product/product.action';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import CategoryCreate from '../../components/category-create/category-create.component';
 import ProductCreate from '../../components/product-create/product-create.component';
 import ShopCard from '../../components/shop-card/shop-card.component';
-import { Category } from '../../core/models/category';
+import { CategoryModel } from '../../core/models/category';
 
 import './admin.style.scss';
 export class AdminPage extends React.Component{
@@ -19,7 +18,7 @@ export class AdminPage extends React.Component{
         this.state = {
             categoryCreate: {
                 edit: false,
-                initialState: new Category(null, '')
+                initialState: new CategoryModel(null, '')
             },
             productModal: false,
             category: '',
@@ -79,22 +78,12 @@ export class AdminPage extends React.Component{
                             }
                         </Select>
                     </FormControl>
-                    <Dropdown className="category-dropdown" isOpen={this.state.categoryDropdown} toggle={this.toggle} style={{paddingRight: '20px'}}>
-                        <DropdownToggle caret>
-                            EDIT 
-                        </DropdownToggle>
-                        <DropdownMenu>
-                            {
-                                categories.map((value) => <DropdownItem onClick={() => this.showCategory(new Category(value.id, value.category))} key={value.id}>{value.category}</DropdownItem>)
-                            }
-                        </DropdownMenu>  
-                    </Dropdown>
                     <span className="spacer"></span>
-                    <Button className="primary-button admin-button" onClick={() => this.showCategory(new Category(null, ''))}>Create a Category</Button>
+                    <Button className="primary-button admin-button" onClick={() => this.showCategory(new CategoryModel(null, ''))}>Create a Category</Button>
                     <Button className="primary-button admin-button" onClick={() => this.showProduct()}>Create a Product</Button>
                 </div>
                 <div>
-                    <Modal onClose={() => this.showCategory(new Category(null, ''))} show={this.state.categoryCreate.edit}>
+                    <Modal onClose={() => this.showCategory(new CategoryModel(null, ''))} show={this.state.categoryCreate.edit}>
                         <CategoryCreate onClose={this.showCategory} edit={this.state.categoryCreate.id} initialState={this.state.categoryCreate.initialState}></CategoryCreate>
                     </Modal>
                     <Modal onClose={this.showProduct} show={this.state.productModal}>

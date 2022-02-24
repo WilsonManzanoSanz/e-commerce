@@ -1,4 +1,4 @@
-export class Category{
+export class CategoryModel{
     constructor(id, category){
         this.id = id;
         this.category = category;

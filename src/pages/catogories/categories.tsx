@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import CategoryCreate from "../../components/category-create/category-create.component";
 import Modal from "../../components/modal/modal.component";
-import { Category } from "../../core/models/category";
 import { fetchCategories } from "../../redux/product/product.action";
 import { selectCategories } from "../../redux/product/product.selector";
-import styles from './catogories.module.scss';
+import Category from "../../components/category/category";
+import { CategoryModel } from "../../core/models/category";
 
 function Catogories(){
     const categories = useSelector(selectCategories);
     const dispatch = useDispatch();
 
-    const [currentCategory, setCategory] = useState(new Category("", ""));
+    const [currentCategory, setCategory] = useState(new CategoryModel("", ""));
     const [openModal, setModalOpen] = useState(false);
     const [categoryIdx, setCategoryIdx] = useState(0);
 
@@ -27,14 +27,7 @@ function Catogories(){
 
     return (<>
        {categories.map((category) => (
-        <div className={styles.menuItem} key={category.id} onClick={() => openEditCard(category)}>
-                <div className={styles.backgroundImage} style={{
-                    backgroundImage: `url(${category.photoUrl})`
-                }}></div>
-           <div className={styles.content}>
-               <div className={styles.title}>{category.category.toUpperCase()}</div>
-           </div>
-       </div>
+        <Category category={category} openEditCard={openEditCard}></Category>
       ))}
     <Modal onClose={() => setModalOpen(false)} show={openModal}>
         <CategoryCreate onClose={() => setModalOpen(false)} initialState={currentCategory} key={categoryIdx}></CategoryCreate>
