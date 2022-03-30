@@ -20,6 +20,7 @@ export class AdminPage extends React.Component{
                 edit: false,
                 initialState: new CategoryModel(null, '')
             },
+            product: {},
             productModal: false,
             category: '',
             categoryDropdown: false
@@ -35,9 +36,16 @@ export class AdminPage extends React.Component{
         }));
     };
 
-    showProduct = e => {
+    showProduct = (product) => {
         this.setState(prevstate => ({
-            productModal: !prevstate.productModal
+            productModal: true,
+            product
+        }));
+    };
+
+    closeProduct = () => {
+        this.setState(prevstate => ({
+            productModal: false,
         }));
     };
 
@@ -54,6 +62,10 @@ export class AdminPage extends React.Component{
     handleChangeCategories = (e) => {
         const { value, name } = e.target;
         this.setState({ [name] : value });
+    }
+
+    selectProduct = (item) => {
+        this.showProduct(item);
     }
 
     render(){
@@ -80,21 +92,21 @@ export class AdminPage extends React.Component{
                     </FormControl>
                     <span className="spacer"></span>
                     <Button className="primary-button admin-button" onClick={() => this.showCategory(new CategoryModel(null, ''))}>Create a Category</Button>
-                    <Button className="primary-button admin-button" onClick={() => this.showProduct()}>Create a Product</Button>
+                    <Button className="primary-button admin-button" onClick={() => this.showProduct({id: null})}>Create a Product</Button>
                 </div>
                 <div>
                     <Modal onClose={() => this.showCategory(new CategoryModel(null, ''))} show={this.state.categoryCreate.edit}>
                         <CategoryCreate onClose={this.showCategory} edit={this.state.categoryCreate.id} initialState={this.state.categoryCreate.initialState}></CategoryCreate>
                     </Modal>
-                    <Modal onClose={this.showProduct} show={this.state.productModal}>
-                        <ProductCreate onClose={this.showProduct}></ProductCreate>
+                    <Modal onClose={this.closeProduct} show={this.state.productModal}>
+                        <ProductCreate key={this.state.product.id} onClose={this.closeProduct} edit={this.state.product.id} product={this.state.product}></ProductCreate>
                     </Modal>
-                </div>
+                </div> 
             <hr></hr>
-            <div className="flex">
+            <div className="flex" style={{flexWrap: 'wrap'}}>
             {
                 products.map(item => (
-                        <ShopCard key={item.id} item={item}></ShopCard>
+                    <ShopCard key={item.id} item={item} editMode={true} editItem={(item) => this.selectProduct(item)}></ShopCard>
                 ))
             }
             </div>

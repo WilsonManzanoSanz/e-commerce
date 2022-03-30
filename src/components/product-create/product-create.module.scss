@@ -1,0 +1,51 @@
+@import '../../variable.scss';
+.productCreate{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    @media screen and (min-width: $break-tablet) {
+        min-width: 760px;
+    }
+
+    .title{
+        margin: 0px 0 10px;
+        text-align: center;
+    }
+
+    .description{
+        text-align: center;
+    }
+
+    .multiplePhotos{
+        display: flex;
+        max-width: 100%;
+    }
+
+    .primary-button{
+        margin: 40px auto 10px;
+    }
+    .previewPhoto{
+        display: block;
+        margin: auto;
+        width: 70%;
+    }
+    .placeHolderPhoto{
+        border: 1px dotted gray;
+        height: 100px;
+        width: 100px;
+    }
+
+    .buttons{
+        display: block;
+        width: 100%;
+        button{
+            display: block;
+            margin: 0 auto 10px;
+        }
+    }
+    .thumbnail{
+        img{
+            max-width: 100%;
+        }
+    }
+}

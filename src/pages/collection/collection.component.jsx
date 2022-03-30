@@ -15,7 +15,6 @@ class CollectionPage extends React.Component {
 
     render(){
         let {category = {category: '', products: []}} = this.props;
-        console.log('props,', this.props);
         return (
             <div className="collection-page">
                 <h2 className="title">{ category.category }</h2>

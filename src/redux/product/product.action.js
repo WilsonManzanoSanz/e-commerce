@@ -2,6 +2,7 @@ import { BASE_URL, commonHeaders } from "../../core/http-const";
 
 export const ADD_CATEGORY = "ADD_CATEGORY";
 export const ADD_PRODUCT = "ADD_PRODUCT";
+export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const UPDATE_CATEGORY = "UPDATE_CATEGORY";
 export const FETCH_CATEGORIES = "FETCH_CATEGORIES";
 export const FETCH_CATEGORYS_FAILURE = "FETCH_CATEGORYS_FAILURE";
@@ -25,6 +26,11 @@ export const updateCategory = (category) => ({
 
 export const addProduct = (product) => ({
   type: ADD_PRODUCT,
+  payload: product,
+});
+
+export const updateProduct = (product) => ({
+  type: UPDATE_PRODUCT,
   payload: product,
 });
 
@@ -159,6 +165,29 @@ export const fetchNewProduct = (product) => {
       const json = await response.json();
       if (json.success) {
         dispatch(addProduct(json.data));
+        return json;
+      } else {
+        throw json.message;
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      return error;
+    }
+  };
+};
+
+
+export const fetchUpdateProduct = (product) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`${BASE_URL}/products/${product.id}`, {
+        method: "PUT",
+        body: JSON.stringify(product), // data can be `string` or {object}!
+        headers: commonHeaders(),
+      });
+      const json = await response.json();
+      if (json.success) {
+        dispatch(updateProduct(json.data));
         return json;
       } else {
         throw json.message;

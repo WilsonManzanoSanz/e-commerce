@@ -8,7 +8,8 @@ import {
     FETCH_CATEGORYS_FAILURE, 
     FETCH_PRODUCT_FAILURE, 
     FETCH_PRODUCT_SUCCESS, 
-    FETCH_PRODUCT_START, 
+    FETCH_PRODUCT_START,
+    UPDATE_PRODUCT, 
 } from './product.action';
 
 const INITIAL_STATE = {
@@ -28,6 +29,9 @@ const productsReducer = (previousState = INITIAL_STATE, action) => {
             return { ...previousState, categories: ArrayInsert(previousState.categories, action.payload, idx) };
         case ADD_PRODUCT:
             return { ...previousState, products: [...previousState.products, action.payload] };
+        case UPDATE_PRODUCT:
+            const index = previousState.products.findIndex(el => el.id === action.payload.id);
+            return { ...previousState, products: ArrayInsert(previousState.products, action.payload, index) };
         case FETCH_CATEGORYS_START:
             return {
                 ...previousState,

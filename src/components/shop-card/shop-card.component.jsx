@@ -5,7 +5,8 @@ import { addItem } from '../../redux/cart/cart.action';
 
 import './shop-card.style.scss'
 
-const ShopCard = ({ item, addItem }) => {
+const ShopCard = ({ item, addItem, editItem, editMode }) => {
+    const dispatchAction = editMode ? editItem : addItem;
     const { name, price, photoUrl } = item;
     return (
         <div className="shop-card">
@@ -14,8 +15,8 @@ const ShopCard = ({ item, addItem }) => {
             <div className="content-footer">
                 <span className="name">{name}</span>
                 <span className="price">${price}</span>
-            </div>∫
-            <Button classType="inverted" onClick={() => addItem(item)}>Add to Cart</Button>
+            </div>
+            <Button classType="inverted" onClick={() => dispatchAction(item)}>{editMode ? 'Edit' : 'Add to Cart'}</Button>
         </div>
     );
 };

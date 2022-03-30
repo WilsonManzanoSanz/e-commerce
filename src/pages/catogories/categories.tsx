@@ -27,7 +27,7 @@ function Catogories(){
 
     return (<>
        {categories.map((category) => (
-        <Category category={category} openEditCard={openEditCard}></Category>
+        <Category key={category.id} category={category} openEditCard={openEditCard}></Category>
       ))}
     <Modal onClose={() => setModalOpen(false)} show={openModal}>
         <CategoryCreate onClose={() => setModalOpen(false)} initialState={currentCategory} key={categoryIdx}></CategoryCreate>
