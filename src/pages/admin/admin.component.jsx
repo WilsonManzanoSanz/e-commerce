@@ -23,6 +23,7 @@ export class AdminPage extends React.Component{
             product: {},
             productModal: false,
             category: '',
+            modalKey: 0,
             categoryDropdown: false
         };
     }
@@ -37,9 +38,11 @@ export class AdminPage extends React.Component{
     };
 
     showProduct = (product) => {
-        this.setState(prevstate => ({
+        console.log(product)
+        this.setState(prevState => ({
             productModal: true,
-            product
+            product,
+            modalKey: prevState.modalKey + 1,
         }));
     };
 
@@ -56,7 +59,7 @@ export class AdminPage extends React.Component{
     componentDidMount(){
         const { fetchCategories, fetchProducts } = this.props;
         fetchCategories();
-        fetchProducts();
+        fetchProducts({include: true});
     }
 
     handleChangeCategories = (e) => {
@@ -99,7 +102,7 @@ export class AdminPage extends React.Component{
                         <CategoryCreate onClose={this.showCategory} edit={this.state.categoryCreate.id} initialState={this.state.categoryCreate.initialState}></CategoryCreate>
                     </Modal>
                     <Modal onClose={this.closeProduct} show={this.state.productModal}>
-                        <ProductCreate key={this.state.product.id} onClose={this.closeProduct} edit={this.state.product.id} product={this.state.product}></ProductCreate>
+                        <ProductCreate key={this.state.modalKey} onClose={this.closeProduct} edit={this.state.product.id} product={this.state.product}></ProductCreate>
                     </Modal>
                 </div> 
             <hr></hr>

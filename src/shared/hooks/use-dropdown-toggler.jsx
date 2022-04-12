@@ -7,7 +7,7 @@ const useDropdownToggler = (dropdownContent, triggerElem) => {
     }
 
     useEffect(() => {
-
+      
       function clickOutside(e) {
         if (dropdownContent.current && (!dropdownContent.current.contains(e.target) && !triggerElem.current.contains(e.target) )) {
           toggleDropdown(false);

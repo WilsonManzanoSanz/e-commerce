@@ -62,26 +62,27 @@ class ProductCreate extends React.Component{
             }
             let newProduct = {...this.state.product, photoUrl};
             if(this.state.thumbnails.length){
-                debugger;
                 const promises = [];
-                this.state.thumbnails.forEach(thumbnail => {
+                this.state.thumbnails.filter(el => el.file).forEach(thumbnail => {
                     promises.push(uploadFile(thumbnail.file));
                 });
                 const promisesResponse = await Promise.all(promises);  
-                newProduct = {...newProduct, photos: promisesResponse.map(el => ({photoUrl: el.path}))}
+                newProduct = {...newProduct, photos: [...promisesResponse.map(el => ({photoUrl: el.path})), ...this.state.thumbnails.filter(el => !el.file) ] };
             }
             this.state.product.id ? await fetchUpdateProduct(newProduct) : await fetchNewProduct(newProduct);
-            this.setState({
-                product: {
-                    id: '',
-                    name: '',
-                    description: '',
-                    price: '',
-                    categoryId: '',
-                    validationMessage: '',
-                    photos:[]
-                }
-            });
+            if(!this.state.product.id){
+                this.setState({
+                    product: {
+                        id: '',
+                        name: '',
+                        description: '',
+                        price: '',
+                        categoryId: '',
+                        validationMessage: '',
+                        photos:[]
+                    }
+                });
+            }
             onClose();
         } catch (error) {
             alert('Something wrong happens');

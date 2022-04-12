@@ -87,11 +87,11 @@ export const fetchCategories = (params) => {
   };
 };
 
-export const fetchProducts = () => {
+export const fetchProducts = (params) => {
   return async (dispatch) => {
     fetchProductsStart();
     try {
-      const response = await fetch(`${BASE_URL}/products`, {
+      const response = await fetch(`${BASE_URL}/products${params && params.include ? '?include=' + params.include : ''}`, {
         method: "GET",
         headers: commonHeaders(),
       });
