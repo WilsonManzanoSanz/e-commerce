@@ -7,3 +7,5 @@ export const commonHeaders = () => {
     Authorization: `Bearer ${store.getState().user.token}`,
   };
 };
+
+export const SEARCH_PRODUCTS = 'SEARCH_PRODUCTS';

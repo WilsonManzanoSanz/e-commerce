@@ -35,12 +35,16 @@ $main-color: black;
     &:focus ~ .label {
       @include shrinkLabel();
     }
+    &:focus ~ .label.hide {
+      display: none;
+    }
   }
 
   .input{
     &.focused{
       outline: none;
       ~ .label{
+
         @include shrinkLabel();
       }
     }

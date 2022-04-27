@@ -3,16 +3,17 @@ import React from 'react';
 import './form-input.style.scss';
 
 const FormInput = ({ handleChange, label, ...otherComponents }) => {
+    const {  hidePlaceholder, ...otherProps } = otherComponents;
     return(
         <div className="form-group">
             {
-                ! otherComponents.astextarea ? 
-                (<input className={`${otherComponents.value ? 'focused': ''} input`} onChange={handleChange} {...otherComponents} />) : 
-                (<textarea className="input" onChange={handleChange} {...otherComponents}></textarea>)
+                ! otherProps.astextarea ? 
+                (<input className={`${otherProps.value ? 'focused': ''} input`} onChange={handleChange} {...otherProps} />) : 
+                (<textarea className="input" onChange={handleChange} {...otherProps}></textarea>)
             }
             {
                 label &&
-                (<label className={`${otherComponents.value && otherComponents.value.length ? 'shrink' : ''} label`}>
+                (<label className={`${otherProps.value && otherProps.value.length ? 'shrink' : ''} label`}>
                     {label}
                 </label>)
             }

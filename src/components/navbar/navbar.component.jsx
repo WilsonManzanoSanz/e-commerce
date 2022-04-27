@@ -13,6 +13,7 @@ import { selectIsMobile } from '../../redux/ui/ui.selector';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { ReactComponent as Logo } from '../../assets/img/logo.svg';
 import { ReactComponent as HamburguerMenu } from '../../assets/img/hamburguer.svg';
+import SearchBoxNavbar from '../search-box-navbar/search-box.component';
 
 import './navbar.style.scss';
 
@@ -29,6 +30,9 @@ const Navbar = ({ currentUser, isMobile, logOut}) => {
                 {
                     !(isMobile) ? (
                         <div className="options">
+                            <div className='item'>
+                                <SearchBoxNavbar />
+                            </div>
                             <Link className="item" to="/shop">
                                 SHOP
                             </Link>

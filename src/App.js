@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Navbar from './components/navbar/navbar.component.jsx';
+import Navbar from './components/navbar/navbar.component';
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.action';
 import { getUser } from './redux/user/user.action';
