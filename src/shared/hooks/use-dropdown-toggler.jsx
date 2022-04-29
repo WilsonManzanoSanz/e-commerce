@@ -6,6 +6,15 @@ const useDropdownToggler = (dropdownContent, triggerElem) => {
       toggleDropdown(!isOpen);
     }
 
+    const openDropdown = (params) => {
+      console.log(params)
+      toggleDropdown(true);
+    }
+
+    const closeDropdown = () => {
+      toggleDropdown(false);
+    }
+
     useEffect(() => {
       
       function clickOutside(e) {
@@ -28,7 +37,7 @@ const useDropdownToggler = (dropdownContent, triggerElem) => {
       };
     }, [isOpen, dropdownContent, triggerElem])
 
-    return { toggleDropdownEvent, isOpen};
+    return { toggleDropdownEvent, isOpen, openDropdown, closeDropdown};
 }
 
 export default useDropdownToggler;

@@ -1,3 +1,16 @@
 .searchBox{
     max-width: 200px;
+    position: relative;
+}
+
+.searchList{
+    position: absolute;
+    z-index: 2;
+    top: 100%;
+    background-color: white;
+    width: max-content;
+}
+
+.searchListItem{
+    min-width: 100px;
 }
