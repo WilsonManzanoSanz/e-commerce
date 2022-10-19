@@ -3,7 +3,7 @@ import React from 'react';
 import './form-input.style.scss';
 
 const FormInput = React.forwardRef<HTMLDivElement, any>((props, ref) => {
-    const { handleChange, label, ...otherComponents } = props;
+    const { handleChange, label, hidePlaceholder, ...otherComponents } = props;
     return(
         <div className="form-group" ref={ref}>
             {

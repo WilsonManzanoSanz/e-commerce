@@ -1,4 +1,4 @@
-import { BASE_URL, commonHeaders } from "../../core/http-const";
+import { BASE_URL, commonHeaders, globalHttpError } from "../../core/http-const";
 
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const SET_TOKEN = "SET_TOKEN";
@@ -54,10 +54,10 @@ export const signInWithPassword = (email, password) => {
         dispatch(setCurrentUser(json.data));
         return json;
       } else {
-        throw json.message;
+        throw json;
       }
     } catch (error) {
-      console.error("Error:", error);
+      globalHttpError(error);
       return error;
     }
   };
@@ -77,10 +77,10 @@ export const signUpWithPassword = (user) => {
         dispatch(setCurrentUser(json.data));
         return json;
       } else {
-        throw json.message;
+        throw json;
       }
     } catch (error) {
-      console.error("Error:", error);
+      globalHttpError(error);
       return error;
     }
   };
@@ -99,11 +99,11 @@ export const logOut = () => {
         dispatch(setCurrentUser(null));
         return json;
       } else {
-        throw json.message;
+        throw json;
       }
     } catch (error) {
       dispatch(setCurrentUser(null));
-      console.error("Error:", error);
+      globalHttpError(error);
       return error;
     }
   };
@@ -124,10 +124,10 @@ export const updateUser = (user) => {
         return json;
       } else {
         dispatch(fetchPutUserStartFailure());
-        throw json.message;
+        throw json;
       }
     } catch (error) {
-      console.error("Error:", error);
+      globalHttpError(error);
       return error;
     }
   };
@@ -145,10 +145,11 @@ export const getUser = (id) => {
         dispatch(setCurrentUser(json.data));
         return json;
       } else {
-        throw json.message;
+        throw json;
       }
     } catch (error) {
-      console.error("Error:", error);
+      debugger;
+      globalHttpError(error);
       return error;
     }
   };

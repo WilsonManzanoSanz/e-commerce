@@ -182,7 +182,7 @@ export const fetchUpdateProduct = (product) => {
     try {
       const response = await fetch(`${BASE_URL}/products/${product.id}`, {
         method: "PUT",
-        body: JSON.stringify(product), // data can be `string` or {object}!
+        body: JSON.stringify(product), // ´data can be `string` or {object}!
         headers: commonHeaders(),
       });
       const json = await response.json();

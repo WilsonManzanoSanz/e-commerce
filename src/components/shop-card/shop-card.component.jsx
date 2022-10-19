@@ -1,11 +1,24 @@
-import React from 'react';
+import React, {memo} from 'react';
 import Button from '../ui/button/button.component';
 import { connect } from 'react-redux';
 import { addItem } from '../../redux/cart/cart.action';
 
 import './shop-card.style.scss'
 
+function areEqual(prevProps, nextProps) {
+    /*
+    return true if passing nextProps to render would return
+    the same result as passing prevProps to render,
+    otherwise return false
+    */
+    if(prevProps.item.name === nextProps.item.name){
+        return prevProps.item.name === nextProps.item.name;
+    }
+}
+
 const ShopCard = ({ item, addItem, editItem, editMode }) => {
+
+    console.log('rendered card')
     const dispatchAction = editMode ? editItem : addItem;
     const { name, price, photoUrl } = item;
     return (
@@ -25,4 +38,4 @@ const mapDispatchToProps = dispatch => ({
     addItem: item => dispatch(addItem(item))
 })
 
-export default connect(null, mapDispatchToProps)(ShopCard);
+export default memo(connect(null, mapDispatchToProps)(ShopCard), areEqual);

@@ -73,6 +73,7 @@ export class AdminPage extends React.Component{
 
     render(){
         const { categories, products = [] } = this.props;
+        console.log('rendered parent')
         return (
             <div className="admin-page">
             <hr></hr>
