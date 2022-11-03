@@ -148,7 +148,6 @@ export const getUser = (id) => {
         throw json;
       }
     } catch (error) {
-      debugger;
       globalHttpError(error);
       return error;
     }

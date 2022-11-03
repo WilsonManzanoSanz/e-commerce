@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.action';
 import { getUser } from './redux/user/user.action';
 import { createStructuredSelector } from 'reselect';
-import { selectCurrentUser} from './redux/user/user.selector';
+import { selectCurrentUser } from './redux/user/user.selector';
 
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
@@ -19,30 +19,34 @@ import Categories from './pages/catogories/categories';
 
 import PrivateRoute from './components/private-route/private-route.component';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor } from './redux/store';
+import { BrowserRouter } from 'react-router-dom';
 
 import './App.scss';
 
 class App extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.queryClient = new QueryClient();
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const { getUser, currentUser } = this.props;
-    if(currentUser && currentUser.id){
+    if (currentUser && currentUser.id) {
       getUser(currentUser.id);
-    } 
+    }
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
   }
 
-  render (){
+  render() {
     return (
-      <QueryClientProvider client={this.queryClient}>
-        <div>
+      <BrowserRouter>
+        <PersistGate persistor={persistor}>
+          <QueryClientProvider client={this.queryClient}>
             <Navbar />
             <div className="container wrapper">
               <Switch>
@@ -51,14 +55,15 @@ class App extends React.Component {
                 <Route path="/google/:token" component={GoogleLoginPage}></Route>
                 <Route exact path="/checkout" component={CheckoutPage}></Route>
                 <Route exact path="/profile" component={ProfilePage}></Route>
-                <PrivateRoute loggedIn={this.props.currentUser && (this.props.currentUser.userType === 2)} component={AdminPage} path="/admin/products"/> 
-                <PrivateRoute loggedIn={this.props.currentUser && (this.props.currentUser.userType === 2)} component={Categories} path="/admin/categories"/> 
-                <Route exact path="/login" render={() => this.props.currentUser ? (<Redirect  to="/"/>) : (<LoginPage />)}></Route>
-                <Route component={NotFound}/>
+                <PrivateRoute loggedIn={this.props.currentUser && (this.props.currentUser.userType === 2)} component={AdminPage} path="/admin/products" />
+                <PrivateRoute loggedIn={this.props.currentUser && (this.props.currentUser.userType === 2)} component={Categories} path="/admin/categories" />
+                <Route exact path="/login" render={() => this.props.currentUser ? (<Redirect to="/" />) : (<LoginPage />)}></Route>
+                <Route component={NotFound} />
               </Switch>
             </div>
-        </div>
-      </QueryClientProvider>
+          </QueryClientProvider>
+        </PersistGate>
+      </BrowserRouter>
     );
   }
 }
